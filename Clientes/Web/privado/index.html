@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="appPrivada">
+<head>
+    <meta charset="utf-8" />
+    <title>OMMFCM</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/sitio.css" rel="stylesheet" />
+​
+</head>
+<body>
+        <!--Load partial views-->
+​
+        <div class="container body-content">
+            <div data-ng-view="">
+            </div>
+        </div>
+​
+        <!--End of partial view-->
+        <div id="push"></div>
+    </div>
+​
+    <footer class="background-midnight-blue color-white">
+        
+    </footer>
+​
+    <!-- 3rd party libraries -->
+    <script src="scripts/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+​
+    <!-- Load app main script -->
+    <script src="app.js"></script>
+​
+    <!-- Load services -->
+    <script src="servicios/servicioIncidentes.js"></script>
+​
+    <!-- Load controllers -->
+    <script src="controladores/controladorIncidentes.js"></script>
+​
+</body>
+</html>
+​
