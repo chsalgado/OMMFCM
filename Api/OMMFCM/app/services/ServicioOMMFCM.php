@@ -2,6 +2,7 @@
 	namespace services;
 	use Incidente;
 	use Request;
+
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		// TODO eliminar esto cuando tegamos paginacion
 		public function getIncidentes()
@@ -45,5 +46,4 @@
 
 			return $resultado;
 	    }
-
 	}
