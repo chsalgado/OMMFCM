@@ -1,4 +1,4 @@
-<? php
+<?php
  
 class Municipio extends Eloquent {
  
