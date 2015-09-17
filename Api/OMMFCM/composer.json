@@ -16,8 +16,8 @@
 			"app/tests/TestCase.php",
 			"app/services"
 		],
-		"psr-0": {
-            "services": "app/services"
+		"psr-4": {
+            "services\\": "app/services"
         }
 
 

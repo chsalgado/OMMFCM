@@ -46,14 +46,15 @@ class IncidentesController extends \BaseController {
 	public function store()
 	{
 		$incidente = new Incidente;
-		$incidente -> fecha = Request::get('fecha');
-		$incidente -> idEspecie = Request::get('idEspecie');
+		$incidente -> idIncidente = null;
+		$incidente -> fecha = Input::get('fecha');
+		$incidente -> idEspecie = Input::get('idEspecie');
 		$incidente -> rutaFoto = 'oli.jpg';
-		$incidente -> long = Request::get('long');
-		$incidente -> lat = Request::get('lat');
-		$incidente -> mpioOrigen = Request::get('mpioOrigen');
-		$incidente -> mpioDestino = Request::get('mpioDestino');
-		$incidente -> km = Request::get('km');
+		$incidente -> long = Input::get('long');
+		$incidente -> lat = Input::get('lat');
+		$incidente -> mpioOrigen = Input::get('mpioOrigen');
+		$incidente -> mpioDestino = Input::get('mpioDestino');
+		$incidente -> km = Input::get('km');
 
 		$resultado = $this->servicioOMMFCM->crearIncidente($incidente);
 
@@ -108,8 +109,8 @@ class IncidentesController extends \BaseController {
 	public function update($id)
 	{
 		$incidente = new Incidente;
-		$incidente -> id = Request::get('id');
-		$incidente -> idEspecie = Request::get('idEspecie');
+		$incidente -> idIncidente = Input::get('idIncidente');
+		$incidente -> idEspecie = Input::get('idEspecie');
 
 		$resultado = $this->servicioOMMFCM->modificarIncidente($incidente);
 

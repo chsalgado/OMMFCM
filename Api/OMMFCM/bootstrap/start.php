@@ -70,4 +70,7 @@ require $framework.'/Illuminate/Foundation/start.php';
 |
 */
 
+App::bind('services\ServicioOMMFCMInterface', 'services\ServicioOMMFCM');  
+
+
 return $app;
