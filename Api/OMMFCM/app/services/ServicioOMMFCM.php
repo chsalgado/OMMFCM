@@ -15,7 +15,6 @@
 	   		return $incidentes;
 	   	}
 
-
 	    public function crearIncidente($incidente)
 	    {
 			$nuevoIncidente = new Incidente;
