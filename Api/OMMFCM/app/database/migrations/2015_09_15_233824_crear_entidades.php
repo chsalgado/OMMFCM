@@ -45,7 +45,7 @@ class CrearEntidades extends Migration {
     	{
 	        $table->bigIncrements('idIncidente');
 	        $table->bigInteger('idEspecie') -> references('id') -> on('especies');
-	        $table->time('fecha');
+	        $table->timestamp('fecha');
 	        $table->string('rutaFoto');
 	        $table->decimal('long', 11, 8);
 	        $table->decimal('lat', 10, 8);

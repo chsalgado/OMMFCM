@@ -1,15 +1,18 @@
 <?php
 	namespace services;
 	use Incidente;
-
+	use Request;
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		// TODO eliminar esto cuando tegamos paginacion
 		public function getIncidentes()
 		{
-			$incidentes = Incidente::all();
-			
-			return $incidentes;
-		}
+	   		$pagina = Request::get('pagina');
+	   		$resultados = Request::get('resultados');
+			Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
+	   		$incidentes = Incidente::paginate($resultados);
+
+	   		return $incidentes;
+	   	}
 
 
 	    public function crearIncidente($incidente)
@@ -42,4 +45,5 @@
 
 			return $resultado;
 	    }
+
 	}
