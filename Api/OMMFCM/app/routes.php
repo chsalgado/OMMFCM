@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/nums', function()
 {
-	return View::make('hello');
+	$numeros = array();
+	$aux = 0;
+	for($i = 1; $i<=10000; $i++){
+		echo $i.' ';
+	}
+	//return View::make('hello');
 });
 
 // Route group for API versioning
