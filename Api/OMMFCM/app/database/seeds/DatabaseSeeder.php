@@ -2,7 +2,6 @@
 
 class DatabaseSeeder extends Seeder 
 {
-
 	/**
 	 * Run the database seeds.
 	 *
@@ -12,16 +11,14 @@ class DatabaseSeeder extends Seeder
 	{
 		Eloquent::unguard();
 
-		//Borrar información contenida en las tablas
-		
+		// Borrar información contenida en las tablas
 		DB::table('especies')->delete();
 		DB::table('incidentes')->delete();
 		DB::table('municipios')->delete();
 		DB::table('estados')->delete();
 		DB::table('usuarios')->delete();
 
-		//Poblar las tablas usuarios/especies/incidentes con datos dummy
-		
+		// Poblar las tablas usuarios/especies/incidentes con datos dummy
 		$usuario = Usuario::create(array(
 			'username' => 'administrador',
 			'password' => 'administrador',
