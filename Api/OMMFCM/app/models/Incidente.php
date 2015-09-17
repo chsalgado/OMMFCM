@@ -1,7 +1,7 @@
 <? php
 	class Incidente extends Eloquent{
 
-		protected fillable = array('fecha', 'rutaFoto', 'long', 'lat', 'mpioOrigen', 'mpioDestino', 'km');
+		protected fillable = array('fecha', 'rutaFoto', 'long', 'lat', 'mpioOrigen', 'mpioDestino', 'km', 'idEspecie');
 
 		public function especie(){
 			return $this -> belongsTo('Especie');
