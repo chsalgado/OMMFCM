@@ -26,18 +26,6 @@ class IncidentesController extends \BaseController {
 		);
 	}
 
-	public function getPage($page,$number)
-	{
-		$incidentes = $this->servicioOMMFCM->getIncidentesPage($page,$number);
-
-		return Response::json(array(
-			'error' => false,
-			'incidentes' => $incidentes -> toArray()),
-			200
-		);
-
-	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
