@@ -1,8 +1,8 @@
-<? php
-
+<?php
 	namespace services;
+	use Incidente;
 
-	public class ServicioOMMFCM implements ServicioOMMFCMInterface{
+	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		// TODO eliminar esto cuando tegamos paginacion
 		public function getIncidentes()
 		{
@@ -31,7 +31,7 @@
 
 	    public function modificarIncidente($incidente)
 	    {
-	    	$incidenteExistente = Incidente::find($incidente -> id);
+	    	$incidenteExistente = Incidente::find($incidente -> idIncidente);
 
 			if ($incidente -> idEspecie)
 			{
