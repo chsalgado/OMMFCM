@@ -2,9 +2,11 @@
 	namespace services;
 	use Incidente;
 	use Request;
+	use Image;
+	use File;
 
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
-		// TODO eliminar esto cuando tegamos paginacion
+		
 		public function getIncidentes()
 		{
 	   		$pagina = Request::get('pagina');
@@ -15,10 +17,15 @@
 	   		return $incidentes;
 	   	}
 
-	    public function crearIncidente($incidente)
+	    public function crearIncidente($incidente, $imagen64, $extensionImg)
 	    {
+			$imagen = base64_decode($imagen64);
+			$ruta_imagen 	= public_path() . "/imagenes/incidentes/" . "incidente_" . time() . $extensionImg;
+			File::put($ruta_imagen, $imagen);
+
 			$nuevoIncidente = new Incidente;
 			$nuevoIncidente = $incidente;
+			$nuevoIncidente -> rutaFoto = $ruta_imagen;
 			$resultado = $nuevoIncidente -> save(); 
 
 			return $resultado;
