@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.george.ommfcm" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ActividadLogo"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ActividadPrincipal"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ActividadFormulario"
+            android:label="@string/title_activity_actividad_formulario" >
+        </activity>
+        <activity
+            android:name=".ActividadConfirmacion"
+            android:label="@string/title_activity_actividad_confirmacion" >
+        </activity>
+        <activity
+            android:name=".ActividadVistaPrevia"
+            android:label="@string/title_activity_actividad_vista_previa" >
+        </activity>
+    </application>
+
+</manifest>

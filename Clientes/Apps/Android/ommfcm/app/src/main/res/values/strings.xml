@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ommfcm</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_actividad_logo">ActividadLogo</string>
+    <string name="title_activity_actividad_formulario">ActividadFormulario</string>
+    <string name="title_activity_actividad_confirmacion">ActividadConfirmacion</string>
+    <string name="title_activity_actividad_vista_previa">ActividadVistaPrevia</string>
+</resources>
