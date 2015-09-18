@@ -13,13 +13,23 @@
 
 App::before(function($request)
 {
-	//
+	if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        $statusCode = 200;
+
+        $headers = [
+            'Access-Control-Allow-Origin'      => '*',  // TODO cambiar esto cuando tengamos los sitios corriendo en un dominio especifico
+            'Access-Control-Allow-Methods'     => 'GET, POST, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers'     => 'Origin, Content-Type, Accept, Authorization, X-Requested-With'
+        ];
+
+        return Response::make(null, $statusCode, $headers);
+    }
 });
 
 
 App::after(function($request, $response)
 {
-	//
+    $response->headers->set('Access-Control-Allow-Origin', '*');
 });
 
 /*

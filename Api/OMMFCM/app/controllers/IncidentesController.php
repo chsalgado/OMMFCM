@@ -4,6 +4,7 @@ use services\ServicioOMMFCMInterface;
 class IncidentesController extends \BaseController {
 
 	public $servicioOMMFCM;
+	
     public function __construct(ServicioOMMFCMInterface $servicioOMMFCM)
      {
         $this->servicioOMMFCM = $servicioOMMFCM; 
