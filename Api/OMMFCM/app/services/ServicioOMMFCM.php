@@ -4,7 +4,8 @@
 	use Request;
 	use Image;
 	use File;
-
+	use \Eventviva\ImageResize;
+	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
 		public function getIncidentes()
@@ -19,13 +20,38 @@
 
 	    public function crearIncidente($incidente, $imagen64, $extensionImg)
 	    {
-			$imagen = base64_decode($imagen64);
-			$ruta_imagen 	= public_path() . "/imagenes/incidentes/" . "incidente_" . time() . $extensionImg;
-			File::put($ruta_imagen, $imagen);
+	    	if(is_null($imagen64))
+	    	{
+	    		return false; // TODO definir la respuesta del servidor ante campos vacíos y agregar validación
+	    	}
 
+	    	$thumbnailWidth = 200;
+	    	$thumbnailHeight = 200;
+			$imagen = base64_decode($imagen64);
+			$imageThumbnail = ImageResize::createFromString(base64_decode($imagen64));
+			$imageThumbnail -> resize($thumbnailWidth, $thumbnailHeight);
+			$ruta = public_path() . "/imagenes/incidentes/";
+			$nombreImagen 	= "incidente_" . time();
+			$rutaThumbnail = $ruta . $nombreImagen . "_thumbnail" . $extensionImg;
+			$nombreImagen  = $nombreImagen . $extensionImg;
+			$resultado = File::put($ruta . $nombreImagen, $imagen);
+
+			if(!$resultado)
+			{
+				return $resultado;
+			}
+
+			$resultado = $imageThumbnail -> save($rutaThumbnail);
+
+			if(!$resultado)
+			{
+				return $resultado;
+			}
+ 
 			$nuevoIncidente = new Incidente;
 			$nuevoIncidente = $incidente;
-			$nuevoIncidente -> rutaFoto = $ruta_imagen;
+			$nuevoIncidente -> rutaFoto = $ruta . $nombreImagen;
+			$nuevoIncidente -> rutaThumbnail = $rutaThumbnail;
 			$resultado = $nuevoIncidente -> save(); 
 
 			return $resultado;
