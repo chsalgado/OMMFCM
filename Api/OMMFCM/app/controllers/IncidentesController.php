@@ -48,14 +48,13 @@ class IncidentesController extends \BaseController {
 		$incidente -> idIncidente = null;
 		$incidente -> fecha = Input::get('fecha');
 		$incidente -> idEspecie = Input::get('idEspecie');
-		$incidente -> rutaFoto = 'oli.jpg';
 		$incidente -> long = Input::get('long');
 		$incidente -> lat = Input::get('lat');
 		$incidente -> mpioOrigen = Input::get('mpioOrigen');
 		$incidente -> mpioDestino = Input::get('mpioDestino');
 		$incidente -> km = Input::get('km');
-
-		$resultado = $this->servicioOMMFCM->crearIncidente($incidente);
+		$imagen64  = Input::get('imagen');
+		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64);
 
 		if ($resultado)
 		{
