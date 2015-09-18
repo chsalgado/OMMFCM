@@ -17,10 +17,10 @@
 	   		return $incidentes;
 	   	}
 
-	    public function crearIncidente($incidente, $imagen64)
+	    public function crearIncidente($incidente, $imagen64, $extensionImg)
 	    {
 			$imagen = base64_decode($imagen64);
-			$ruta_imagen 	= public_path() . "/imagenes/incidentes/" . "incidente_" . time() . ".png";
+			$ruta_imagen 	= public_path() . "/imagenes/incidentes/" . "incidente_" . time() . $extensionImg;
 			File::put($ruta_imagen, $imagen);
 
 			$nuevoIncidente = new Incidente;

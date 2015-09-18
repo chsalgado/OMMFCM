@@ -54,7 +54,8 @@ class IncidentesController extends \BaseController {
 		$incidente -> mpioDestino = Input::get('mpioDestino');
 		$incidente -> km = Input::get('km');
 		$imagen64  = Input::get('imagen');
-		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64);
+		$extensionImg = Input::get('extension');
+		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64, $extensionImg);
 
 		if ($resultado)
 		{
