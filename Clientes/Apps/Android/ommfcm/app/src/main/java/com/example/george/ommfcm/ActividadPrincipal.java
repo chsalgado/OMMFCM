@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class ActividadPrincipal extends AppCompatActivity {
 
@@ -33,5 +34,39 @@ public class ActividadPrincipal extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void tomar_foto(View view){
+
+    }
+
+    public void escoger_foto_galeria(View view){
+
+    }
+
+    public Coordenadas obtener_coordenadas_actuales(){
+        return null;
+    }
+
+    public Coordenadas obtener_coordenadas_foto(){
+        return null;
+    }
+
+    private class Coordenadas{
+        private int latitude;
+        private int longitude;
+
+        Coordenadas(int lat, int lon){
+            this.latitude = lat;
+            this.longitude = lon;
+        }
+
+        public int getLatitude(){
+            return this.latitude;
+        }
+
+        public int getLongitude(){
+            return this.longitude;
+        }
     }
 }
