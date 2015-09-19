@@ -5,6 +5,7 @@
 	use Image;
 	use File;
 	use \Eventviva\ImageResize;
+	use Especie;
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -77,5 +78,70 @@
 			$resultado = $incidenteExistente -> save();
 
 			return $resultado;
+	    }
+
+	    public function getEspecies()
+	    {
+	   		$pagina = Request::get('pagina');
+	   		$resultados = Request::get('resultados');
+	   		$especies = Especie::all();
+
+	   		// Validar que los dos parámetros de paginación fueron enviados, de lo contrario mandar todas las especies
+	   		if(!is_null($pagina) && !is_null($resultados))
+	   		{
+				Especie::resolveConnection()->getPaginator()->setCurrentPage($pagina);
+		   		$especies = Especie::paginate($resultados);	   			
+	   		}
+
+	   		return $especies;	    	
+	    }
+
+	    public function crearEspecie($especie)
+	    {
+			$nuevaEspecie = new Especie;
+			$nuevaEspecie = $especie;
+			$resultado = $nuevaEspecie -> save(); 
+
+	    	if($resultado)
+	    	{
+				return 200;	    		
+	    	}
+
+	    	return 500;
+	    }
+
+	    public function modificarEspecie($especie)
+	    {
+	    	$especieExistente = Especie::find($especie -> idEspecie);
+	    	
+	    	if(is_null($especieExistente))
+	    	{
+	    		return 404;
+	    	}
+
+	    	$especieExistente -> nombreComun = $especie -> nombreComun;
+	    	$especieExistente -> nombreCientifico = $especie -> nombreCientifico;
+
+	    	$resultado = $especieExistente -> save();
+
+	    	if($resultado)
+	    	{
+				return 200;	    		
+	    	}
+
+	    	return 500;
+	    }
+
+	    public function eliminarEspecie($id)
+	    {
+	    	$especie = Especie::find($id);
+	    	$resultado = $especie -> delete();
+
+	    	if($resultado)
+	    	{
+				return 200;	    		
+	    	}
+
+	    	return 500;
 	    }
 	}
