@@ -13,7 +13,8 @@
 
 App::before(function($request)
 {
-	if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+	if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') 
+	{
         $statusCode = 200;
 
         $headers = [
