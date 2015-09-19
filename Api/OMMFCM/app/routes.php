@@ -20,5 +20,5 @@ Route::get('/', function()
 Route::group(array('prefix' => 'api/'), function()
 {
     Route::resource('incidentes', 'IncidentesController');
+    Route::resource('especies', 'EspeciesController');
 });
-

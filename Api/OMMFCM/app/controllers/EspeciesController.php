@@ -1,7 +1,7 @@
 <?php
 use services\ServicioOMMFCMInterface;
 
-class IncidentesController extends \BaseController 
+class EspeciesController extends \BaseController 
 {
 	public $servicioOMMFCM;
 
@@ -10,7 +10,6 @@ class IncidentesController extends \BaseController
         $this->servicioOMMFCM = $servicioOMMFCM; 
      }
 
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -18,14 +17,15 @@ class IncidentesController extends \BaseController
 	 */
 	public function index()
 	{
-		$incidentes = $this->servicioOMMFCM->getIncidentes();
+		$especies = $this->servicioOMMFCM->getEspecies();
 
 		return Response::json(array(
 			'error' => false,
-			'incidentes' => $incidentes -> toArray()),
+			'especies' => $especies -> toArray()),
 			200
 		);
 	}
+
 
 	/**
 	 * Show the form for creating a new resource.
@@ -45,34 +45,26 @@ class IncidentesController extends \BaseController
 	 */
 	public function store()
 	{
-		$incidente = new Incidente;
-		$incidente -> idIncidente = null;
-		$incidente -> fecha = Input::get('fecha');
-		$incidente -> idEspecie = Input::get('idEspecie');
-		$incidente -> long = Input::get('long');
-		$incidente -> lat = Input::get('lat');
-		$incidente -> mpioOrigen = Input::get('mpioOrigen');
-		$incidente -> mpioDestino = Input::get('mpioDestino');
-		$incidente -> km = Input::get('km');
-		$imagen64  = Input::get('imagen');
-		$extensionImg = Input::get('extension');
-		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64, $extensionImg);
+		$especie = new Especie;		
+		$especie -> nombreComun = Input::get('nombreComun');
+		$especie -> nombreCientifico = Input::get('nombreCientifico');
+		$resultado = $this->servicioOMMFCM->crearEspecie($especie);
 
-		if ($resultado)
+		if ($resultado <= 400)
 		{
 			return Response::json(array(
 				'error' => false,
-				'incidente' => $incidente),
-				201
+				'especie' => $especie),
+				$resultado
 			);
 		}
 		else
 		{
 			return Response::json(array(
 				'error' => true),
-				500
+				$resultado
 			);
-		}	
+		}		
 	}
 
 
@@ -108,25 +100,26 @@ class IncidentesController extends \BaseController
 	 */
 	public function update($id)
 	{
-		$incidente = new Incidente;
-		$incidente -> idIncidente = $id;
-		$incidente -> idEspecie = Input::get('idEspecie');
+		$especie = new Especie;
+		$especie -> idEspecie = $id;
+		$especie -> nombreComun = Input::get('nombreComun');
+		$especie -> nombreCientifico = Input::get('nombreCientifico');
 
-		$resultado = $this->servicioOMMFCM->modificarIncidente($incidente);
+		$resultado = $this->servicioOMMFCM->modificarEspecie($especie);
 
-		if ($resultado)
+		if ($resultado <= 400)
 		{
 			return Response::json(array(
 				'error' => false,
-				'incidente' => $incidente),
-				200
+				'especie' => $especie),
+				$resultado
 			);
 		}
 		else
 		{
 			return Response::json(array(
 				'error' => true),
-				500
+				$resultado
 			);
 		}	
 	}
@@ -139,21 +132,21 @@ class IncidentesController extends \BaseController
 	 * @return Response
 	 */
 	public function destroy($id)
-	{
-		$resultado = $this->servicioOMMFCM->eliminarIncidente($id);
+	{		
+		$resultado = $this->servicioOMMFCM->eliminarEspecie($id);
 
-		if ($resultado)
+		if ($resultado <= 400)
 		{
 			return Response::json(array(
 				'error' => false),
-				204
+				$resultado
 			);
 		}
 		else
 		{
 			return Response::json(array(
 				'error' => true),
-				500
+				$resultado
 			);
 		}	
 	}
