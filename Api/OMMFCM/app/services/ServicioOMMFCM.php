@@ -21,9 +21,24 @@
 
 	    public function crearIncidente($incidente, $imagen64, $extensionImg)
 	    {
-	    	if(is_null($imagen64))
+	    	if(is_null($imagen64) || is_null($extensionImg))
 	    	{
-	    		return false; // TODO definir la respuesta del servidor ante campos vacíos y agregar validación
+	    		return 400;
+	    	}
+
+	    	if(is_null($incidente -> idEspecie))
+	    	{
+	    		$incidente -> idEspecie = 0;
+	    	}
+
+	    	if(is_null($incidente -> mpioOrigen))
+	    	{
+	    		$incidente -> mpioOrigen = 0;
+	    	}
+
+	    	if(is_null($incidente -> mpioDestino))
+	    	{
+	    		$incidente -> mpioDestino = 0;
 	    	}
 
 	    	$thumbnailAncho = 200;
@@ -35,49 +50,75 @@
 			$nombreImagen 	= "incidente_" . time();
 			$rutaThumbnail = $ruta . $nombreImagen . "_thumbnail" . $extensionImg;
 			$nombreImagen  = $nombreImagen . $extensionImg;
+
 			$resultado = File::put($ruta . $nombreImagen, $imagen);
 
 			if(!$resultado)
 			{
-				return $resultado;
+				return 500;
 			}
 
 			$resultado = $imagenThumbnail -> save($rutaThumbnail);
 
 			if(!$resultado)
 			{
-				return $resultado;
+				return 500;
 			}
  
 			$nuevoIncidente = new Incidente;
 			$nuevoIncidente = $incidente;
 			$nuevoIncidente -> rutaFoto = $ruta . $nombreImagen;
 			$nuevoIncidente -> rutaThumbnail = $rutaThumbnail;
+
 			$resultado = $nuevoIncidente -> save(); 
 
-			return $resultado;
+	    	if($resultado)
+	    	{
+				return 200;	    		
+	    	}
+
+	    	return 500;	    
 	    }
 
 	    public function eliminarIncidente($id)
 	    {
 	    	$incidente = Incidente::find($id);
+	    	$rutaImagen = $incidente -> rutaFoto;
+	    	$rutaThumbnail = $incidente -> rutaThumbnail;
+	    	$resultado = File::delete($rutaImagen, $rutaThumbnail);
+
+	    	if(!$resultado)
+	    	{
+	    		return 500;
+	    	}
+
 	    	$resultado = $incidente -> delete();
 
-			return $resultado;
+	    	if($resultado)
+	    	{
+				return 200;	    		
+	    	}
+
+	    	return 500;	    
 	    }
 
 	    public function modificarIncidente($incidente)
 	    {
 	    	$incidenteExistente = Incidente::find($incidente -> idIncidente);
 
-			if ($incidente -> idEspecie)
+			if(!$incidente -> idEspecie)
 			{
-				$incidenteExistente -> idEspecie = $incidente -> idEspecie;
+				return 400;	
 			}
 
+			$incidenteExistente -> idEspecie = $incidente -> idEspecie;
 			$resultado = $incidenteExistente -> save();
 
-			return $resultado;
+			if($resultado)
+			{
+				return 200;
+			}
+			return 500;
 	    }
 
 	    public function getEspecies()
