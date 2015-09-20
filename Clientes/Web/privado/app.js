@@ -1,6 +1,6 @@
 var app=angular.module('appPrivada', ['ngRoute']);
 
-app.config(function($routeProvider){
+app.config(function($routeProvider, $httpProvider){
 
 	$routeProvider.when("/resumen", {
 		controller: "controladorDashboard",
@@ -13,7 +13,14 @@ app.config(function($routeProvider){
 	});
 
 	$routeProvider.otherwise({redirectTo: "/resumen"});
+
+	$httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
+
+var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
+
+
 
 //Routing debugging code
 
