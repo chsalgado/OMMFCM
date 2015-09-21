@@ -1,6 +1,6 @@
 var app=angular.module('appPrivada', ['ngRoute']);
 
-app.config(function($routeProvider){
+app.config(function($routeProvider, $httpProvider){
 
 	$routeProvider.when("/resumen", {
 		controller: "controladorDashboard",
@@ -13,10 +13,15 @@ app.config(function($routeProvider){
 	});
 
 	$routeProvider.otherwise({redirectTo: "/resumen"});
+
+	$httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-//Routing debugging code
+var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
 
+// Routing debugging code
+// Prueba
 app.run(['$rootScope',  function($rootScope) {
       // see what's going on when the route tries to change
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
