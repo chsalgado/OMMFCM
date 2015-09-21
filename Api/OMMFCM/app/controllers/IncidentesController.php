@@ -119,14 +119,14 @@ class IncidentesController extends \BaseController
 			return Response::json(array(
 				'error' => false,
 				'incidente' => $incidente),
-				200
+				$resultado
 			);
 		}
 		else
 		{
 			return Response::json(array(
 				'error' => true),
-				500
+				$resultado
 			);
 		}	
 	}
@@ -146,14 +146,14 @@ class IncidentesController extends \BaseController
 		{
 			return Response::json(array(
 				'error' => false),
-				204
+				$resultado
 			);
 		}
 		else
 		{
 			return Response::json(array(
 				'error' => true),
-				500
+				$resultado
 			);
 		}	
 	}
