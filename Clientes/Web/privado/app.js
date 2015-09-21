@@ -20,10 +20,8 @@ app.config(function($routeProvider, $httpProvider){
 
 var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
 
-
-
-//Routing debugging code
-
+// Routing debugging code
+// Prueba
 app.run(['$rootScope',  function($rootScope) {
       // see what's going on when the route tries to change
       $rootScope.$on('$routeChangeStart', function(event, next, current) {

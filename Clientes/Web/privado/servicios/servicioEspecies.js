@@ -1,7 +1,6 @@
 'use strict';
 app.factory('servicioEspecies', ['$http', function($http){
 
-		var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
 		var fabricaServicioEspecies = {};
 
 		var _obtenerEspecies = function(){

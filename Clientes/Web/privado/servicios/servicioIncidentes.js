@@ -1,8 +1,6 @@
 'use strict';
 app.factory('servicioIncidentes', ['$http', function($http){
 
-		var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
-		//var servicioBase = 'http://10.25.108.12/api/OMMFCM/public/';
 		var fabricaServicioIncidentes = {};
 
 		var _obtenerIncidentes = function(pagina, resultados){
