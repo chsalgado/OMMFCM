@@ -58,7 +58,7 @@ class IncidentesController extends \BaseController
 		$extensionImg = Input::get('extension');
 		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64, $extensionImg);
 
-		if ($resultado < 400)
+		if($resultado < 400)
 		{
 			return Response::json(array(
 				'error' => false,
@@ -114,7 +114,7 @@ class IncidentesController extends \BaseController
 
 		$resultado = $this->servicioOMMFCM->modificarIncidente($incidente);
 
-		if ($resultado)
+		if($resultado < 400)
 		{
 			return Response::json(array(
 				'error' => false,
@@ -142,7 +142,7 @@ class IncidentesController extends \BaseController
 	{
 		$resultado = $this->servicioOMMFCM->eliminarIncidente($id);
 
-		if ($resultado)
+		if($resultado < 400)
 		{
 			return Response::json(array(
 				'error' => false),
