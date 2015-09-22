@@ -5,6 +5,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
 	servicioEspecies.obtenerEspecies().then(function(resultados){
 		$scope.especies = resultados;
 	});
+	$scope.especieSeleccionada = "22";
 
 	// Lista de incidentes
 	$scope.incidentes = [];
@@ -62,9 +63,18 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
 	}
 
 	// TODO
-	$scope.modificarIncidetne = function(){
-		servicioIncidentes.modificarIncidetne().then(function(resultado){
+	$scope.modificarIncidente = function(idIncidente, idEspecie){
+		servicioIncidentes.modificarIncidente(idIncidente, idEspecie).then(function(resultado){
+			$scope.actualizarPagina($scope.paginaActual);
 
+			if(resultado == 200){
+				$scope.mensaje = 'El incidente ha sido modificado';
+				$scope.exito = true;
+			}else{
+				$scope.mensaje = 'El incidente no fue modificado. Intentelo más tarde';
+				$scope.exito = false;
+			}
+			$timeout($scope.ocultarMensaje, 3000);
 		});
 	}
 }]);

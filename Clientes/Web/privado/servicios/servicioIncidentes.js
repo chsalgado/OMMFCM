@@ -22,8 +22,10 @@ app.factory('servicioIncidentes', ['$http', function($http){
 		};
 
 		// TODO
-		var _modificarIncidente = function(){
-
+		var _modificarIncidente = function(idIncidente, idEspecie){
+			return $http.put(servicioBase + 'api/incidentes/' + idIncidente, {'idEspecie': idEspecie}).then(function(resultado){
+				return resultado.status;
+			});
 		};
 
 		fabricaServicioIncidentes.obtenerIncidentes = _obtenerIncidentes;

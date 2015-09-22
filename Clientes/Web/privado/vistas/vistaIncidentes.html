@@ -35,8 +35,8 @@
 				<tr ng-repeat="incidente in incidentes">
 					<th></th>
 					<th>
-						<select>
-							<option ng-repeat="especie in especies" value="especie.idEspecie">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
+						<select ng-model="especieSeleccionada" ng-change="modificarIncidente(incidente.idIncidente, especieSeleccionada)">
+							<option ng-repeat="especie in especies" value="{{especie.idEspecie}}">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
 						</select> 
 						<a href="" class="btn btn-link"><i class="fa fa-plus fa-2x"></i></span></a>
 					</th>
