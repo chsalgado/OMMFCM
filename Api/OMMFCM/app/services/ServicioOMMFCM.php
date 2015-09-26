@@ -85,18 +85,32 @@
 	    	$incidente = Incidente::find($id);
 	    	$rutaImagen = $incidente -> rutaFoto;
 	    	$rutaThumbnail = $incidente -> rutaThumbnail;
-	    	$resultado = File::delete($rutaImagen, $rutaThumbnail);
 
-	    	if(!$resultado)
+	    	if(file_exists($rutaImagen))
 	    	{
-	    		return 500;
+		    	$resultado = File::delete($rutaImagen);    		
+
+		    	if(!$resultado)
+		    	{
+		    		return 500;
+		    	}
+	    	}
+
+	    	if(file_exists($rutaThumbnail))
+	    	{
+		    	$resultado = File::delete($rutaThumbnail);    			    		
+
+		    	if(!$resultado)
+		    	{
+		    		return 500;
+		    	}
 	    	}
 
 	    	$resultado = $incidente -> delete();
 
 	    	if($resultado)
 	    	{
-				return 200;	    		
+				return 204;	    		
 	    	}
 
 	    	return 500;	    
