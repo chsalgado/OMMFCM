@@ -1,7 +1,6 @@
 <?php
 	namespace services;
 	use Incidente;
-	use Request;
 	use Image;
 	use File;
 	use \Eventviva\ImageResize;
@@ -141,10 +140,8 @@
 			return 500;
 	    }
 
-	    public function getEspecies()
+	    public function getEspecies($pagina, $resultados)
 	    {
-	   		$pagina = Request::get('pagina');
-	   		$resultados = Request::get('resultados');
 	   		$especies = Especie::all();
 
 	   		// Validar que los dos parámetros de paginación fueron enviados, de lo contrario mandar todas las especies
