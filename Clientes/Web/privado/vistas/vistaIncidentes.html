@@ -1,63 +1,63 @@
 <div ng-init="actualizarPagina(1)">
-	<div class="row">
-		<div class="alert alert-danger fade in" ng-show="errores" ng-model="errores">{{mensaje}}</div>
-		<div class="alert alert-success fade in" ng-show="exito" ng-model="exito">{{mensaje}}</div>
-	</div>
-	<div class="row">
-		<div>
-			Mostrar: 
-			<select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
-			</select>
-			&nbsp incidentes
-		</div>
-		<div class="pull-right">
-			Filtrar por especie:
-			<select>
-				<option value="">Todas las especies</option>
-				<option ng-repeat="especie in especies" value="especie.idEspecie">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
-			</select> 
-		</div>
-	</div>
-	<hr/>
-	<div class="row">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Foto</th>
-					<th>Nombre común - científico</th>
-					<th>Ubicación</th>
-					<th>Km.</th>
-					<th>Fecha</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="incidente in incidentes">
-					<th></th>
-					<th>
-						<select>
-							<option ng-repeat="especie in especies" value="especie.idEspecie">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
-						</select> 
-						<a href="" class="btn btn-link"><i class="fa fa-plus fa-2x"></i></span></a>
-					</th>
-					<th> - </th>
-					<th>{{incidente.km}}</th>
-					<th>{{incidente.fecha}}</th>
-					<th><a ng-click="eliminarIncidente(incidente.idIncidente)" class="btn btn-link"><i class="fa fa-trash-o fa-2x"></i></a></th>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<div>
-			Mostrando {{desde}} al {{hasta}} de {{total}} incidentes
-		</div>
-		<div class="pull-right">
-			<a ng-click="actualizarPagina(1)" class="btn btn-link" ng-class="{ disabled: !regresar }"><i class="fa fa-angle-double-left fa-2x"></i></a>
-			<a ng-click="actualizarPagina(paginaActual - 1)" class="btn btn-link" ng-class="{ disabled: !regresar }"><i class="fa fa-angle-left fa-2x"></i></a>
-			<span class="numeroDePagina">{{paginaActual}}</span>
-			<a ng-click="actualizarPagina(paginaActual + 1)" class="btn btn-link" ng-class="{ disabled: !avanzar }"><i class="fa fa-angle-right fa-2x"></i></a>
-			<a ng-click="actualizarPagina(ultimaPagina)" class="btn btn-link" ng-class="{ disabled: !avanzar }"><i class="fa fa-angle-double-right fa-2x"></i></a>
-		</div>
-	</div>
+    <div class="row">
+        <div class="alert alert-danger fade in" ng-show="errores" ng-model="errores">{{mensaje}}</div>
+        <div class="alert alert-success fade in" ng-show="exito" ng-model="exito">{{mensaje}}</div>
+    </div>
+    <div class="row">
+        <div>
+            Mostrar: 
+            <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
+            </select>
+            &nbsp incidentes
+        </div>
+        <div class="pull-right">
+            Filtrar por especie:
+            <select>
+                <option value="">Todas las especies</option>
+                <option ng-repeat="especie in especies" value="especie.idEspecie">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
+            </select> 
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre común - científico</th>
+                    <th>Ubicación</th>
+                    <th>Km.</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="incidente in incidentes">
+                    <th></th>
+                    <th>
+                        <select ng-model="especieSeleccionada" ng-change="modificarIncidente(incidente.idIncidente, especieSeleccionada)">
+                            <option ng-repeat="especie in especies" value="{{especie.idEspecie}}">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
+                        </select> 
+                        <a href="" class="btn btn-link"><i class="fa fa-plus fa-2x"></i></span></a>
+                    </th>
+                    <th> - </th>
+                    <th>{{incidente.km}}</th>
+                    <th>{{incidente.fecha}}</th>
+                    <th><a ng-click="eliminarIncidente(incidente.idIncidente)" class="btn btn-link"><i class="fa fa-trash-o fa-2x"></i></a></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div>
+            Mostrando {{desde}} al {{hasta}} de {{total}} incidentes
+        </div>
+        <div class="pull-right">
+            <a ng-click="actualizarPagina(1)" class="btn btn-link" ng-class="{ disabled: !regresar }"><i class="fa fa-angle-double-left fa-2x"></i></a>
+            <a ng-click="actualizarPagina(paginaActual - 1)" class="btn btn-link" ng-class="{ disabled: !regresar }"><i class="fa fa-angle-left fa-2x"></i></a>
+            <span class="numeroDePagina">{{paginaActual}}</span>
+            <a ng-click="actualizarPagina(paginaActual + 1)" class="btn btn-link" ng-class="{ disabled: !avanzar }"><i class="fa fa-angle-right fa-2x"></i></a>
+            <a ng-click="actualizarPagina(ultimaPagina)" class="btn btn-link" ng-class="{ disabled: !avanzar }"><i class="fa fa-angle-double-right fa-2x"></i></a>
+        </div>
+    </div>
 </div>

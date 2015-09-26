@@ -2,19 +2,19 @@ var app=angular.module('appPrivada', ['ngRoute']);
 
 app.config(function($routeProvider, $httpProvider){
 
-	$routeProvider.when("/resumen", {
-		controller: "controladorDashboard",
-		templateUrl: "/vistas/vistaDashboard.html"
-	});
+    $routeProvider.when("/resumen", {
+        controller: "controladorDashboard",
+        templateUrl: "/vistas/vistaDashboard.html"
+    });
 
-	$routeProvider.when("/incidentes", {
-		controller: "controladorIncidentes",
-		templateUrl: "/vistas/vistaIncidentes.html"
-	});
+    $routeProvider.when("/incidentes", {
+        controller: "controladorIncidentes",
+        templateUrl: "/vistas/vistaIncidentes.html"
+    });
 
-	$routeProvider.otherwise({redirectTo: "/resumen"});
+    $routeProvider.otherwise({redirectTo: "/resumen"});
 
-	$httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
