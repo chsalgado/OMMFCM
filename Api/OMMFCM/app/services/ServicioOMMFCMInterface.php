@@ -7,7 +7,7 @@
 	    public function crearIncidente($incidente, $imagen64, $extensionImg);
 	    public function eliminarIncidente($id);
 	    public function modificarIncidente($incidente);
-	    public function getEspecies();
+	    public function getEspecies($pagina, $resultados);
 	    public function crearEspecie($especie);
 	    public function eliminarEspecie($id);
 	    public function modificarEspecie($especie);
