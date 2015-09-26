@@ -18,7 +18,18 @@ class IncidentesController extends \BaseController
 	 */
 	public function index()
 	{
-		$incidentes = $this->servicioOMMFCM->getIncidentes();
+		$pagina = Request::get('pagina');
+	   	$resultados = Request::get('resultados');
+	   	$idEspecie = Request::get('idEspecie');
+
+	   	if(!$idEspecie)	
+		{
+			$incidentes = $this->servicioOMMFCM->getIncidentes($pagina, $resultados);
+		}
+		else
+		{
+			$incidentes = $this->servicioOMMFCM->getIncidentesPorEspecie($idEspecie, $pagina, $resultados);	
+		}
 
 		return Response::json(array(
 			'error' => false,
