@@ -9,12 +9,18 @@
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
-		public function getIncidentes()
+		public function getIncidentes($pagina, $resultados)
 		{
-	   		$pagina = Request::get('pagina');
-	   		$resultados = Request::get('resultados');
-			Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
+	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
 	   		$incidentes = Incidente::paginate($resultados);
+
+	   		return $incidentes;
+	   	}
+
+	   	public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados)
+		{
+	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
+	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
