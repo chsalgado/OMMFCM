@@ -3,8 +3,9 @@
 class Estado extends Eloquent {
  
     protected $table = 'estados';
+    protected $primaryKey = 'id_estado';
 
     public function municipios(){
-    	return $this -> hasMany('Municipio');
+    	return $this -> hasMany('Municipio', 'estado');
     }
  }

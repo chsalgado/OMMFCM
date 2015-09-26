@@ -11,4 +11,6 @@
 	    public function crearEspecie($especie);
 	    public function eliminarEspecie($id);
 	    public function modificarEspecie($especie);
+	    public function getEstados();
+	    public function getMunicipiosPorEstado($idEstado);
 	}
