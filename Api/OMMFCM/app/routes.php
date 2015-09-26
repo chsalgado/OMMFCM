@@ -21,4 +21,6 @@ Route::group(array('prefix' => 'api/'), function()
 {
     Route::resource('incidentes', 'IncidentesController');
     Route::resource('especies', 'EspeciesController');
+    Route::resource('estados', 'EstadosController');
+    Route::resource('municipios', 'MunicipiosController');
 });

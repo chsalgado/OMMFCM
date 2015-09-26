@@ -5,6 +5,7 @@
 	use File;
 	use \Eventviva\ImageResize;
 	use Especie;
+	use Estado;
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -202,4 +203,18 @@
 
 	    	return 500;
 	    }
+
+	    public function getEstados()
+		{
+	   		$estados = Estado::all();
+
+	   		return $estados;
+	   	}
+
+	    public function getMunicipiosPorEstado($idEstado)
+	   	{
+	   		$municipios = Estado::find($idEstado) -> municipios;
+
+	   		return $municipios;
+	   	}
 	}

@@ -10,7 +10,6 @@ class IncidentesController extends \BaseController
         $this->servicioOMMFCM = $servicioOMMFCM; 
      }
 
-
 	/**
 	 * Display a listing of the resource.
 	 *
