@@ -21,7 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
 
-public class ActividadFormulario extends ActionBarActivity implements
+public class ActividadFormulario extends AppCompatActivity implements
         ConnectionCallbacks, OnConnectionFailedListener {
     private static final int RESULT_LOAD = 1;
     private AlertDialog alert = null;
