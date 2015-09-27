@@ -1,7 +1,7 @@
 <div ng-init="actualizarPagina(1)">
     <div class="row">
-        <div class="alert alert-danger fade in" ng-show="errores" ng-model="errores">{{mensaje}}</div>
-        <div class="alert alert-success fade in" ng-show="exito" ng-model="exito">{{mensaje}}</div>
+        <div class="alert alert-danger fade in" ng-show="errores">{{mensaje}}</div>
+        <div class="alert alert-success fade in" ng-show="exito">{{mensaje}}</div>
     </div>
     <div class="row">
         <div>
@@ -35,13 +35,12 @@
                 <tr ng-repeat="incidente in incidentes">
                     <th></th>
                     <th>
-                        <select ng-model="especieSeleccionada" ng-change="modificarIncidente(incidente.idIncidente, especieSeleccionada)">
-                            <option ng-repeat="especie in especies" value="{{especie.idEspecie}}">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
+                        <select ng-model="incidente.idEspecie" ng-change="modificarIncidente(incidente.idIncidente, incidente.idEspecie)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies'>
                         </select> 
                         <a href="" class="btn btn-link"><i class="fa fa-plus fa-2x"></i></span></a>
                     </th>
                     <th> - </th>
-                    <th>{{incidente.km}}</th>
+                    <th>{{incidente.idEspecie}}</th>
                     <th>{{incidente.fecha}}</th>
                     <th><a ng-click="eliminarIncidente(incidente.idIncidente)" class="btn btn-link"><i class="fa fa-trash-o fa-2x"></i></a></th>
                 </tr>
