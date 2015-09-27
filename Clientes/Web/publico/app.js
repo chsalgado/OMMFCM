@@ -15,6 +15,18 @@ app.config(function ($routeProvider) {
         controller: "",
         templateUrl: "/vistas/vistaReportar.html"
     });
+    
+    $routeProvider.when("/reportaralt", {
+        controller: "",
+        templateUrl: "/vistas/vistaReportarAlt.html"
+    });
+
 
     $routeProvider.otherwise({ redirectTo: "/inicio" });
 });
+
+var serviceBase = 'http://localhost:8000/';
+app.constant({
+    apiServiceBaseUri: serviceBase,
+});
+
