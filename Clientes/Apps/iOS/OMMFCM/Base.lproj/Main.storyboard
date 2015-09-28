@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <scenes>
+        <!--Selecciona una Foto-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OMMFCM" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWU-md-2LM">
+                                <rect key="frame" x="209" y="402" width="183" height="30"/>
+                                <state key="normal" title="Seleccionar foto de galeria"/>
+                                <connections>
+                                    <action selector="botonSeleccionaFoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w4s-NH-UvS"/>
+                                    <segue destination="TAi-1z-2bJ" kind="presentation" identifier="verificarDatos" modalTransitionStyle="crossDissolve" id="45Y-GJ-IlL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZyI-wD-7UQ">
+                                <rect key="frame" x="261" y="285" width="78" height="30"/>
+                                <state key="normal" title="Tomar Foto"/>
+                                <connections>
+                                    <action selector="botonTomarFoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O50-GU-J54"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CWU-md-2LM" firstAttribute="top" secondItem="ZyI-wD-7UQ" secondAttribute="bottom" constant="87" id="RrH-lM-hnJ"/>
+                            <constraint firstItem="CWU-md-2LM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="T21-Wh-geT"/>
+                            <constraint firstItem="ZyI-wD-7UQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gmw-ia-cwQ"/>
+                            <constraint firstItem="ZyI-wD-7UQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kBQ-QE-WQR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Selecciona una Foto" id="geU-Ox-zYk"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1252" y="429"/>
+        </scene>
+        <!--Verifica tus datos-->
+        <scene sceneID="DWp-i5-OfI">
+            <objects>
+                <viewController id="TAi-1z-2bJ" customClass="MandarViewController" customModule="OMMFCM" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hvp-VA-ADw"/>
+                        <viewControllerLayoutGuide type="bottom" id="35x-Vn-zJv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="su4-FK-Rty">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KGc-JH-iUo">
+                                <rect key="frame" x="274" y="444" width="52" height="30"/>
+                                <state key="normal" title="Mandar"/>
+                                <connections>
+                                    <action selector="botonMandarFoto:" destination="TAi-1z-2bJ" eventType="touchUpInside" id="imt-Be-PT2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqy-1l-hJe">
+                                <rect key="frame" x="265" y="501" width="71" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="71" id="6gX-yJ-sRo"/>
+                                </constraints>
+                                <state key="normal" title="Regresar"/>
+                                <connections>
+                                    <segue destination="7hJ-7W-Ucw" kind="unwind" identifier="regresa" unwindAction="regresaAPrincipal:" id="ssZ-JQ-FvZ"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j9T-TM-2pw">
+                                <rect key="frame" x="167" y="75" width="267" height="307"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="307" id="K1c-Kx-Nag"/>
+                                    <constraint firstAttribute="width" constant="267" id="tQB-fk-NbZ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yqy-1l-hJe" firstAttribute="top" secondItem="KGc-JH-iUo" secondAttribute="bottom" constant="27" id="2rl-7a-pwc"/>
+                            <constraint firstItem="KGc-JH-iUo" firstAttribute="centerX" secondItem="su4-FK-Rty" secondAttribute="centerX" id="Bbw-9I-tgn"/>
+                            <constraint firstItem="35x-Vn-zJv" firstAttribute="top" secondItem="yqy-1l-hJe" secondAttribute="bottom" constant="69" id="Ben-PG-wYH"/>
+                            <constraint firstItem="KGc-JH-iUo" firstAttribute="top" secondItem="j9T-TM-2pw" secondAttribute="bottom" constant="62" id="Lzr-bP-S4o"/>
+                            <constraint firstItem="yqy-1l-hJe" firstAttribute="centerX" secondItem="KGc-JH-iUo" secondAttribute="centerX" id="QSg-Fn-hc0"/>
+                            <constraint firstItem="j9T-TM-2pw" firstAttribute="centerX" secondItem="su4-FK-Rty" secondAttribute="centerX" id="tFw-27-mgz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Verifica tus datos" id="Jdz-1t-gK6">
+                        <barButtonItem key="backBarButtonItem" title="Regresar" id="wrX-dZ-YUO"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="imagen" destination="j9T-TM-2pw" id="Q3x-cv-efw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wxT-ey-DJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="7hJ-7W-Ucw" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2018" y="429"/>
+        </scene>
+    </scenes>
+</document>
