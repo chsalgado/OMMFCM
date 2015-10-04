@@ -1,7 +1,15 @@
 package com.example.george.ommfcm;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -10,128 +18,276 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActividadPrincipal extends AppCompatActivity {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
-    private static final int RESULT_LOAD = 1;
-    private static boolean tieneCoordenadas = true;
+import java.io.IOException;
+
+public class ActividadPrincipal extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+
+    private static final int GALLERY_REQUEST = 1; // Codigo para identificar la llamada a la aplicación de galeria
+    private static final int CAM_REQUEST = 2; // Codigo para identificar la llamada a la aplicacion de la camara
+    private double latitud = 0; // Variable para guardar latitud
+    private double longitud = 0; // Variable para guardar longitud
     private String rutaImagen;
 
+    protected GoogleApiClient mGoogleApiClient;
+
+    protected Location mLastLocation;
+
+    /**
+     * Metodo que se llama cuando se crea la vista por primera vez
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actividad_principal);
+        setContentView(R.layout.activity_actividad_principal); // Cargar layout
+
+        crearClienteLocalizacion(); // Crear cliente para localizacion
+
+        if(!gpsEstaActivado())
+            solicitarActivacionGPS(); // Pedir al usuario la activacion del gps en caso de que se encuentre apagado
     }
 
+    /**
+     * Metodo que se llama cada vez que la vista se hace visible para el usuario
+     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_actividad_principal, menu);
-        return true;
+    protected void onStart() {
+        super.onStart();
+
+        if(gpsEstaActivado()) // Comprueba si el gps del dispositivo se encuentra activado
+            mGoogleApiClient.connect(); // Conecta con el servicio de ubicación de Google
     }
 
+    /**
+     * Metodo que se llama al cambiar a una nueva vista o al cerrar la aplicación
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect(); // Detiene la conexión con el servicio de Google
+        }
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    /**
+     * Una vez que se conectó con los servicios de ubicación de google, obtiene las coordenadas de la posición actual
+     *
+     * @param connectionHint
+     */
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient); // Obtiene la última localización conocida del dispositivo
+        if (mLastLocation != null) {
+            this.latitud = mLastLocation.getLatitude(); // Asignar latitud a variable de clase
+            this.longitud = mLastLocation.getLongitude(); // Asignar longitud a variable de clase
+            Log.d("ActividadPrincipal", String.valueOf(mLastLocation.getLatitude()) + " - " + mLastLocation.getLongitude());
+        } else {
+            Log.d("ActividadPrincipal", "No se detectaron coordenadas");
+        }
+    }
+
+    /**
+     * Mensaje de error en caso de que la conexión falle
+     *
+     * @param result
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.d("ActividadPrincipal", "No se pudieron obtener las coordenadas");
+    }
+
+    /**
+     * Mensaje de alerta en caso de que la conexión se haya suspendido
+     *
+     * @param cause
+     */
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Log.d("ActividadPrincipal", "Conexión suspendida");
+        //mGoogleApiClient.connect();
+    }
+
+    /**
+     * Metodo que verifica si el servicio de gps se encuentra activado en el telefono
+     *
+     * @return true si el gps esta activado, false en caso contrario
+     */
+    private boolean gpsEstaActivado(){
+        LocationManager locationManager;
+        String context = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager)getSystemService(context); // Obtener el servicio de localizacion
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER); // Verifica si el servicio de localizacion esa disponible
+    }
+
+    /**
+     * Metodo que crea un nuevo cliente para utilizar los servicios de Google
+     */
+    protected synchronized void crearClienteLocalizacion() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
+                .addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    /**
+     * Metodo que muestra una alerta solicitando la activacion del servicio de ubicación
+     */
+    private void solicitarActivacionGPS() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Construye la alerta. Se coloca mensaje, botón para confirmación, y cancelación.
+        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = builder.create(); // Crear alerta
+        alert.show(); // Mostrar alerta
+    }
+
+    /**
+     * Metodo que llama a la aplicacion de camara del dispositivo para tomar foto
+     *
+     * @param view Vista donde se va ejecutar este metodo, parametro por defecto que permite
+     *             al metodo ser invocado por un boton en el archivo de layout
+     */
+    public void tomar_foto(View view){
+        Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // Crear nueva accion para ejecutar la aplicacion de camara
+        startActivityForResult(intentCamara, CAM_REQUEST); // Inicia la aplicación de camara
+    }
+
+    /**
+     * Metodo que llama a la aplicacion de galeria del dispositivo para seleccionar una foto
+     *
+     * @param view Vista donde se va a ejecutar este metodo
+     */
+    public void escoger_foto_galeria(View view){
+        Intent intentGaleria = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI); // Se crea el intent para abrir la aplicación de galería
+        startActivityForResult(intentGaleria, GALLERY_REQUEST); // Inicia la aplicación de galeria
+    }
+
+    /**
+     * Metodo que verifica si una foto tiene coordenadas guardadas en su metadata
+     *
+     * @param rutaImagen
+     * @return true si la imagen tiene coordenadas, false en caso contrario
+     */
+    private boolean tieneCoordenadasImagen(String rutaImagen){
+        try {
+            float[] coordenadas = new float[2]; // Variable para guardar las coordenadas de la imagen
+            ExifInterface exifInterface = new ExifInterface(rutaImagen); // Crear objeto para leer metadata de imagen
+            if(exifInterface.getLatLong(coordenadas)) {
+                this.latitud = (double) coordenadas[0];
+                this.longitud = (double) coordenadas[1];
+                return true;
+            }
+        } catch (IOException e) {
+            Toast.makeText(ActividadPrincipal.this,
+                    e.toString(),
+                    Toast.LENGTH_LONG).show(); // Mostrar mensaje en caso de error
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
-    public void tomar_foto(View view){
-
+    /**
+     * Metodo que obtiene la ruta absoluta de una imagen
+     *
+     * @param imagenSeleccionada Uri de la imagen
+     * @return string con la ruta absoluta de la imagen
+     */
+    public String obtenerRutaRealUri(Uri imagenSeleccionada){
+        try {
+            String[] informacion_imagen = {MediaStore.Images.Media.DATA}; // Obtener la metadata de todas las imagenes guardadas en el dispositivo
+            Cursor cursor = getContentResolver().query(imagenSeleccionada, informacion_imagen, null, null, null); // Buscar la imagen que coincide con el Uri dado
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);  // Buscar la columna de url de imagen
+            cursor.moveToFirst(); // Ir al primer elemento
+            return cursor.getString(column_index); // Regresar ruta real
+        } catch (Exception e) {
+            return imagenSeleccionada.getPath(); // Regresar ruta decodificada
+        }
     }
 
-    public void escoger_foto_galeria(View view){
-        // Crear intent para abrir la aplicación de galería
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // Empezar intent
-        startActivityForResult(galleryIntent, RESULT_LOAD);
+    /**
+     * Metodo que inicia la vista 'VistaPrevia'
+     */
+    private void iniciarVistaPrevia() {
+        Intent intentVistaPrevia = new Intent(ActividadPrincipal.this, ActividadVistaPrevia.class); // Crear llamada para cambio de vista a 'VistaPrevia'
+        intentVistaPrevia.putExtra("ruta_imagen", this.rutaImagen); // Agregar ruta de imagen a la llamada
+        intentVistaPrevia.putExtra("latitud", this.latitud);
+        intentVistaPrevia.putExtra("longitud", this.longitud);
+        startActivity(intentVistaPrevia); // Iniciar el cambio de actividad
     }
 
+    /**
+     * Metodo que inicia la vista 'IniciarFormulario'
+     */
+    private void iniciarFormulario() {
+        Intent intentFormulario = new Intent(ActividadPrincipal.this, ActividadFormulario.class); // Crear llamada para cambio de vista a 'Formulario'
+        intentFormulario.putExtra("ruta_imagen", this.rutaImagen); // Agregar ruta de la imagen a la llamada
+        startActivity(intentFormulario); // Empezar actividad
+    }
+
+    /**
+     * Metodo que recibe el resultado de la accion de tomar foto de la camara o escoger foto de la galeria
+     *
+     * @param requestCode codigo de la accion
+     * @param resultCode codigo con resultado de la accion, para saber si fue exitosa
+     * @param data informacion que regresa la accion
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            // Si la imagen se escoge de la galeria
-            if (requestCode == RESULT_LOAD && resultCode == RESULT_OK && null != data) {
 
-                // Obtener la información de la imagen
-                Uri selectedImage = data.getData();
-                String[] informacion_imagen = { MediaStore.Images.Media.DATA };
+            if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) { // Caso en el que la imagen se escoge de la galeria
+                Uri imagenSeleccionada = data.getData(); // Obtener la información de la imagen
+                this.rutaImagen = obtenerRutaRealUri(imagenSeleccionada); // Obtener ruta real de la imagen
 
-                // Obtener el cursor
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        informacion_imagen, null, null, null);
-                // Moverse al primer elemento
-                cursor.moveToFirst();
+                if (tieneCoordenadasImagen(rutaImagen))
+                    iniciarVistaPrevia(); // Si la imagen tiene coordenadas ir a 'VistaPrevia'
+                else
+                    iniciarFormulario(); // En caso de que no existan coordenadas ir a vista 'Formulario'
 
-                int indice_columna = cursor.getColumnIndex(informacion_imagen[0]);
-                rutaImagen = cursor.getString(indice_columna);
-                cursor.close();
-                if (tieneCoordenadas) {
-                    iniciarVistaPrevia();
-                }else{
-                    iniciarFormulario();
-                }
-            } else {
-                Toast.makeText(this, "Hey pick your image first",
-                        Toast.LENGTH_LONG).show();
+            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK ){ // Caso en que la imagen se tomo de la camara
+
+                Uri fotoCapturada = data.getData(); // Obtener informacion de la imagen
+                this.rutaImagen = obtenerRutaRealUri(fotoCapturada); // Obtener ruta real de la imagen
+
+                if (this.longitud != 0.0 && this.latitud != 0.0)
+                    iniciarVistaPrevia(); // Si se pudieron obtener las coordenadas ir a 'VistaPrevia'
+                else
+                    iniciarFormulario(); // En caso de que no se puedan obtener las coordeandas ir a vista 'Formulario'
+
+            }else {
+
+                Toast.makeText(this, "Favor de escoger una imagen",
+                        Toast.LENGTH_LONG).show(); // Mostrar mensaje de error
+                Log.d("ActividadPrincipal", "resultCode= " + resultCode );
             }
+
         } catch (Exception e) {
-            Toast.makeText(this, "Something went embrassing", Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(this, "Error en la aplicación, favor de intentar de nuevo", Toast.LENGTH_LONG)
+                    .show(); // Mostrar mensaje de error
+            Log.d("ActividadPrincipal", "Error: " + e.toString());
         }
 
-    }
-
-    private void iniciarVistaPrevia() {
-        Intent intentVistaPrevia = new Intent(ActividadPrincipal.this, ActividadVistaPrevia.class);
-        intentVistaPrevia.putExtra("ruta_imagen", rutaImagen);
-        // intentVistaPrevia.putExtra("latitud", coord.getLatitud());
-        // intentVistaPrevia.putExtra("longitud", coord.getLongitud());
-        startActivity(intentVistaPrevia);
-    }
-
-    private void iniciarFormulario() {
-        Intent intentFormulario = new Intent(ActividadPrincipal.this, ActividadFormulario.class);
-        intentFormulario.putExtra("ruta_imagen", rutaImagen);
-        startActivity(intentFormulario);
-    }
-
-
-    public Coordenadas obtener_coordenadas_actuales(){
-        return null;
-    }
-
-    public Coordenadas obtener_coordenadas_foto(){
-        return null;
-    }
-
-    private class Coordenadas{
-        private int latitud;
-        private int longitud;
-
-        Coordenadas(int lat, int lon){
-            this.latitud = lat;
-            this.longitud = lon;
-        }
-
-        public int getLatitude(){
-            return this.latitud;
-        }
-
-        public int getLongitude(){
-            return this.longitud;
-        }
     }
 }

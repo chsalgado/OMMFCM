@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/btn_tomar_foto"/>
+        android:text="@string/btn_tomar_foto"
+        android:onClick="tomar_foto"/>
 
     <Button
         android:id="@+id/btn_escoger_imagen"
