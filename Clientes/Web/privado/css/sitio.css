@@ -1,3 +1,7 @@
 .numeroDePagina{
     font-size: large;
 }
+
+select.especie{
+	width: auto;
+}
