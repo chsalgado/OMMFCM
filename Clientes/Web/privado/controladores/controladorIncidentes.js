@@ -47,18 +47,19 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     }
 
     $scope.eliminarIncidente = function(id){
-        servicioIncidentes.eliminarIncidente(id).then(function(resultado){
-            $scope.actualizarPagina($scope.paginaActual);
-            $scope.mensaje = 'El incidente ha sido eliminado';
-            $scope.exito = true;
-        }, function(resultado){
-            $scope.mensaje = 'El incidente no fue eliminado. Intentelo más tarde';
-            $scope.errores = true;
-        });
-        $timeout($scope.ocultarMensaje, 3000);
+        if(confirm('¿Estás seguro que quieres eliminar este incidente?')){
+            servicioIncidentes.eliminarIncidente(id).then(function(resultado){
+                $scope.actualizarPagina($scope.paginaActual);
+                $scope.mensaje = 'El incidente ha sido eliminado';
+                $scope.exito = true;
+            }, function(resultado){
+                $scope.mensaje = 'El incidente no fue eliminado. Intentelo más tarde';
+                $scope.errores = true;
+            });
+            $timeout($scope.ocultarMensaje, 3000);
+        }
     }
 
-    // TODO
     $scope.modificarIncidente = function(idIncidente, idEspecie){
         servicioIncidentes.modificarIncidente(idIncidente, idEspecie).then(function(resultado){
             $scope.actualizarPagina($scope.paginaActual);
@@ -69,9 +70,5 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
             $scope.errores = true;
         });
         $timeout($scope.ocultarMensaje, 3000);
-    }
-
-    $scope.prueba = function(ms){
-        console.log(ms);
     }
 }]);
