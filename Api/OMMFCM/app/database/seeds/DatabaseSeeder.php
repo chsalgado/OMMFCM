@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
 			$idEspecie = rand(1,9);
 			$fecha = rand(2010,2015).'-0'.rand(1,9).'-'.rand(10,30).' '.rand(10,24).':00:00';
 			$rutaFoto = 'fotos/foto_'.$i.'.jpg';
+			$rutaThumbnail = 'fotos/thumbnail_'.$i.'.jpg';
 			$long = '100'.rand(10000000,14444444);
 			$lat = rand(20,22).rand(10000000,99999999);
 			$mpioOrigen = rand(1,2577);
@@ -57,6 +58,7 @@ class DatabaseSeeder extends Seeder
 			  'idEspecie' => $idEspecie,
 			  'fecha' => $fecha,
 			  'rutaFoto' => $rutaFoto,
+			  'rutaThumbnail' => $rutaThumbnail,
 			  'long'	=>	$long,
 			  'lat'	=> $lat,
 			  'mpioOrigen'	=> $mpioOrigen,
