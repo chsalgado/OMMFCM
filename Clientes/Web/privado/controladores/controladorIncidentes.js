@@ -1,11 +1,6 @@
 'use strict';
 app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, servicioIncidentes, servicioEspecies){
 
-    // Inicializar especies
-    servicioEspecies.obtenerEspecies().then(function(resultados){
-        $scope.especies = resultados;
-    });
-
     // Lista de incidentes
     $scope.incidentes = [];
 
@@ -22,6 +17,12 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     $scope.ocultarMensaje = function(){
         $scope.exito = false;
         $scope.errores = false;
+    }
+
+    $scope.obtenerEspecies = function(){
+        servicioEspecies.obtenerEspecies().then(function(resultados){
+            $scope.especies = resultados;
+        });        
     }
 
     $scope.actualizarPagina = function(pagina){
