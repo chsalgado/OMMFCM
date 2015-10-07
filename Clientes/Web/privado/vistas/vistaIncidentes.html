@@ -33,7 +33,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="incidente in incidentes">
-                    <th><img ng-src="{{incidente.rutaThumbnail}}"></th>
+                    <th><img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (incidente.rutaThumbnail).split('imagenes')[1] }}"></th>
                     <th>
                         <select ng-model="incidente.idEspecie" ng-change="modificarIncidente(incidente.idIncidente, incidente.idEspecie)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
                         </select> 
