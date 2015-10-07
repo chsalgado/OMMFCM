@@ -2,7 +2,7 @@
 describe('controlador incidentes', function(){
     var $scope, $timeout, exito;
 
-    var mockControladorIncidentes, mockServicioIncidentes, mockServicioEspecies;
+    var controladorIncidentes, mockServicioIncidentes, mockServicioEspecies;
 
     var cambiarExito = function(valExito){
         exito = valExito;
@@ -62,8 +62,8 @@ describe('controlador incidentes', function(){
                 return ($q.reject());
             });
 
-            // Mock del controlador
-            mockControladorIncidentes = $controller('controladorIncidentes',{
+            // Controlador
+            controladorIncidentes = $controller('controladorIncidentes',{
                 $scope: $scope,
                 servicioIncidentes: mockServicioIncidentes,
                 servicioEspecies: mockServicioEspecies
