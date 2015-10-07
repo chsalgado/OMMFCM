@@ -10,13 +10,16 @@ import UIKit
 
 class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate
 {
-    var estados: [String: String]! // De memoria
+    var estados: [String: String]!                  // De memoria
     var estadosMunicipios: [String: NSDictionary]!  // De memoria
     
     // Info actual mostrandose en seleccion
     var informacionSelectorMunicipiosOrigen: [[String: String]] = [[:]]
     var informacionSelectorMunicipiosDestino: [[String: String]] = [[:]]
     var informacionSelectorEstados: [[String: String]]  = [[:]]
+    
+    var nombreOrigen: String?
+    var nombreDestino: String?
     
     @IBOutlet weak var selectorOrigen: UIPickerView!
     @IBOutlet weak var selectorDestino: UIPickerView!
@@ -26,7 +29,7 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBAction func cambiarKilometro(sender: UIStepper)
     {
         let km = Int(sender.value).description
-        kilometro.text = km
+        self.kilometro?.text = km
         Datos.kilometros = km
     }
     
@@ -37,7 +40,7 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
     {
         super.viewDidLoad()
         
-        self.cargaPrimerosEstadosMunicipiosDeMemoria()
+        //self.cargaPrimerosEstadosMunicipiosDeMemoria() // CargaMemoria
         self.actualizaEstados()
         
         self.selectorOrigen.delegate = self
@@ -49,7 +52,8 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
     func actualizaEstados()
     {
         // URL del servicio y objeto sesion
-        let url = NSURL(string: "http://jorgegonzac-001-site1.hostbuddy.com/public_html/index.php/api/estados")
+        let urlServicio = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/estados"
+        let url = NSURL(string: urlServicio)
         let sesion = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
         // solicitud
@@ -61,7 +65,6 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                 let result = try? NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
                 if (resp as! NSHTTPURLResponse).statusCode == 200
                 {
-                    print("correcto")
                     let res = result as! Dictionary<String, AnyObject>
                     if let estados = res["estados"] as? [Dictionary<String, AnyObject>]
                     {
@@ -80,14 +83,15 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                         }
                     }
                     self.informacionSelectorEstados.removeFirst()
-                    self.selectorOrigen.reloadComponent(0)
-                    self.selectorDestino.reloadComponent(0)
+                    self.performBlock({
+                        self.selectorOrigen.reloadComponent(0)
+                        self.selectorDestino.reloadComponent(0)
+                        }, afterDelay: 0.1)
                     self.actualizaMunicipios(self.informacionSelectorEstados.first!["idEstado"]!)
                 }
                 else if (resp as! NSHTTPURLResponse).statusCode == 500
                 {
                     print("error estados")
-                    self.actualizaEstados()
                 }
         }).resume()
     }
@@ -95,7 +99,7 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
     func actualizaMunicipios(estado: String, selector: Int? = nil)
     {
         // URL del servicio y objeto sesion
-        let url = NSURL(string: "http://jorgegonzac-001-site1.hostbuddy.com/public_html/index.php/api/municipios?estado=" + estado)
+        let url = NSURL(string: "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/municipios?estado=" + estado)
         let sesion = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
         // solicitud
@@ -127,12 +131,16 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                                 self.informacionSelectorMunicipiosOrigen.append(infoMunicipios)
                             }
                             self.informacionSelectorMunicipiosOrigen.removeFirst()
-                            self.selectorOrigen.reloadComponent(1)
+                            self.performBlock({
+                                self.selectorOrigen.reloadComponent(1)
+                                self.selectorOrigen.selectRow(0, inComponent: 1, animated: true)
+                                self.pickerView(self.selectorOrigen, didSelectRow: 0, inComponent: 1)
+                                }, afterDelay: 0.1)
                         }
                     }
                     else if (resp as! NSHTTPURLResponse).statusCode == 500
                     {
-                        self.actualizaMunicipios(estado, selector: selector)
+                        print("error municipios 0")
                     }
             }).resume()
         }
@@ -156,36 +164,42 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                                 self.informacionSelectorMunicipiosDestino.append(infoMunicipios)
                             }
                             self.informacionSelectorMunicipiosDestino.removeFirst()
-                            self.selectorDestino.reloadComponent(1)
+                            self.performBlock({
+                                self.selectorDestino.reloadComponent(1)
+                                self.selectorDestino.selectRow(0, inComponent: 1, animated: true)
+                                self.pickerView(self.selectorDestino, didSelectRow: 0, inComponent: 1)
+                                }, afterDelay: 0.1)
                         }
                     }
                     else if (resp as! NSHTTPURLResponse).statusCode == 500
                     {
-                        self.actualizaMunicipios(estado, selector: selector)
+                        print("error municipios 1")
                     }
             }).resume()
         }
     }
     
     // Funciones de DataSource delegate
+    // Cuantos compomentes tiene, estados y municipios
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
     {
         return 2
     }
     
+    // Cuandos elementos tiene el componente
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
-        if component == 0
+        if component == 0   // Estados
         {
             return self.informacionSelectorEstados.count
         }
         else
         {
-            if pickerView.tag == 0
+            if pickerView.tag == 0  // Municipios Origen
             {
                 return self.informacionSelectorMunicipiosOrigen.count
             }
-            else
+            else    // Municipios destino
             {
                 return self.informacionSelectorMunicipiosDestino.count
             }
@@ -193,12 +207,14 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     // Funciones de Picker delegate
+    // Se llama a este metodo cuando se selecciono un elemento
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         if component == 0
         {
             let idEstado = self.informacionSelectorEstados[row]["idEstado"]
             self.actualizaMunicipios(idEstado!, selector: pickerView.tag)
+            //self.actualizaMunicipiosDeMemoria(idEstado!, selector: pickerView.tag)    //CargaMemoria
         }
         else
         {
@@ -206,15 +222,20 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
             {
                 Datos.municipioOrigen = self.informacionSelectorMunicipiosOrigen[row]["idMunicipio"]
                 Datos.municipioOrigenTexto = self.informacionSelectorMunicipiosOrigen[row]["municipio"]
+                let estado = self.informacionSelectorEstados[self.selectorOrigen.selectedRowInComponent(0)]["estado"]
+                self.nombreOrigen = Datos.municipioOrigenTexto! + " " + estado!
             }
             else
             {
                 Datos.municipioDestino = self.informacionSelectorMunicipiosDestino[row]["idMunicipio"]
                 Datos.municipioDestinoTexto = self.informacionSelectorMunicipiosDestino[row]["municipio"]
+                let estado = self.informacionSelectorEstados[self.selectorDestino.selectedRowInComponent(0)]["estado"]
+                self.nombreDestino = Datos.municipioDestinoTexto! + " " + estado!
             }
         }
     }
     
+    // Muestra la informacion en el elemento, actualiza el que se selecciono
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
     {
         var pickerLabel = view as? UILabel
@@ -316,7 +337,7 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                 self.informacionSelectorMunicipiosOrigen.append(infoMunicipios)
             }
             self.informacionSelectorMunicipiosOrigen.removeFirst()
-            self.selectorOrigen.reloadComponent(1)
+            self.selectorOrigen?.reloadComponent(1)
         }
         else if selector == 1
         {
@@ -333,7 +354,19 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                 self.informacionSelectorMunicipiosDestino.append(infoMunicipios)
             }
             self.informacionSelectorMunicipiosDestino.removeFirst()
-            self.selectorDestino.reloadComponent(1)
+            self.selectorDestino?.reloadComponent(1)
         }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "verMapa" {
+            let controladorDestino = segue.destinationViewController as! MapaViewController
+            controladorDestino.nombreOrigen = self.nombreOrigen
+            controladorDestino.nombreDestino = self.nombreDestino
+        }
+    }
+    
+    func performBlock(block:() -> Void, afterDelay delay:NSTimeInterval){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), block)
     }
 }
