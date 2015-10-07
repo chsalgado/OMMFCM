@@ -8,12 +8,37 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class MapaViewController: UIViewController
+class MapaViewController: UIViewController, MKMapViewDelegate
 {
     @IBOutlet weak var mapa: MKMapView!
     
     var ubicacion: MKPointAnnotation?
+    var municipioOrigen: CLPlacemark? = nil
+    {
+        didSet
+        {
+            if self.municipioOrigen != nil && self.municipioDestino != nil
+            {
+                self.trazaRuta()
+            }
+        }
+    }
+    var municipioDestino: CLPlacemark? = nil
+    {
+        didSet
+        {
+            if self.municipioDestino != nil && self.municipioOrigen != nil
+            {
+                self.trazaRuta()
+            }
+        }
+    }
+    var ruta: MKRoute?
+    
+    var nombreOrigen: String?
+    var nombreDestino: String?
     
     @IBAction func tocoUbicacion(sender: UITapGestureRecognizer)
     {
@@ -45,16 +70,91 @@ class MapaViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.mapa.delegate = self
         if Datos.longitud != nil
         {
             self.inicializaAnotacion()
             self.ubicacion!.coordinate.latitude = Datos.latitud!
             self.ubicacion!.coordinate.longitude = Datos.longitud!
         }
+        self.localizarPuntos()
     }
     
     override func prefersStatusBarHidden() -> Bool
     {
         return true
+    }
+    
+    func localizarPuntos()
+    {
+        if self.nombreOrigen != nil
+        {
+            let geocoderOrigen = CLGeocoder()
+            let textoOrigen = self.nombreOrigen! + " méxico"
+            geocoderOrigen.geocodeAddressString(textoOrigen, completionHandler: {(placemark: [CLPlacemark]?, error: NSError?) in
+                if (error != nil)
+                {
+                    print(error)
+                }
+                else
+                {
+                    self.municipioOrigen = placemark?.last
+                }
+            })
+        }
+        
+        if self.nombreDestino != nil
+        {
+            let geocoderDestino = CLGeocoder()
+            let textoDestino = self.nombreDestino! + " méxico"
+            geocoderDestino.geocodeAddressString(textoDestino, completionHandler: {(placemark: [CLPlacemark]?, error: NSError?) in if (error != nil)
+            {
+                print(error)
+            }
+            else
+            {
+                self.municipioDestino = placemark?.last
+                }
+            })
+        }
+    }
+    
+    func trazaRuta()
+    {
+        let inicio = MKMapItem(placemark: MKPlacemark(placemark: self.municipioOrigen!))
+        let fin = MKMapItem(placemark: MKPlacemark(placemark: self.municipioDestino!))
+        let request = MKDirectionsRequest()
+        request.source = inicio
+        request.destination = fin
+        request.transportType = .Automobile
+        
+        let directions = MKDirections(request: request)
+        directions.calculateDirectionsWithCompletionHandler({(response: MKDirectionsResponse?, error: NSError?) in
+            if (error != nil)
+            {
+                print(error)
+            }
+            else
+            {
+                if let rutaTrazada: MKRoute = response?.routes[0]
+                {
+                    self.ruta = rutaTrazada
+                    self.mapa?.addOverlay(rutaTrazada.polyline)
+                    let anIn = MKPointAnnotation()
+                    anIn.coordinate = (self.municipioOrigen?.location?.coordinate)!
+                    let anFin = MKPointAnnotation()
+                    anFin.coordinate = (self.municipioDestino?.location?.coordinate)!
+                    self.mapa?.showAnnotations([anIn, anFin], animated: true)
+                }
+            }
+        })
+    }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
+    {
+        let myLineRenderer = MKPolylineRenderer(polyline: (self.ruta?.polyline)!)
+        myLineRenderer.strokeColor = UIColor.greenColor()
+        myLineRenderer.lineWidth = 3
+        return myLineRenderer
     }
 }
