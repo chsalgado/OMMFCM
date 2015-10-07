@@ -36,9 +36,9 @@ public class ActividadPrincipal extends AppCompatActivity implements
     private double longitud = 0; // Variable para guardar longitud
     private String rutaImagen;
 
-    protected GoogleApiClient mGoogleApiClient;
+    public GoogleApiClient mGoogleApiClient;
 
-    protected Location mLastLocation;
+    public Location mLastLocation;
 
     /**
      * Metodo que se llama cuando se crea la vista por primera vez
@@ -130,35 +130,46 @@ public class ActividadPrincipal extends AppCompatActivity implements
     /**
      * Metodo que crea un nuevo cliente para utilizar los servicios de Google
      */
-    protected synchronized void crearClienteLocalizacion() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
-                .addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this)
-                .addApi(LocationServices.API)
-                .build();
+    public synchronized void crearClienteLocalizacion() {
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
+                    .addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this)
+                    .addApi(LocationServices.API)
+                    .build();
+        } catch(NullPointerException npe) {
+            throw new NullPointerException();
+        } catch(IllegalStateException ise) {
+            throw new IllegalStateException();
+        }
     }
 
     /**
      * Metodo que muestra una alerta solicitando la activacion del servicio de ubicación
      */
-    private void solicitarActivacionGPS() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //Construye la alerta. Se coloca mensaje, botón para confirmación, y cancelación.
-        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
-                .setCancelable(false)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
+    public boolean solicitarActivacionGPS() {
+        try {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            //Construye la alerta. Se coloca mensaje, botón para confirmación, y cancelación.
+            builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
+                    .setCancelable(false)
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            dialog.cancel();
+                        }
+                    });
 
-        AlertDialog alert = builder.create(); // Crear alerta
-        alert.show(); // Mostrar alerta
+            AlertDialog alert = builder.create(); // Crear alerta
+            alert.show(); // Mostrar alerta
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -189,7 +200,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
      * @param rutaImagen
      * @return true si la imagen tiene coordenadas, false en caso contrario
      */
-    private boolean tieneCoordenadasImagen(String rutaImagen){
+    public boolean tieneCoordenadasImagen(String rutaImagen){
         try {
             float[] coordenadas = new float[2]; // Variable para guardar las coordenadas de la imagen
             ExifInterface exifInterface = new ExifInterface(rutaImagen); // Crear objeto para leer metadata de imagen
@@ -228,7 +239,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
     /**
      * Metodo que inicia la vista 'VistaPrevia'
      */
-    private void iniciarVistaPrevia() {
+    public void iniciarVistaPrevia() {
         Intent intentVistaPrevia = new Intent(ActividadPrincipal.this, ActividadVistaPrevia.class); // Crear llamada para cambio de vista a 'VistaPrevia'
         intentVistaPrevia.putExtra("ruta_imagen", this.rutaImagen); // Agregar ruta de imagen a la llamada
         intentVistaPrevia.putExtra("latitud", this.latitud);
@@ -239,7 +250,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
     /**
      * Metodo que inicia la vista 'IniciarFormulario'
      */
-    private void iniciarFormulario() {
+        public void iniciarFormulario() {
         Intent intentFormulario = new Intent(ActividadPrincipal.this, ActividadFormulario.class); // Crear llamada para cambio de vista a 'Formulario'
         intentFormulario.putExtra("ruta_imagen", this.rutaImagen); // Agregar ruta de la imagen a la llamada
         startActivity(intentFormulario); // Empezar actividad
