@@ -9,13 +9,11 @@
             <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
             </select>
             &nbsp incidentes
+            <button class="btn btn-link"><i class="fa fa-plus"></i> Agregar nueva especie</button>
         </div>
         <div class="pull-right">
             Filtrar por especie:
-            <select>
-                <option value="">Todas las especies</option>
-                <option ng-repeat="especie in especies" value="especie.idEspecie">{{especie.nombreComun}} - {{especie.nombreCientifico}}</option>
-            </select> 
+            <select ng-model="especieSeleccionada" ng-change="actualizarPagina(paginaActual)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especiesFiltro'></select>
         </div>
     </div>
     <hr/>
@@ -36,8 +34,7 @@
                     <th><img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (incidente.rutaThumbnail).split('imagenes')[1] }}"></th>
                     <th>
                         <select ng-model="incidente.idEspecie" ng-change="modificarIncidente(incidente.idIncidente, incidente.idEspecie)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
-                        </select> 
-                        <a href="" class="btn btn-link"><i class="fa fa-plus fa-2x"></i></span></a>
+                        </select>                        
                     </th>
                     <th> - </th>
                     <th>{{incidente.km}}</th>

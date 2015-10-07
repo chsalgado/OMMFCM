@@ -8,6 +8,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     $scope.paginaActual = 1;
     $scope.resultadosDisponibles = [10, 20, 30, 40, 50];
     $scope.resultados = 10;
+    $scope.especieSeleccionada = -1;
 
     // Retroalimentación al usuario
     $scope.mensaje = '';
@@ -22,6 +23,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     $scope.obtenerEspecies = function(){
         servicioEspecies.obtenerEspecies().then(function(resultados){
             $scope.especies = resultados;
+            $scope.especiesFiltro = [{"idEspecie": -1, "nombreComun": "- - Todas especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"}];
+            $scope.especiesFiltro.push.apply($scope.especiesFiltro, resultados); 
         });        
     }
 
@@ -30,7 +33,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
         $scope.avanzar = true;
         $scope.regresar = true;
 
-        servicioIncidentes.obtenerIncidentes($scope.paginaActual, $scope.resultados).then(function(resultado){
+        servicioIncidentes.obtenerIncidentes($scope.paginaActual, $scope.resultados, $scope.especieSeleccionada).then(function(resultado){
             $scope.incidentes = resultado.incidentes;
             $scope.total = resultado.total;
             $scope.desde = resultado.desde;
