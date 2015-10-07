@@ -7,14 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6825F40F1BC48CB20030F18C /* prueba.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6825F40E1BC48CB20030F18C /* prueba.jpg */; settings = {ASSET_TAGS = (); }; };
+		682F57B81BB3891400CE961A /* estados.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B71BB3891400CE961A /* estados.json */; settings = {ASSET_TAGS = (); }; };
+		682F57BA1BB3A41500CE961A /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B91BB3A41500CE961A /* municipios.json */; settings = {ASSET_TAGS = (); }; };
+		6831572E1BB4BC230078B742 /* logo imt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6831572D1BB4BC230078B742 /* logo imt.jpg */; settings = {ASSET_TAGS = (); }; };
+		683CBC0E1BBCA00000F103AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 683CBC0D1BBCA00000F103AF /* CoreLocation.framework */; };
 		685B8B851BABB88A0030B63A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B841BABB88A0030B63A /* AppDelegate.swift */; };
 		685B8B871BABB88A0030B63A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B861BABB88A0030B63A /* ViewController.swift */; };
-		685B8B8A1BABB88A0030B63A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B881BABB88A0030B63A /* Main.storyboard */; };
 		685B8B8C1BABB88A0030B63A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B8B1BABB88A0030B63A /* Assets.xcassets */; };
 		685B8B8F1BABB88A0030B63A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B8D1BABB88A0030B63A /* LaunchScreen.storyboard */; };
-		685B8B9A1BABB88A0030B63A /* OMMFCMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B991BABB88A0030B63A /* OMMFCMTests.swift */; };
 		685B8BA51BABB88A0030B63A /* OMMFCMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BA41BABB88A0030B63A /* OMMFCMUITests.swift */; };
 		685B8BB31BABC00B0030B63A /* MandarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB21BABC00B0030B63A /* MandarViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		685B8BB51BB22E6D0030B63A /* UbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		685B8BB71BB246960030B63A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB61BB246960030B63A /* MapaViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		68AB60131BB9D27B00021C42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B881BABB88A0030B63A /* Main.storyboard */; };
+		68B090DE1BC37FB5005E7DFD /* TestMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DD1BC37FB5005E7DFD /* TestMapa.swift */; settings = {ASSET_TAGS = (); }; };
+		68B090E01BC43959005E7DFD /* TestUbicacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DF1BC43959005E7DFD /* TestUbicacion.swift */; settings = {ASSET_TAGS = (); }; };
+		68B090E21BC458AF005E7DFD /* TestMandar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090E11BC458AF005E7DFD /* TestMandar.swift */; settings = {ASSET_TAGS = (); }; };
+		68CA54131BBC5923008EA0FE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CA54121BBC5923008EA0FE /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6825F40E1BC48CB20030F18C /* prueba.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = prueba.jpg; sourceTree = "<group>"; };
+		682F57B71BB3891400CE961A /* estados.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = estados.json; sourceTree = "<group>"; };
+		682F57B91BB3A41500CE961A /* municipios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = municipios.json; sourceTree = "<group>"; };
+		6831572D1BB4BC230078B742 /* logo imt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "logo imt.jpg"; sourceTree = "<group>"; };
+		683CBC0D1BBCA00000F103AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		685B8B811BABB88A0030B63A /* OMMFCM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMMFCM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		685B8B841BABB88A0030B63A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		685B8B861BABB88A0030B63A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,12 +58,17 @@
 		685B8B8E1BABB88A0030B63A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		685B8B901BABB88A0030B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		685B8B951BABB88A0030B63A /* OMMFCMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OMMFCMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		685B8B991BABB88A0030B63A /* OMMFCMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMMFCMTests.swift; sourceTree = "<group>"; };
 		685B8B9B1BABB88A0030B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		685B8BA01BABB88A0030B63A /* OMMFCMUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OMMFCMUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		685B8BA41BABB88A0030B63A /* OMMFCMUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMMFCMUITests.swift; sourceTree = "<group>"; };
 		685B8BA61BABB88A0030B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		685B8BB21BABC00B0030B63A /* MandarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandarViewController.swift; sourceTree = "<group>"; };
+		685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbicacionViewController.swift; sourceTree = "<group>"; };
+		685B8BB61BB246960030B63A /* MapaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		68B090DD1BC37FB5005E7DFD /* TestMapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMapa.swift; sourceTree = "<group>"; };
+		68B090DF1BC43959005E7DFD /* TestUbicacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUbicacion.swift; sourceTree = "<group>"; };
+		68B090E11BC458AF005E7DFD /* TestMandar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMandar.swift; sourceTree = "<group>"; };
+		68CA54121BBC5923008EA0FE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				683CBC0E1BBCA00000F103AF /* CoreLocation.framework in Frameworks */,
+				68CA54131BBC5923008EA0FE /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +101,8 @@
 		685B8B781BABB88A0030B63A = {
 			isa = PBXGroup;
 			children = (
+				683CBC0D1BBCA00000F103AF /* CoreLocation.framework */,
+				68CA54121BBC5923008EA0FE /* MapKit.framework */,
 				685B8B831BABB88A0030B63A /* OMMFCM */,
 				685B8B981BABB88A0030B63A /* OMMFCMTests */,
 				685B8BA31BABB88A0030B63A /* OMMFCMUITests */,
@@ -101,9 +125,14 @@
 			children = (
 				685B8B841BABB88A0030B63A /* AppDelegate.swift */,
 				685B8BB21BABC00B0030B63A /* MandarViewController.swift */,
+				685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */,
 				685B8B861BABB88A0030B63A /* ViewController.swift */,
 				685B8B881BABB88A0030B63A /* Main.storyboard */,
+				685B8BB61BB246960030B63A /* MapaViewController.swift */,
 				685B8B8B1BABB88A0030B63A /* Assets.xcassets */,
+				682F57B91BB3A41500CE961A /* municipios.json */,
+				682F57B71BB3891400CE961A /* estados.json */,
+				6831572D1BB4BC230078B742 /* logo imt.jpg */,
 				685B8B8D1BABB88A0030B63A /* LaunchScreen.storyboard */,
 				685B8B901BABB88A0030B63A /* Info.plist */,
 			);
@@ -113,7 +142,10 @@
 		685B8B981BABB88A0030B63A /* OMMFCMTests */ = {
 			isa = PBXGroup;
 			children = (
-				685B8B991BABB88A0030B63A /* OMMFCMTests.swift */,
+				6825F40E1BC48CB20030F18C /* prueba.jpg */,
+				68B090E11BC458AF005E7DFD /* TestMandar.swift */,
+				68B090DF1BC43959005E7DFD /* TestUbicacion.swift */,
+				68B090DD1BC37FB5005E7DFD /* TestMapa.swift */,
 				685B8B9B1BABB88A0030B63A /* Info.plist */,
 			);
 			path = OMMFCMTests;
@@ -195,6 +227,11 @@
 				TargetAttributes = {
 					685B8B801BABB88A0030B63A = {
 						CreatedOnToolsVersion = 7.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					685B8B941BABB88A0030B63A = {
 						CreatedOnToolsVersion = 7.0;
@@ -231,9 +268,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68AB60131BB9D27B00021C42 /* Main.storyboard in Resources */,
+				682F57BA1BB3A41500CE961A /* municipios.json in Resources */,
+				682F57B81BB3891400CE961A /* estados.json in Resources */,
+				6831572E1BB4BC230078B742 /* logo imt.jpg in Resources */,
 				685B8B8F1BABB88A0030B63A /* LaunchScreen.storyboard in Resources */,
 				685B8B8C1BABB88A0030B63A /* Assets.xcassets in Resources */,
-				685B8B8A1BABB88A0030B63A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +281,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6825F40F1BC48CB20030F18C /* prueba.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +299,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				685B8BB51BB22E6D0030B63A /* UbicacionViewController.swift in Sources */,
 				685B8BB31BABC00B0030B63A /* MandarViewController.swift in Sources */,
+				685B8BB71BB246960030B63A /* MapaViewController.swift in Sources */,
 				685B8B871BABB88A0030B63A /* ViewController.swift in Sources */,
 				685B8B851BABB88A0030B63A /* AppDelegate.swift in Sources */,
 			);
@@ -268,7 +311,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				685B8B9A1BABB88A0030B63A /* OMMFCMTests.swift in Sources */,
+				68B090DE1BC37FB5005E7DFD /* TestMapa.swift in Sources */,
+				68B090E21BC458AF005E7DFD /* TestMandar.swift in Sources */,
+				68B090E01BC43959005E7DFD /* TestUbicacion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,7 +446,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OMMFCM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.imt.OMMFCM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -413,7 +458,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OMMFCM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.imt.OMMFCM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -487,6 +532,7 @@
 				685B8BAB1BABB88A0030B63A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		685B8BAC1BABB88A0030B63A /* Build configuration list for PBXNativeTarget "OMMFCMTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +541,7 @@
 				685B8BAE1BABB88A0030B63A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		685B8BAF1BABB88A0030B63A /* Build configuration list for PBXNativeTarget "OMMFCMUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +550,7 @@
 				685B8BB11BABB88A0030B63A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
