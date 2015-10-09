@@ -11,10 +11,6 @@ app.config(function($routeProvider, $httpProvider){
         controller: "controladorIncidentes",
         templateUrl: "/vistas/vistaIncidentes.html"
     });
-    $routeProvider.when("/incidentes", {
-        controller: "controladorIncidentes",
-        templateUrl: "/vistas/vistaIncidentes.html"
-    });
 
     $routeProvider.when("/especies", {
         controller: "controladorEspecies",
@@ -27,20 +23,7 @@ app.config(function($routeProvider, $httpProvider){
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
+// TODO Remove
 //var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
 var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
 //var servicioBase = 'http://jorgegonzac-001-site1.hostbuddy.com/public_html/index.php/';
-
-// Routing debugging code
-// Prueba
-app.run(['$rootScope',  function($rootScope) {
-      // see what's going on when the route tries to change
-      $rootScope.$on('$routeChangeStart', function(event, next, current) {
-          // next is an object that is the route that we are starting to go to
-          // current is an object that is the route where we are currently
-          var currentPath = current.originalPath;
-          var nextPath = next.originalPath;
-
-          console.log('Starting to leave %s to go to %s', currentPath, nextPath);
-      });
-}]);
