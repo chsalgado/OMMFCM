@@ -1,0 +1,38 @@
+<div>
+	<div class="row">
+        <div class="alert alert-danger fade in" ng-show="errores">{{mensaje}}</div>
+        <div class="alert alert-success fade in" ng-show="exito">{{mensaje}}</div>
+	</div>
+	<div class="row">
+        <div>
+            Mostrar: 
+            <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
+            </select>
+            &nbsp especies
+            <button class="btn btn-link"><i class="fa fa-plus"></i> Agregar nueva especie</button>
+        </div>
+	</div>
+	<hr>
+	<div class="row">
+		<table class="table table-stripedd">
+			<thead>
+				<tr>
+					<th>Nombre común</th>
+					<th>Nombre científico</th>
+					<th>Estado</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>
+						<select></select>
+					</td>
+					<td><a class="btn btn-link"><i class="fa fa-edit fa-2x"></i></a><a class="btn btn-link"><i class="fa fa-trash fa-2x"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

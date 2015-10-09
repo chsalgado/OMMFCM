@@ -11,6 +11,15 @@ app.config(function($routeProvider, $httpProvider){
         controller: "controladorIncidentes",
         templateUrl: "/vistas/vistaIncidentes.html"
     });
+    $routeProvider.when("/incidentes", {
+        controller: "controladorIncidentes",
+        templateUrl: "/vistas/vistaIncidentes.html"
+    });
+
+    $routeProvider.when("/especies", {
+        controller: "controladorEspecies",
+        templateUrl: "/vistas/vistaEspecies.html"
+    });
 
     $routeProvider.otherwise({redirectTo: "/resumen"});
 
@@ -18,8 +27,8 @@ app.config(function($routeProvider, $httpProvider){
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
-//var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
+//var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
+var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
 //var servicioBase = 'http://jorgegonzac-001-site1.hostbuddy.com/public_html/index.php/';
 
 // Routing debugging code
