@@ -11,4 +11,5 @@
     <string name="btn_escoger_imagen">Escoger foto de mi galeria</string>
     <string name="btn_detalles">Ver instrucciones</string>
     <string name="btn_subir_incidente">Subir incidente</string>
+    <string name="title_activity_actividad_mapa">ActividadMapa</string>
 </resources>
