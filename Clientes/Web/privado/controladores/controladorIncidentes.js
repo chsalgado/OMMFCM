@@ -15,11 +15,14 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     $scope.exito = false;
     $scope.errores = false;
 
+    // Oculta la retroalimentacion al usuario
     $scope.ocultarMensaje = function(){
         $scope.exito = false;
         $scope.errores = false;
     }
 
+    // Obtiene todas las especies
+    // Las especies llenan los selects
     $scope.obtenerEspecies = function(){
         servicioEspecies.obtenerEspecies().then(function(resultados){
             $scope.especies = resultados;
@@ -28,6 +31,13 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
         });        
     }
 
+    // Obtiene los incidentes para llenar la tabla
+    // Se llama cuando:
+    //      Se carga la pagina
+    //      Se cambia de pagina
+    //      Se uiliza el filtro por especie
+    //      Se selecciona numero de resultados a mostrar
+    //      Se elimina o modifica un incidente
     $scope.actualizarPagina = function(pagina){
         $scope.paginaActual = pagina;
         $scope.avanzar = true;
@@ -50,6 +60,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
         });
     }
 
+    // Elimina un incidente
     $scope.eliminarIncidente = function(id){
         if(confirm('¿Estás seguro que quieres eliminar este incidente?')){
             servicioIncidentes.eliminarIncidente(id).then(function(resultado){
@@ -64,6 +75,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
         }
     }
 
+    // Modifica la especie de un incidente
     $scope.modificarIncidente = function(idIncidente, idEspecie){
         servicioIncidentes.modificarIncidente(idIncidente, idEspecie).then(function(resultado){
             $scope.actualizarPagina($scope.paginaActual);

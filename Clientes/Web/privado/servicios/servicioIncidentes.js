@@ -3,6 +3,8 @@ app.factory('servicioIncidentes', ['$http', function($http){
 
         var fabricaServicioIncidentes = {};
 
+        // Obtiene incidentes paginados
+        // Los incidentes pueden ser filtrados por especie
         var _obtenerIncidentes = function(pagina, resultados, idEspecie){
             if(idEspecie == -1){
                 return $http.get(servicioBase + 'api/incidentes?pagina=' + pagina + '&resultados=' + resultados).then(function(resultado){
@@ -27,13 +29,14 @@ app.factory('servicioIncidentes', ['$http', function($http){
             }
         };
 
+        // Elimina un incidente
         var _eliminarIncidente = function(id){
             return $http.delete(servicioBase + 'api/incidentes/' + id).then(function(resultado){
                 return resultado.status;
             });
         };
 
-        // TODO
+        // Modifica la especie de un incidente
         var _modificarIncidente = function(idIncidente, idEspecie){
             return $http.put(servicioBase + 'api/incidentes/' + idIncidente, {'idEspecie': idEspecie}).then(function(resultado){
                 return resultado.status;
