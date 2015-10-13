@@ -12,4 +12,5 @@
     <string name="btn_detalles"></string>
     <string name="inicio_intro">Bienvenido a la aplicacion de IMT. Para iniciar la generacion del reporte, presione en cualquiera de los dos botones.</string>
     <string name="btn_subir_incidente">Subir incidente</string>
+    <string name="title_activity_actividad_mapa">ActividadMapa</string>
 </resources>
