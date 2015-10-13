@@ -31,18 +31,30 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by George on 10/7/15.
+ *
+ * Actividad asincrona donde se calcula una ruta en el mapa de acuerdo a un origen y un destino
  */
 public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
-    private static final String TOAST_MSG = "Calculating"; private static final String TOAST_ERR_MAJ = "Impossible to trace Itinerary";
-    private Context context;
-    private GoogleMap gMap;
-    private String origenEstado;
-    private String origenMunicipio;
-    private String destinoEstado;
-    private String destinoMunicipio;
-    private final ArrayList<LatLng> lstLatLng = new ArrayList<LatLng>();
-    private Marker user_marker;
+    private static final String TOAST_MSG = "Calculating"; // Mensaje de retroalimentacion para el usuario
+    private static final String TOAST_ERR_MAJ = "Impossible to trace Itinerary"; // Mensaje de retroalimentacion para el usuario
+    private Context context; // Variable que guarda el contexto de la actividad donde se ejecutan la sfunciones
+    private GoogleMap gMap; // Variable para acceso al mapa
+    private String origenEstado; // Nombre del estado origen
+    private String origenMunicipio; // Nombre del municipio origen
+    private String destinoEstado; // Nombre del estado destino
+    private String destinoMunicipio; // NOmbre del municipio destino
+    private final ArrayList<LatLng> lstLatLng = new ArrayList<LatLng>(); // Arreglo de coordenadas para guardar la ruta
+    private Marker user_marker; // Variable de marcador de mapa
 
+    /**
+     * Constructor de la clase
+     * @param context contexto de la actividad donde se ejecuta la accion
+     * @param gMap variable de accesso al mapa
+     * @param origenEstado nombre del estado origen
+     * @param origenMunicipio nombre del municipio origen
+     * @param destinoEstado nombre del estado destino
+     * @param destinoMunicipio nombre del municipio destino
+     */
     public RutaMapa(final Context context, final GoogleMap gMap, final String origenEstado, final String origenMunicipio, final String destinoEstado, final String destinoMunicipio) {
         this.context = context;
         this.gMap= gMap;
@@ -53,11 +65,12 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
     }
 
     @Override protected void onPreExecute() {
-        Toast.makeText(context, TOAST_MSG, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, TOAST_MSG, Toast.LENGTH_LONG).show(); // Mostrar mensaje de carga
     }
 
     @Override protected Boolean doInBackground(Void... params) {
         try {
+            // Armar ruta para llamar al servicio de google con origen y destino
             final StringBuilder url = new StringBuilder("https://maps.googleapis.com/maps/api/directions/xml?");
             url.append("origin=");
             url.append(URLEncoder.encode(origenMunicipio.replace(' ', '+'), "utf-8"));
@@ -69,14 +82,14 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
             url.append(URLEncoder.encode(destinoEstado.replace(' ', '+'), "utf-8"));
             url.append("&sensor=false&units=metric&mode=driving");
 
-
+            // Realizar la conexion al servicio de google
             URL obj = new URL(url.toString());
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
             con.connect();
 
+            // Crear un documento para leer la respuesta del servidor
             final InputStream stream = con.getInputStream();
-            //String responseString = readStream(stream);
             final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setIgnoringComments(true);
             final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -84,12 +97,17 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
             document.getDocumentElement().normalize();
             final String status = document.getElementsByTagName("status").item(0).getTextContent();
 
+            // En caso de que no haya respuesta de google regresar falso
             if(!"OK".equals(status)) {
                 return false;
             }
+
+            // Guardar nodos de la ruta en una lista
             final Element elementLeg = (Element) document.getElementsByTagName("leg").item(0);
             final NodeList nodeListStep = elementLeg.getElementsByTagName("step");
             final int length = nodeListStep.getLength();
+
+            // Decodificar nodos y dibujarlos en el mapa
             for(int i=0; i<length; i++) {
                 final Node nodeStep = nodeListStep.item(i);
                 if(nodeStep.getNodeType() == Node.ELEMENT_NODE) {
@@ -99,34 +117,16 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
             }
             return true;
         } catch(final Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Imprimir error
             return false;
         }
     }
 
-    private String readStream(InputStream in) {
-        BufferedReader reader = null;
-        StringBuffer response = new StringBuffer();
-        try {
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return response.toString();
-    }
-
+    /**
+     * Metodo de decodifica un punto dado del servicio de google
+     *
+     * @param encodedPoints string con punto codificado
+     */
     private void decodePolylines(final String encodedPoints) {
         int index = 0;
         int lat = 0, lng = 0;
@@ -150,14 +150,17 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
 
     @Override protected void onPostExecute(final Boolean result) {
         if(!result) {
-            Toast.makeText(context, TOAST_ERR_MAJ, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, TOAST_ERR_MAJ, Toast.LENGTH_SHORT).show(); // Mostrar mensaje en caso de error
         } else {
             try {
-                final PolylineOptions polylines = new PolylineOptions();
-                polylines.color(Color.BLUE);
+                final PolylineOptions polylines = new PolylineOptions(); // Crear arreglo de lineas
+                polylines.color(Color.BLUE); // Asignar un color a la linea
+
                 for(final LatLng latLng : lstLatLng) {
-                    polylines.add(latLng);
+                    polylines.add(latLng); // Agregar lineas al arreglo
                 }
+
+                // Crear marcadores de inicio y final para la ruta
                 final MarkerOptions markerA = new MarkerOptions();
                 markerA.position(lstLatLng.get(0));
                 markerA.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
@@ -166,22 +169,31 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
                 markerB.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
                 LatLng first_coord = lstLatLng.get(0);
-                LatLng last_coorf = lstLatLng.get(lstLatLng.size() - 1);
+                LatLng last_coord = lstLatLng.get(lstLatLng.size() - 1);
 
-                LatLng southwest = getSouthwestCoord(lstLatLng.get(0), lstLatLng.get(lstLatLng.size() - 1));
-                LatLng northeast = getNortheastCoord(lstLatLng.get(0), lstLatLng.get(lstLatLng.size() - 1));
+                // Buscar coordenadas mas al suroeste y noreste
+                LatLng southwest = getSouthwestCoord(first_coord, last_coord);
+                LatLng northeast = getNortheastCoord(first_coord, last_coord);
                 LatLngBounds bounds = new LatLngBounds(southwest, northeast);
 
+                // Agregar lineas y marcadores al mapa
                 gMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
                 gMap.addMarker(markerA);
                 gMap.addPolyline(polylines);
                 gMap.addMarker(markerB);
 
+                // Agregar listener al mapa para agregar un marcador en el lugar de la pantalla que toco el usuario
                 gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
+                    /**
+                     * Metodo que se llama al hacer click en algun lugar del mapa
+                     *
+                     * @param point coordenadas del lugar donde se dio click
+                     */
                     @Override
                     public void onMapClick(LatLng point) {
 
+                        // Si un marcador ya existe eliminarlo y crear uno nuevo en la nueva posicion
                         if(user_marker != null) {
                             user_marker.remove();
                             user_marker = null;
@@ -193,11 +205,18 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
                 });
 
             } catch (Exception e) {
-                e.printStackTrace();
+                e.printStackTrace(); // Imprimir error
             }
         }
     }
 
+    /**
+     * Metodo que regresa la coordenada mas al suroeste dadas 2 coordenadas
+     *
+     * @param coord1 coordenada a comparar
+     * @param coord2 coordenada a comparar
+     * @return coordenada mas al sureste de acuerdo a los dos puntos dados
+     */
     private LatLng getSouthwestCoord(LatLng coord1, LatLng coord2){
         double westLat;
         double westLong;
@@ -217,6 +236,13 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
         return new LatLng(westLat, westLong);
     }
 
+    /**
+     * Metodo que regresa la coordenada mas al noreste dadas 2 coordenadas
+     *
+     * @param coord1 coordenada a comparar
+     * @param coord2 coordenada a comparar
+     * @return coordenada mas al noroeste de acuerdo a los puntos dados
+     */
     private LatLng getNortheastCoord(LatLng coord1, LatLng coord2){
         double eastLat;
         double eastLong;
@@ -226,12 +252,10 @@ public class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
         else
             eastLat = coord2.latitude;
 
-
         if(coord1.longitude > coord2.longitude)
             eastLong = coord1.longitude;
         else
             eastLong = coord2.longitude;
-
 
         return new LatLng(eastLat, eastLong);
     }
