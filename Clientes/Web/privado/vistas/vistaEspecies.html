@@ -1,4 +1,4 @@
-<div>
+<div ng-init="actualizarPagina(1)">
 	<div class="row">
         <div class="alert alert-danger fade in" ng-show="errores">{{mensaje}}</div>
         <div class="alert alert-success fade in" ng-show="exito">{{mensaje}}</div>
@@ -24,15 +24,29 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
+				<tr ng-repeat="especie in especies">
+					<td>{{especie.nombreComun}}</td>
+					<td>{{especie.nombreCientifico}}</td>
+					<td>{{especie.estado}}</td>
 					<td>
-						<select></select>
+						<a class="btn btn-link"><i class="fa fa-edit fa-2x"></i></a>
+						<a class="btn btn-link"><i class="fa fa-trash fa-2x"></i></a>
 					</td>
-					<td><a class="btn btn-link"><i class="fa fa-edit fa-2x"></i></a><a class="btn btn-link"><i class="fa fa-trash fa-2x"></i></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	    <div class="row">
+        <div>
+            Mostrando {{desde}} al {{hasta}} de {{total}} incidentes
+        </div>
+        <div class="pull-right">
+            <a ng-click="actualizarPagina(1)" class="btn btn-link" ng-class="{ disabled: !regresar }"><i class="fa fa-angle-double-left fa-2x"></i></a>
+            <a ng-click="actualizarPagina(paginaActual - 1)" class="btn btn-link" ng-class="{ disabled: !regresar }"><i class="fa fa-angle-left fa-2x"></i></a>
+            <span class="numeroDePagina">{{paginaActual}}</span>
+            <a ng-click="actualizarPagina(paginaActual + 1)" class="btn btn-link" ng-class="{ disabled: !avanzar }"><i class="fa fa-angle-right fa-2x"></i></a>
+            <a ng-click="actualizarPagina(ultimaPagina)" class="btn btn-link" ng-class="{ disabled: !avanzar }"><i class="fa fa-angle-double-right fa-2x"></i></a>
+        </div>
+    </div>
+
 </div>
