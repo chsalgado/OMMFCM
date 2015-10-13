@@ -15,7 +15,7 @@ class CrearTablaEstadoEspecie extends Migration {
 		// Crear tabla de estados de especies
 		Schema::create('estadosEspecies', function(Blueprint $table)
     	{
-	        $table->bigIncrements('idEstadoEspecie');
+			$table->tinyInteger('idEstadoEspecie')->unsigned()->autoIncrement();
 	        $table->string('estado');
 	        $table->timestamps();
     	});
@@ -23,11 +23,11 @@ class CrearTablaEstadoEspecie extends Migration {
 		// Agregar atributo de estado a las especies
 		Schema::table('especies', function($table)
 		{
-		    $table->bigInteger('idEstadoEspecie');		    
+		    $table->tinyInteger('idEstadoEspecie');		    
 		});
 
 		// Agregar el tipo unsigned a la columna  idEstadoEspecie en la tabla especies para poder crear luego la llave foranea (no se puede crear una FK con tipos diferentes)		
-		DB::statement('ALTER TABLE `especies` MODIFY `idEstadoEspecie` BIGINT UNSIGNED NULL;');
+		DB::statement('ALTER TABLE `especies` MODIFY `idEstadoEspecie` TINYINT UNSIGNED NULL;');
 
 		// Agregar llave foranea. 
 		DB::statement('ALTER TABLE especies ADD FOREIGN KEY (idEstadoEspecie) REFERENCES estadosEspecies(idEstadoEspecie)');		
