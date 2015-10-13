@@ -24,6 +24,7 @@
                     <th>Foto</th>
                     <th>Nombre común - científico</th>
                     <th>Ubicación</th>
+                    <th>Ruta</th>
                     <th>Km.</th>
                     <th>Fecha</th>
                     <th></th>
@@ -31,15 +32,35 @@
             </thead>
             <tbody>
                 <tr ng-repeat="incidente in incidentes">
-                    <th><img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (incidente.rutaThumbnail).split('imagenes')[1] }}"></th>
-                    <th>
-                        <select ng-model="incidente.idEspecie" ng-change="modificarIncidente(incidente.idIncidente, incidente.idEspecie)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
-                        </select>                        
-                    </th>
-                    <th> - </th>
-                    <th>{{incidente.km}}</th>
-                    <th>{{incidente.fecha}}</th>
-                    <th><a ng-click="eliminarIncidente(incidente.idIncidente)" class="btn btn-link"><i class="fa fa-trash-o fa-2x"></i></a></th>
+                    <td><img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (incidente.rutatdumbnail).split('imagenes')[1] }}"></td>
+                    <td ng-hide="editando[$index]">
+                        {{incidente.idEspecie}}
+                    </td>
+                    <td ng-show="editando[$index]">
+                        <select ng-model="incidente.idEspecie" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
+                        </select>
+                    </td>
+                    <td><a href=""><i class="fa fa-map-marker"></i> Ver mapa</a></td>
+                    <td ng-hide="editando[$index]">
+                        {{incidente.ruta}}
+                    </td>
+                    <td ng-show="editando[$index]">
+                        <input type="text" ng-model="incidete.ruta">
+                    </td>
+                    <td ng-hide="editando[$index]">
+                        {{incidente.km}}
+                    </td>
+                    <td ng-show="editando[$index]">
+                        <input type="text" ng-model="incidente.km">
+                    </td>
+                    <td>
+                        {{incidente.fecha}}
+                    </td>
+                    <td>
+                        <a ng-hide="editando[$index]" ng-click="editables($index)" class="btn btn-link" ng-class="{ disabled: editandoIn }"><i class="fa fa-edit fa-2x"></i></a>
+                        <a ng-show="editando[$index]" ng-click="modificarIncidente($index, incidente.idIncidente, incidente.idEspecie)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
+                        <a ng-click="eliminarIncidente(incidente.idIncidente)" class="btn btn-link" ng-class="{ disabled: editandoIn }"><i class="fa fa-trash-o fa-2x"></i></a>
+                    </td>
                 </tr>
             </tbody>
         </table>

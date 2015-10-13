@@ -15,6 +15,9 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     $scope.exito = false;
     $scope.errores = false;
 
+    // Variable que permite que se edite un incidente a la vez 
+    $scope.editandoIn = false;
+
     // Oculta la retroalimentacion al usuario
     $scope.ocultarMensaje = function(){
         $scope.exito = false;
@@ -39,6 +42,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     //      Se selecciona numero de resultados a mostrar
     //      Se elimina o modifica un incidente
     $scope.actualizarPagina = function(pagina){
+        $scope.editando = [];
         $scope.paginaActual = pagina;
         $scope.avanzar = true;
         $scope.regresar = true;
@@ -57,6 +61,11 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
             if(pagina == $scope.ultimaPagina){
                 $scope.avanzar = false;
             }
+
+            angular.forEach($scope.incidentes, function(inc){
+                // Arreglo que permite saber que incidente se está modificando
+                $scope.editando.push.apply($scope.editando, [false]);
+            });
         });
     }
 
@@ -75,8 +84,17 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
         }
     }
 
-    // Modifica la especie de un incidente
-    $scope.modificarIncidente = function(idIncidente, idEspecie){
+    // Muestra los campos que pueden ser modificados en un incidente
+    $scope.editables = function(index){
+        $scope.editando[index] = true;
+        $scope.editandoIn = true;
+    }
+
+    // Modifica un incidente
+    $scope.modificarIncidente = function(index, idIncidente, idEspecie){        
+        $scope.editando[index] = false;
+        $scope.editandoIn = false;
+        
         servicioIncidentes.modificarIncidente(idIncidente, idEspecie).then(function(resultado){
             $scope.actualizarPagina($scope.paginaActual);
             $scope.mensaje = 'El incidente ha sido modificado';

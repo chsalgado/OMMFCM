@@ -80,8 +80,10 @@ describe('controlador incidentes', function(){
         expect($scope.mensaje).toMatch('');
         expect($scope.exito).toBe(false);
         expect($scope.errores).toBe(false);
+        expect($scope.editandoIn).toBe(false);
         expect($scope.especies).toBeUndefined();
         expect($scope.especiesFiltro).toBeUndefined();
+        expect($scope.editando).toBeUndefined();
         expect($scope.avanzar).toBeUndefined();
         expect($scope.regresar).toBeUndefined();
         expect($scope.total).toBeUndefined();
@@ -111,6 +113,7 @@ describe('controlador incidentes', function(){
     it('actualiza la pagina', function(){
         cambiarExito(true);
         $scope.actualizarPagina(1);
+        expect($scope.editando.length).toBe(0);
         expect($scope.paginaActual).toEqual(1);
         expect($scope.avanzar).toBe(true);
         expect($scope.regresar).toBe(true);
@@ -123,6 +126,7 @@ describe('controlador incidentes', function(){
         expect($scope.ultimaPagina).toEqual(1);
         expect($scope.regresar).toBe(false);
         expect($scope.avanzar).toBe(false);
+        expect($scope.editando).toEqual([false,false]);
     });
 
     it('muestra mensaje de exito cuando se elimina un incidente', function(){
@@ -145,19 +149,34 @@ describe('controlador incidentes', function(){
 
     it('muestra mensaje de éxito cuando se modifica un incidente', function(){
         cambiarExito(true);
+        // Se llama para definir editando
+        $scope.actualizarPagina(1);
+        $timeout.flush();
+
+        var index = 1;
         var idIncidente = 15;
         var idEspecie = 2;
-        $scope.modificarIncidente(idIncidente, idEspecie);
+        $scope.modificarIncidente(index, idIncidente, idEspecie);
+        expect($scope.editando).toEqual([false, false]);
+        expect($scope.editandoIn).toBe(false);
         expect(mockServicioIncidentes.modificarIncidente).toHaveBeenCalledWith(idIncidente, idEspecie);
         $timeout.flush();
         expect($scope.mensaje).toBe('El incidente ha sido modificado');
     });
 
     it('muestra mensaje de error cuando no se puede modificar un incidente', function(){
+        cambiarExito(true);
+        // Se llama para definir editando
+        $scope.actualizarPagina(1);
+        $timeout.flush();
+        
         cambiarExito(false);
+        var index = 1;
         var idIncidente = 15;
         var idEspecie = 2;
-        $scope.modificarIncidente(idIncidente, idEspecie);
+        $scope.modificarIncidente(index, idIncidente, idEspecie);
+        expect($scope.editando).toEqual([false, false]);
+        expect($scope.editandoIn).toBe(false);
         expect(mockServicioIncidentes.modificarIncidente).toHaveBeenCalledWith(idIncidente, idEspecie);
         $timeout.flush();
         expect($scope.mensaje).toBe('El incidente no fue modificado. Intentelo más tarde');
