@@ -57,13 +57,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         {
             self.performSegueWithIdentifier("seleccionaUbicacion", sender: self)
         }
-
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.solicitarEstados()
     }
 
     override func didReceiveMemoryWarning()
@@ -112,11 +110,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 {
                     (error: NSError!) in
                     NSLog("Error!")
+                    print("error")
                 })
-            
+            //
         }
         else
         {
             self.siguienteVista()
         }
     }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController)
+    {
+        picker.dismissViewControllerAnimated(true, completion: {})
+    }    
+}
+
+
+

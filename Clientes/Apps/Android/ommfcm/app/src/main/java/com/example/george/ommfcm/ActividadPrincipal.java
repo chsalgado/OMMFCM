@@ -269,6 +269,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
         try {
 
             if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null) { // Caso en el que la imagen se escoge de la galeria
+
                 Uri imagenSeleccionada = data.getData(); // Obtener la información de la imagen
                 this.rutaImagen = obtenerRutaRealUri(imagenSeleccionada); // Obtener ruta real de la imagen
 
