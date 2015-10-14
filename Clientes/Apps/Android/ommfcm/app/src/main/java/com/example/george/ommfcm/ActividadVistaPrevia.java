@@ -22,6 +22,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class ActividadVistaPrevia extends AppCompatActivity {
@@ -30,7 +34,9 @@ public class ActividadVistaPrevia extends AppCompatActivity {
     String imagenBase64; // Variable donde se va a guardar la imagen en formato string base 64
     RequestParams params = new RequestParams(); // Variable para agregar los parametros que se envian en la llamada http
     String imgRuta; // Variable donde se guarda la ruta de la imagen obtenida de la vista previa
-    private static String rutaServidor= "http://10.25.108.12/api/OMMFCM/public/api/incidentes"; // Ruta del servidor donde se sube la imagen
+    private double latitud = 0.0;
+    private double longitud = 0.0;
+    private static String rutaServidor= "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/incidentes"; // Ruta del servidor donde se sube la imagen
 
     /**
      * Metodo que se llama al crearse la vista por primera vez
@@ -46,6 +52,8 @@ public class ActividadVistaPrevia extends AppCompatActivity {
         if(intentInfo.hasExtra("ruta_imagen")) { // Verificar que la variable existe
             ImageView imgIncidente = (ImageView) findViewById(R.id.img_incidente); // Variable de la ImageView
             imgRuta = intentInfo.getStringExtra("ruta_imagen"); // Obtener ruta de la imegen
+            this.latitud = intentInfo.getDoubleExtra("latitud", 0.0);
+            this.longitud = intentInfo.getDoubleExtra("longitud", 0.0);
             Bitmap bmp = BitmapFactory.decodeFile(imgRuta); // Decodificar imagen
             imgIncidente.setImageBitmap(bmp); // Asignar imagen decodificada a imageView
             prDialog = new ProgressDialog(this); // Crear un dialogo para mostrar progreso
@@ -101,9 +109,9 @@ public class ActividadVistaPrevia extends AppCompatActivity {
             protected void onPostExecute(String msg){
                 prDialog.setMessage("Subiendo imagen");
                 params.put("imagen", imagenBase64); // Agregar string de la imagen a los parametros de la llamada HTTP
-                params.put("fecha","2014-02-18 15:00:00"); // Agregar fecha a los parametros
-                params.put("long", 123.94599969); // Agregar longitud a los parametros
-                params.put("lat", 99.99999999); // Agregar latitud a los parametros
+                params.put("fecha", getDateTime()); // Agregar fecha a los parametros
+                params.put("long", latitud); // Agregar longitud a los parametros
+                params.put("lat", longitud); // Agregar latitud a los parametros
                 params.put("mpioOrigen", 2140); // Agregar municipio de origen a los parametros
                 params.put("mpioDestino", 2402); // Agregar municipio de destino a los parametros
                 params.put("km", "79"); // Agregar kilometro a los parametros
@@ -134,20 +142,20 @@ public class ActividadVistaPrevia extends AppCompatActivity {
 
                 Log.d("ActividadVistaPrevia", "Error: " + error.toString());
 
-                if(statusCode == 404){
+                if (statusCode == 404) {
                     Toast.makeText(getApplicationContext(),
                             "Requested resource not found",
                             Toast.LENGTH_LONG).show(); // Mostrar error 400
-                }else if(statusCode == 500){
+                } else if (statusCode == 500) {
                     Toast.makeText(getApplicationContext(),
                             "Lo sentimos hubo problemas con el servidor, favor de intentarlo de nuevo",
                             Toast.LENGTH_LONG).show(); // Mostrar error 500
-                }else {
+                } else {
                     Toast.makeText(
                             getApplicationContext(),
                             "Ocurrió un error \n  Posibles causas: \n" +
-                            "1. Se perdio la conexión a internet\n" +
-                            "2. El servidor no esta funcionando", Toast.LENGTH_LONG)
+                                    "1. Se perdio la conexión a internet\n" +
+                                    "2. El servidor no esta funcionando", Toast.LENGTH_LONG)
                             .show(); // Mostrar error
                 }
             }
@@ -164,5 +172,11 @@ public class ActividadVistaPrevia extends AppCompatActivity {
         if(prDialog != null){
             prDialog.dismiss(); // Desechar dialogo de progreso cuando la aplicacion se cierre
         }
+    }
+
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

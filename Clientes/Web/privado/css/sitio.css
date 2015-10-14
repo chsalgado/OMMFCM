@@ -5,3 +5,11 @@
 select.especie{
 	width: auto;
 }
+
+.retro{
+	position: fixed;
+}
+
+.menuScrolleable{
+	margin-top: 50px;
+}

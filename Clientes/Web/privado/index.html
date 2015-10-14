@@ -13,7 +13,7 @@
 <body>
 
     <!-- Menu -->
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#/resumen">
@@ -29,8 +29,8 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#/incidentes">Incidentes</a></li>
-                    <li><a href="#">Especies</a></li>
+                    <li><a href="#/incidentes">Incidentes</a></li>
+                    <li><a href="#/especies">Especies</a></li>
                     <li><a href="#">Reporte</a></li>
                 </ul>
             </div>
@@ -39,7 +39,7 @@
 
         <!--Load partial views-->
 ​
-        <div class="container body-content">
+        <div class="container body-content menuScrolleable">
             <div data-ng-view="">
             </div>
         </div>
@@ -69,6 +69,7 @@
 ​
     <!-- Load controllers -->
     <script src="controladores/controladorIncidentes.js"></script>
+    <script src="controladores/controladorEspecies.js"></script>
 ​
 </body>
 </html>

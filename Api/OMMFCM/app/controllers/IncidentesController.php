@@ -21,7 +21,7 @@ class IncidentesController extends \BaseController
 	   	$resultados = Request::get('resultados');
 	   	$idEspecie = Request::get('idEspecie');
 
-	   	if(!$idEspecie)	
+	   	if(is_null($idEspecie))	
 		{
 			$incidentes = $this->servicioOMMFCM->getIncidentes($pagina, $resultados);
 		}
