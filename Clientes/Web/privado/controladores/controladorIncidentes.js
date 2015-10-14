@@ -1,5 +1,5 @@
 'use strict';
-app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, servicioIncidentes, servicioEspecies){
+app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, $filter, servicioIncidentes, servicioEspecies){
 
     // Lista de incidentes
     $scope.incidentes = [];
@@ -42,6 +42,10 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     //      Se selecciona numero de resultados a mostrar
     //      Se elimina o modifica un incidente
     $scope.actualizarPagina = function(pagina){
+        // Arreglos que guardan los nombres de especie de cada incidente
+        $scope.nombreComun = [];
+        $scope.nombreCientifico = [];
+
         $scope.editando = [];
         $scope.paginaActual = pagina;
         $scope.avanzar = true;
@@ -67,6 +71,19 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
                 $scope.editando.push.apply($scope.editando, [false]);
             });
         });
+    }
+
+    // Obtiene los nombres de especie de un incidente
+    $scope.nombresDeEspecie = function(idEspecie){
+        $scope.nCo = $filter('filter')($scope.especies, function(resultado){
+            return resultado.idEspecie === idEspecie;
+        })[0].nombreComun;
+        $scope.nombreComun.push.apply($scope.nombreComun, [$scope.nCo]);
+
+        $scope.nCi = $filter('filter')($scope.especies, function(resultado){
+            return resultado.idEspecie === idEspecie;
+        })[0].nombreCientifico;
+        $scope.nombreCientifico.push.apply($scope.nombreCientifico, [$scope.nCi]);
     }
 
     // Elimina un incidente

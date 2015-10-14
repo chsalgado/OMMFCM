@@ -83,6 +83,8 @@ describe('controlador incidentes', function(){
         expect($scope.editandoIn).toBe(false);
         expect($scope.especies).toBeUndefined();
         expect($scope.especiesFiltro).toBeUndefined();
+        expect($scope.nombreComun).toBeUndefined();
+        expect($scope.nombreCientifico).toBeUndefined();
         expect($scope.editando).toBeUndefined();
         expect($scope.avanzar).toBeUndefined();
         expect($scope.regresar).toBeUndefined();
@@ -113,6 +115,8 @@ describe('controlador incidentes', function(){
     it('actualiza la pagina', function(){
         cambiarExito(true);
         $scope.actualizarPagina(1);
+        expect($scope.nombreComun.length).toBe(0);
+        expect($scope.nombreCientifico.length).toBe(0);
         expect($scope.editando.length).toBe(0);
         expect($scope.paginaActual).toEqual(1);
         expect($scope.avanzar).toBe(true);
@@ -127,6 +131,16 @@ describe('controlador incidentes', function(){
         expect($scope.regresar).toBe(false);
         expect($scope.avanzar).toBe(false);
         expect($scope.editando).toEqual([false,false]);
+    });
+
+    it('obtiene los nombres de especie de un incidente', function(){
+        cambiarExito(true);
+        $scope.obtenerEspecies();
+        $scope.actualizarPagina(1);
+        $timeout.flush();
+        $scope.nombresDeEspecie(14);
+        expect($scope.nombreComun).toEqual(['nombre comun0']);
+        expect($scope.nombreCientifico).toEqual(['nombre cientifico0']);
     });
 
     it('muestra mensaje de exito cuando se elimina un incidente', function(){
