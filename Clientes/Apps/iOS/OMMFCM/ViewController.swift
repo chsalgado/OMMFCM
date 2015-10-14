@@ -11,23 +11,12 @@ struct Datos
     static var imagen: UIImage?
     static var latitud: CLLocationDegrees?
     static var longitud: CLLocationDegrees?
-    static var municipioOrigen: String?
-    static var municipioDestino: String?
-    static var kilometros: String?
-    
-    static var municipioOrigenTexto: String?
-    static var municipioDestinoTexto: String?
     
     static func borrar()
     {
         self.imagen = nil
         self.latitud = nil
         self.longitud = nil
-        self.municipioOrigen = nil
-        self.municipioDestino = nil
-        self.kilometros = nil
-        self.municipioOrigenTexto = nil
-        self.municipioDestinoTexto = nil
     }
 }
 
@@ -105,14 +94,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                         Datos.latitud = (asset.valueForProperty(ALAssetPropertyLocation) as! CLLocation!).coordinate.latitude
                         Datos.longitud = (asset.valueForProperty(ALAssetPropertyLocation) as! CLLocation!).coordinate.longitude
                         self.siguienteVista()
+                    } else {
+                        self.siguienteVista()
                     }
                 }, failureBlock:
                 {
                     (error: NSError!) in
-                    NSLog("Error!")
-                    print("error")
+                    print(error)
                 })
-            //
         }
         else
         {

@@ -157,4 +157,20 @@ class MapaViewController: UIViewController, MKMapViewDelegate
         myLineRenderer.lineWidth = 3
         return myLineRenderer
     }
+    
+    @IBAction func botonAceptar(sender: UIButton)
+    {
+        if Datos.latitud != nil && Datos.longitud != nil
+        {
+            self.performSegueWithIdentifier("mapaConfirmar", sender: self)
+        }
+        else
+        {
+            let aviso = UIAlertController(title: "Error: Falta ubicación", message: "Toca en el mapa para seleccionar ubicación", preferredStyle: UIAlertControllerStyle.Alert)
+            let accion = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.Default, handler: { _ in })
+            aviso.addAction(accion)
+            self.presentViewController(aviso, animated: true, completion: {})
+        }
+    }
+    
 }

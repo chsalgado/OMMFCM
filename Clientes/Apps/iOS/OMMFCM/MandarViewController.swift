@@ -14,12 +14,6 @@ class MandarViewController: UIViewController
     @IBOutlet weak var imagen: UIImageView!
     
     @IBOutlet weak var mapa: MKMapView!
-    @IBOutlet weak var tituloSinCoordenadas: UILabel!
-    
-    @IBOutlet weak var vistaInformacion: UIView!
-    @IBOutlet weak var municipioOrigen: UILabel!
-    @IBOutlet weak var municipioDestino: UILabel!
-    @IBOutlet weak var kilometros: UILabel!
     
     var envioExitoso: Bool?
     
@@ -32,25 +26,7 @@ class MandarViewController: UIViewController
     {
         super.viewDidLoad()
         self.imagen.image = Datos.imagen
-        
-        if Datos.latitud != nil
-        {
-            self.colocaPuntoEnMapa()
-            self.tituloSinCoordenadas.hidden = true
-        }
-        else
-        {
-            self.mapa.hidden = true
-        }
-        
-        if Datos.municipioDestino != nil
-        {
-            self.colocaInformacion()
-        }
-        else
-        {
-            self.vistaInformacion.hidden = true
-        }
+        self.colocaPuntoEnMapa()
     }
     
     func colocaPuntoEnMapa()
@@ -66,13 +42,6 @@ class MandarViewController: UIViewController
         self.mapa.setRegion(coordinateRegion, animated: true)
     }
     
-    func colocaInformacion()
-    {
-        self.municipioOrigen.text = Datos.municipioOrigenTexto
-        self.municipioDestino.text = Datos.municipioDestinoTexto
-        self.kilometros.text = Datos.kilometros
-    }
-    
     func enviarDatos()
     {
         // Datos a enviar
@@ -86,12 +55,6 @@ class MandarViewController: UIViewController
         if Datos.latitud != nil && Datos.longitud != nil {
             incidente["lat"] = Datos.latitud!.description
             incidente["long"] = Datos.longitud!.description
-        }
-        // Municipios
-        if Datos.municipioOrigen != nil && Datos.municipioDestino != nil && Datos.kilometros != nil {
-            incidente["mpioOrigen"] = Datos.municipioOrigen
-            incidente["mpioDestino"] = Datos.municipioDestino
-            incidente["km"] = Datos.kilometros
         }
         
         let datosJson = try? NSJSONSerialization.dataWithJSONObject(incidente, options: .PrettyPrinted)
