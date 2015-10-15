@@ -56,7 +56,6 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
                 $scope.mensaje = 'La especie ha sido eliminada';
                 $scope.exito = true;
             }, function(resultado){
-                console.log(resultado);
                 $scope.errores = true;
                 if(resultado.status == 412){
                     $scope.mensaje = 'La especie no puede ser eliminada porque hay incidentes asociados a ella';
