@@ -42,9 +42,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
     //      Se selecciona numero de resultados a mostrar
     //      Se elimina o modifica un incidente
     $scope.actualizarPagina = function(pagina){
-        // Arreglos que guardan los nombres de especie de cada incidente
-        $scope.nombreComun = [];
-        $scope.nombreCientifico = [];
+        // Arreglo que guarda los nombres de especie de cada incidente
+        $scope.nombreEspecie = [];
 
         $scope.editando = [];
         $scope.paginaActual = pagina;
@@ -75,19 +74,13 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
 
     // Obtiene los nombres de especie de un incidente
     $scope.nombresDeEspecie = function(idEspecie){
-        // Encuentra la especie con el id recibido, y extrae su nombre comun
+        // Encuentra la especie con el id recibido
         $scope.nCo = $filter('filter')($scope.especies, function(resultado){
             return resultado.idEspecie === idEspecie;
-        })[0].nombreComun;
-        // Agrega el nombre comun al arreglo para mostrarlo en la tabla
-        $scope.nombreComun.push.apply($scope.nombreComun, [$scope.nCo]);
+        })[0];
 
-        // Encuentra la especie con el id recibido, y extrae su nombre cientifico
-        $scope.nCi = $filter('filter')($scope.especies, function(resultado){
-            return resultado.idEspecie === idEspecie;
-        })[0].nombreCientifico;
-        // Agrega el nombre cientifico al arreglo para mostrarlo en la tabla
-        $scope.nombreCientifico.push.apply($scope.nombreCientifico, [$scope.nCi]);
+        // Agrega los nombres al arreglo para mostrarlos en la tabla
+        $scope.nombreEspecie.push.apply($scope.nombreEspecie, [$scope.nCo.nombreComun + ' - ' + $scope.nCo.nombreCientifico]);
     }
 
     // Elimina un incidente

@@ -34,7 +34,7 @@
                 <tr ng-repeat="incidente in incidentes" ng-init="nombresDeEspecie(incidente.idEspecie)">
                     <td><img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (incidente.rutatdumbnail).split('imagenes')[1] }}"></td>
                     <td ng-hide="editando[$index]">
-                        {{nombreComun[$index]}} - {{nombreCientifico[$index]}}
+                        {{nombreEspecie[$index]}}
                     </td>
                     <td ng-show="editando[$index]">
                         <select ng-model="incidente.idEspecie" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
