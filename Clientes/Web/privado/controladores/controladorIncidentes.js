@@ -1,5 +1,5 @@
 'use strict';
-app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, servicioIncidentes, servicioEspecies){
+app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, $filter, servicioIncidentes, servicioEspecies){
 
     // Lista de incidentes
     $scope.incidentes = [];
@@ -42,6 +42,9 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
     //      Se selecciona numero de resultados a mostrar
     //      Se elimina o modifica un incidente
     $scope.actualizarPagina = function(pagina){
+        // Arreglo que guarda los nombres de especie de cada incidente
+        $scope.nombreEspecie = [];
+
         $scope.editando = [];
         $scope.paginaActual = pagina;
         $scope.avanzar = true;
@@ -67,6 +70,17 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', 'servicioIncident
                 $scope.editando.push.apply($scope.editando, [false]);
             });
         });
+    }
+
+    // Obtiene los nombres de especie de un incidente
+    $scope.nombresDeEspecie = function(idEspecie){
+        // Encuentra la especie con el id recibido
+        $scope.nEspecie = $filter('filter')($scope.especies, function(resultado){
+            return resultado.idEspecie === idEspecie;
+        })[0];
+
+        // Agrega los nombres al arreglo para mostrarlos en la tabla
+        $scope.nombreEspecie.push.apply($scope.nombreEspecie, [$scope.nEspecie.nombreComun + ' - ' + $scope.nEspecie.nombreCientifico]);
     }
 
     // Elimina un incidente
