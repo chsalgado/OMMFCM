@@ -57,11 +57,11 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
                 $scope.exito = true;
             }, function(resultado){
                 console.log(resultado);
-                if(resultado.status == 412){
-                    alert('La especie no puede ser eliminada porque hay incidentes asociados a ella');
-                }else{
-                $scope.mensaje = 'La especie no fue eliminada. Intentelo más tarde';
                 $scope.errores = true;
+                if(resultado.status == 412){
+                    $scope.mensaje = 'La especie no puede ser eliminada porque hay incidentes asociados a ella';
+                }else{
+                    $scope.mensaje = 'La especie no fue eliminada. Intentelo más tarde';
                 }
             });
             $timeout($scope.ocultarMensaje, 3000);

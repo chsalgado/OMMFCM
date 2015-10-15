@@ -1,11 +1,15 @@
 'use strict';
 describe('controlador especies', function(){
-	var $scope, $timeout, exito;
+	var $scope, $timeout, exito, error;
 
 	var controladorEspecies, mockServicioEspecies;
 
 	var cambiarExito = function(valExito){
         exito = valExito;
+    }
+
+    var cambiarError = function(valError){
+    	error = valError;
     }
 
 	beforeEach(module('appPrivada'));
@@ -42,7 +46,7 @@ describe('controlador especies', function(){
 				if(exito){
 					return ($q.resolve());
 				}
-				return ($q.reject({"status": 500}));
+				return ($q.reject({"status": error}));
 			});
 
 			// Controlador
@@ -97,10 +101,22 @@ describe('controlador especies', function(){
 
 	it('muestra mensaje de error cuando no se puede eliminar una especie', function(){
 		cambiarExito(false);
+		cambiarError(500);
 		var idEspecie = 4;
 		$scope.eliminarEspecie(idEspecie);
 		expect(mockServicioEspecies.eliminarEspecie).toHaveBeenCalledWith(idEspecie);
 		$timeout.flush();
 		expect($scope.mensaje).toBe('La especie no fue eliminada. Intentelo más tarde');
+	});
+
+	it('muestra mensaje de error cuando hay incidentes asociados con la especie que se quiere eliminar', function(){
+		cambiarExito(false);
+		cambiarError(412);
+		var idEspecie = 4;
+		$scope.eliminarEspecie(idEspecie);
+		expect(mockServicioEspecies.eliminarEspecie).toHaveBeenCalledWith(idEspecie);
+		$timeout.flush();
+		expect($scope.mensaje).toBe('La especie no puede ser eliminada porque hay incidentes asociados a ella');
+
 	});
 });
