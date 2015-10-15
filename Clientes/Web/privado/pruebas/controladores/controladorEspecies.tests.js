@@ -1,6 +1,6 @@
 'use strict';
 describe('controlador especies', function(){
-	var $scope, $timeout, exito;
+	var $scope, $timeout, exito, error;
 
 	var controladorEspecies, mockServicioEspecies;
 
@@ -8,11 +8,18 @@ describe('controlador especies', function(){
         exito = valExito;
     }
 
+    var cambiarError = function(valError){
+    	error = valError;
+    }
+
 	beforeEach(module('appPrivada'));
 
 	beforeEach(function(){
 
-		mockServicioEspecies = jasmine.createSpyObj('servicioEspecies', ['obtenerEspeciesPaginadas']);
+        // Mockea el confirm de eliminarEspecie
+        spyOn(window, 'confirm').and.returnValue(true);
+
+		mockServicioEspecies = jasmine.createSpyObj('servicioEspecies', ['obtenerEspeciesPaginadas', 'eliminarEspecie']);
 
 		inject(function($rootScope, $controller, $q, _$timeout_){
 			$scope = $rootScope.$new();
@@ -35,6 +42,13 @@ describe('controlador especies', function(){
 				return ($q.reject());
 			});
 
+			mockServicioEspecies.eliminarEspecie.and.callFake(function(){
+				if(exito){
+					return ($q.resolve());
+				}
+				return ($q.reject({"status": error}));
+			});
+
 			// Controlador
 			controladorEspecies = $controller('controladorEspecies', {
 				$scope: $scope,
@@ -45,7 +59,6 @@ describe('controlador especies', function(){
 
 	it('asigna variables iniciales', function(){
 		expect($scope.especies.length).toBe(0);
-		expect($scope.estado).toEqual(['Sin Clasificar','Amenazada', 'Peligro de extinción', 'Endémica', 'Protegida', 'Sin estatus en la NOM-059']);
 		expect($scope.paginaActual).toEqual(1);
 		expect($scope.resultadosDisponibles.length).toBe(5);
         expect($scope.resultados).toEqual(10);
@@ -75,5 +88,35 @@ describe('controlador especies', function(){
         expect($scope.ultimaPagina).toEqual(1);
         expect($scope.regresar).toBe(false);
         expect($scope.avanzar).toBe(false);
+	});
+
+	it('muestra mensaje de exito cuando se elimina una especie', function(){
+		cambiarExito(true);
+		var idEspecie = 4;
+		$scope.eliminarEspecie(idEspecie);
+		expect(mockServicioEspecies.eliminarEspecie).toHaveBeenCalledWith(idEspecie);
+		$timeout.flush();
+		expect($scope.mensaje).toBe('La especie ha sido eliminada');
+	});
+
+	it('muestra mensaje de error cuando no se puede eliminar una especie', function(){
+		cambiarExito(false);
+		cambiarError(500);
+		var idEspecie = 4;
+		$scope.eliminarEspecie(idEspecie);
+		expect(mockServicioEspecies.eliminarEspecie).toHaveBeenCalledWith(idEspecie);
+		$timeout.flush();
+		expect($scope.mensaje).toBe('La especie no fue eliminada. Intentelo más tarde');
+	});
+
+	it('muestra mensaje de error cuando hay incidentes asociados con la especie que se quiere eliminar', function(){
+		cambiarExito(false);
+		cambiarError(412);
+		var idEspecie = 4;
+		$scope.eliminarEspecie(idEspecie);
+		expect(mockServicioEspecies.eliminarEspecie).toHaveBeenCalledWith(idEspecie);
+		$timeout.flush();
+		expect($scope.mensaje).toBe('La especie no puede ser eliminada porque hay incidentes asociados a ella');
+
 	});
 });
