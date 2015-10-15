@@ -4,9 +4,6 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
     // Lista de especies
     $scope.especies = [];
 
-    // Estado de la especie
-    $scope.estado = ['Sin Clasificar','Amenazada', 'Peligro de extinción', 'Endémica', 'Protegida', 'Sin estatus en la NOM-059'];
-
     // Variables de paginacion
     $scope.paginaActual = 1;
     $scope.resultadosDisponibles = [10, 20, 30, 40, 50];
@@ -49,5 +46,25 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
                 $scope.avanzar = false;
             }
         });
+    }
+
+    // Elimina una especie
+    $scope.eliminarEspecie = function(id){
+        if(confirm('¿Estás seguro que quieres eliminar esta especie?')){
+            servicioEspecies.eliminarEspecie(id).then(function(resultado){
+                $scope.actualizarPagina($scope.paginaActual);
+                $scope.mensaje = 'La especie ha sido eliminada';
+                $scope.exito = true;
+            }, function(resultado){
+                console.log(resultado);
+                if(resultado.status == 412){
+                    alert('La especie no puede ser eliminada porque hay incidentes asociados a ella');
+                }else{
+                $scope.mensaje = 'La especie no fue eliminada. Intentelo más tarde';
+                $scope.errores = true;
+                }
+            });
+            $timeout($scope.ocultarMensaje, 3000);
+        }
     }
 }]);

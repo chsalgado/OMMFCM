@@ -26,5 +26,14 @@ describe('probar servicio de especies', function(){
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
         });
+
+        it('elimina una especie', function(){
+            $httpBackend.expectDELETE(servicioBase + 'api/especies/4').respond(204);
+            servicioEspecies.eliminarEspecie(4);
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+
+        });
     });
 });
