@@ -80,7 +80,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         })[0];
 
         // Agrega los nombres al arreglo para mostrarlos en la tabla
-        $scope.nombreEspecie.push.apply($scope.nombreEspecie, [$scope.nEspecie.nombreComun + ' - ' + $scope.nCo.nombreCientifico]);
+        $scope.nombreEspecie.push.apply($scope.nombreEspecie, [$scope.nEspecie.nombreComun + ' - ' + $scope.nEspecie.nombreCientifico]);
     }
 
     // Elimina un incidente
