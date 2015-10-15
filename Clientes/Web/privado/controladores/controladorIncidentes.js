@@ -75,14 +75,18 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
 
     // Obtiene los nombres de especie de un incidente
     $scope.nombresDeEspecie = function(idEspecie){
+        // Encuentra la especie con el id recibido, y extrae su nombre comun
         $scope.nCo = $filter('filter')($scope.especies, function(resultado){
             return resultado.idEspecie === idEspecie;
         })[0].nombreComun;
+        // Agrega el nombre comun al arreglo para mostrarlo en la tabla
         $scope.nombreComun.push.apply($scope.nombreComun, [$scope.nCo]);
 
+        // Encuentra la especie con el id recibido, y extrae su nombre cientifico
         $scope.nCi = $filter('filter')($scope.especies, function(resultado){
             return resultado.idEspecie === idEspecie;
         })[0].nombreCientifico;
+        // Agrega el nombre cientifico al arreglo para mostrarlo en la tabla
         $scope.nombreCientifico.push.apply($scope.nombreCientifico, [$scope.nCi]);
     }
 
