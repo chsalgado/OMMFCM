@@ -126,7 +126,7 @@
 	    {
 	    	$incidenteExistente = Incidente::find($incidente -> idIncidente);
 
-			if(!$incidente -> idEspecie && !$incidente -> km && !$incidente -> ruta)
+			if(!$incidente -> idEspecie || !$incidente -> km || !$incidente -> ruta)
 			{
 				return 400;	
 			}
@@ -134,7 +134,7 @@
 			$incidenteExistente -> idEspecie = $incidente -> idEspecie;
 			$incidenteExistente -> ruta = $incidente -> ruta;
 			$incidenteExistente -> km = $incidente -> km;
-
+			
 			$resultado = $incidenteExistente -> save();
 
 			if($resultado)
