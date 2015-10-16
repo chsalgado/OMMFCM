@@ -6,6 +6,7 @@
 	use \Eventviva\ImageResize;
 	use Especie;
 	use Estado;
+	use EstadoEspecie;
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -219,5 +220,12 @@
 	   		$municipios = Estado::find($idEstado) -> municipios;
 
 	   		return $municipios;
+	   	}
+
+	   	public function getEstadosEspecies()
+	   	{
+	   		$estadosEspecies = EstadoEspecie::all();
+
+	   		return $estadosEspecies;
 	   	}
 	}
