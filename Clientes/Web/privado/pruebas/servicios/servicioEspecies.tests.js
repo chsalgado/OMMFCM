@@ -27,13 +27,20 @@ describe('probar servicio de especies', function(){
             $httpBackend.verifyNoOutstandingRequest();
         });
 
+        it('obtiene los estados que puede tener una especie', function(){
+            $httpBackend.expectGET(servicioBase + 'api/estadosEspecies').respond({"error":false,"estadosEspecies":[{"idEstadoEspecie":1,"estado":"Sin Clasificar","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"},{"idEstadoEspecie":2,"estado":"Amenazada","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"}]});
+            servicioEspecies.obtenerEstadosEspecies();
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
+
         it('elimina una especie', function(){
             $httpBackend.expectDELETE(servicioBase + 'api/especies/4').respond(204);
             servicioEspecies.eliminarEspecie(4);
             $httpBackend.flush();
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
-
         });
     });
 });
