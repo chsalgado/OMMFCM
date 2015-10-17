@@ -25,12 +25,28 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="especie in especies" ng-init="nombreEstadoEspecie(especie.idEstadoEspecie)">
-					<td>{{especie.nombreComun}}</td>
-					<td>{{especie.nombreCientifico}}</td>
-					<td>{{nombreEstado[$index]}}</td>
+					<td ng-hide="editando[$index]">
+						{{especie.nombreComun}}
+					</td>
+					<td ng-show="editando[$index]">
+						<input type="text" ng-model="especie.nombreComun">
+					</td>
+					<td ng-hide="editando[$index]">
+						{{especie.nombreCientifico}}
+					</td>
+					<td ng-show="editando[$index]">
+						<input type="text" ng-model="especie.nombreCientifico">
+					</td>
+					<td ng-hide="editando[$index]">
+						{{nombreEstado[$index]}}
+					</td>
+					<td ng-show="editando[$index]">
+						<select ng-model="especie.idEstadoEspecie" ng-options="estado.idEstadoEspecie as estado.estado for estado in estados"></select>
+					</td>
 					<td>
-						<a class="btn btn-link"><i class="fa fa-edit fa-2x"></i></a>
-						<a ng-click="eliminarEspecie(especie.idEspecie)" class="btn btn-link"><i class="fa fa-trash fa-2x"></i></a>
+                        <a ng-hide="editando[$index]" ng-click="editables($index)" class="btn btn-link" ng-class="{ disabled: editandoEs }"><i class="fa fa-edit fa-2x"></i></a>
+                        <a ng-show="editando[$index]" ng-click="modificarEspecie($index, especie.idEspecie, especie.nombreComun, especie.nombreCientifico, especie.idEstadoEspecie)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
+						<a ng-click="eliminarEspecie(especie.idEspecie)" class="btn btn-link" ng-class="{ disabled: editandoEs }"><i class="fa fa-trash fa-2x"></i></a>
 					</td>
 				</tr>
 			</tbody>

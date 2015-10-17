@@ -14,6 +14,9 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
     $scope.exito = false;
     $scope.errores = false;
 
+    // Variable que permite que se edite un incidente a la vez 
+    $scope.editandoEs = false;
+
     // Oculta la retroalimentacion al usuario
     $scope.ocultarMensaje = function(){
         $scope.exito = false;
@@ -37,6 +40,7 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
         // Arreglo que guarda el nombre del estado de cada especie
         $scope.nombreEstado = [];
 
+        $scope.editando = [];
         $scope.paginaActual = pagina;
         $scope.avanzar = true;
         $scope.regresar = true;
@@ -55,6 +59,12 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
             if(pagina == $scope.ultimaPagina){
                 $scope.avanzar = false;
             }
+
+            angular.forEach($scope.especies, function(inc){
+                // Arreglo que permite saber que especie se está modificando
+                $scope.editando.push.apply($scope.editando, [false]);
+            });
+
         });
     }
 
@@ -86,5 +96,27 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
             });
             $timeout($scope.ocultarMensaje, 3000);
         }
+    }
+
+    // Muestra los campos que pueden ser modificados en una especie
+    $scope.editables = function(index){
+        $scope.editando[index] = true;
+        $scope.editandoEs = true;
+    }
+
+    // Modifica una especie
+    $scope.modificarEspecie = function (index, idEspecie, nComun, nCientifico, idEstado){
+        $scope.editando[index] = false;
+        $scope.editandoEs = false;
+        
+        servicioEspecies.modificarEspecie(idEspecie, nComun, nCientifico, idEstado).then(function(resultado){
+            $scope.actualizarPagina($scope.paginaActual);
+            $scope.mensaje = 'La especie ha sido modificada';
+            $scope.exito = true;
+        }, function(resultado){
+            $scope.mensaje = 'La especie no fue modificada. Intentelo más tarde';
+            $scope.errores = true;
+        });
+        $timeout($scope.ocultarMensaje, 3000);
     }
 }]);

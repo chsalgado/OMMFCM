@@ -42,5 +42,13 @@ describe('probar servicio de especies', function(){
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
         });
+
+        it('modifica una especie', function(){
+            $httpBackend.expectPUT(servicioBase + 'api/especies/4', {'nombreComun': 'nombreComun', 'nombreCientifico': 'nombreCientifico', 'idEstadoEspecie': 1}).respond(204);
+            servicioEspecies.modificarEspecie(4, 'nombreComun', 'nombreCientifico', 1);
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();           
+        });
     });
 });
