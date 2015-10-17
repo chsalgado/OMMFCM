@@ -105,11 +105,12 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
     }
 
     // Modifica un incidente
-    $scope.modificarIncidente = function(index, idIncidente, idEspecie){        
+    $scope.modificarIncidente = function(index, idIncidente, idEspecie, ruta, km){        
         $scope.editando[index] = false;
         $scope.editandoIn = false;
+        console.log('r'+ruta);
         
-        servicioIncidentes.modificarIncidente(idIncidente, idEspecie).then(function(resultado){
+        servicioIncidentes.modificarIncidente(idIncidente, idEspecie, ruta, km).then(function(resultado){
             $scope.actualizarPagina($scope.paginaActual);
             $scope.mensaje = 'El incidente ha sido modificado';
             $scope.exito = true;

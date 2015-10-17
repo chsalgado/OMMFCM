@@ -45,7 +45,7 @@
                         {{incidente.ruta}}
                     </td>
                     <td ng-show="editando[$index]">
-                        <input type="text" ng-model="incidete.ruta">
+                        <input type="text" ng-model="incidente.ruta">
                     </td>
                     <td ng-hide="editando[$index]">
                         {{incidente.km}}
@@ -58,7 +58,7 @@
                     </td>
                     <td>
                         <a ng-hide="editando[$index]" ng-click="editables($index)" class="btn btn-link" ng-class="{ disabled: editandoIn }"><i class="fa fa-edit fa-2x"></i></a>
-                        <a ng-show="editando[$index]" ng-click="modificarIncidente($index, incidente.idIncidente, incidente.idEspecie)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
+                        <a ng-show="editando[$index]" ng-click="modificarIncidente($index, incidente.idIncidente, incidente.idEspecie, incidente.ruta, incidente.km)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
                         <a ng-click="eliminarIncidente(incidente.idIncidente)" class="btn btn-link" ng-class="{ disabled: editandoIn }"><i class="fa fa-trash-o fa-2x"></i></a>
                     </td>
                 </tr>
