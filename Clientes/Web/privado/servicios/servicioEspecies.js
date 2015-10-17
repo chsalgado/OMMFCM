@@ -24,6 +24,13 @@ app.factory('servicioEspecies', ['$http', function($http){
             });
         };
 
+        // Obtiene los estados que puede tener una especie
+        var _obtenerEstadosEspecies = function(){
+            return $http.get(servicioBase + 'api/estadosEspecies').then(function(resultado){
+                return resultado.data.estadosEspecies;
+            });
+        }
+
         // Elimina una especie
         var _eliminarEspecie = function(id){
             return $http.delete(servicioBase + 'api/especies/' + id).then(function(resultado){
@@ -33,6 +40,7 @@ app.factory('servicioEspecies', ['$http', function($http){
 
         fabricaServicioEspecies.obtenerEspecies = _obtenerEspecies;
         fabricaServicioEspecies.obtenerEspeciesPaginadas = _obtenerEspeciesPaginadas;
+        fabricaServicioEspecies.obtenerEstadosEspecies = _obtenerEstadosEspecies;
         fabricaServicioEspecies.eliminarEspecie = _eliminarEspecie;
 
         return fabricaServicioEspecies;

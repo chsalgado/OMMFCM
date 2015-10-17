@@ -1,5 +1,5 @@
 'use strict';
-app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies', function($scope, $timeout, servicioEspecies){
+app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servicioEspecies', function($scope, $timeout, $filter, servicioEspecies){
 
     // Lista de especies
     $scope.especies = [];
@@ -20,6 +20,13 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
         $scope.errores = false;
     }
 
+    // Obtiene los estados que puede tener una especie
+    $scope.obtenerEstadosEspecies = function(){
+        servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
+            $scope.estados = resultado;
+        });
+    }
+
     // Obtiene los incidentes para llenar la tabla
     // Se llama cuando:
     //      Se carga la pagina
@@ -27,6 +34,9 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
     //      Se selecciona numero de resultados a mostrar
     //      Se elimina o modifica una especie
     $scope.actualizarPagina = function(pagina){
+        // Arreglo que guarda el nombre del estado de cada especie
+        $scope.nombreEstado = [];
+
         $scope.paginaActual = pagina;
         $scope.avanzar = true;
         $scope.regresar = true;
@@ -46,6 +56,17 @@ app.controller('controladorEspecies', ['$scope', '$timeout', 'servicioEspecies',
                 $scope.avanzar = false;
             }
         });
+    }
+
+    // Obtiene el nombre del estado de una especie
+    $scope.nombreEstadoEspecie = function(idEstadoEspecie){
+        // Encuentra el estado con el id recibido
+        $scope.nEstado = $filter('filter')($scope.estados, function(resultado){
+            return resultado.idEstadoEspecie === idEstadoEspecie;
+        })[0];
+
+        // Agrega el nombre al arreglo para mostrarlo en la tabla
+        $scope.nombreEstado.push.apply($scope.nombreEstado, [$scope.nEstado.estado]);
     }
 
     // Elimina una especie
