@@ -38,10 +38,17 @@ app.factory('servicioEspecies', ['$http', function($http){
             });
         };
 
+        var _modificarEspecie = function(idEspecie, nombreComun, nombreCientifico, idEstadoEspecie){
+            return $http.put(servicioBase + 'api/especies/' + idEspecie, {'nombreComun': nombreComun, 'nombreCientifico': nombreCientifico, 'idEstadoEspecie': idEstadoEspecie}).then(function(resultado){
+                return resultado.status;
+            });
+        };
+
         fabricaServicioEspecies.obtenerEspecies = _obtenerEspecies;
         fabricaServicioEspecies.obtenerEspeciesPaginadas = _obtenerEspeciesPaginadas;
         fabricaServicioEspecies.obtenerEstadosEspecies = _obtenerEstadosEspecies;
         fabricaServicioEspecies.eliminarEspecie = _eliminarEspecie;
+        fabricaServicioEspecies.modificarEspecie = _modificarEspecie;
 
         return fabricaServicioEspecies;
 }]);
