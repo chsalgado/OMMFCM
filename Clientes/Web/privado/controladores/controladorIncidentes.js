@@ -4,6 +4,13 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
     // Lista de incidentes
     $scope.incidentes = [];
 
+    // Objeto utilizado para agregar una especie
+    $scope.nuevaEspecie = {
+        "nombreComun":null,
+        "nombreCientifico":null,
+        "idEstadoEspecie":1
+    }
+
     // Variables de paginación
     $scope.paginaActual = 1;
     $scope.resultadosDisponibles = [10, 20, 30, 40, 50];
@@ -22,6 +29,15 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
     $scope.ocultarMensaje = function(){
         $scope.exito = false;
         $scope.errores = false;
+    }
+
+    // Obtiene los estados que puede tener una especie
+    $scope.obtenerEstadosEspecies = function(){
+        if(!$scope.estados){
+            servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
+                $scope.estados = resultado;
+            });
+        }
     }
 
     // Obtiene todas las especies
@@ -115,6 +131,19 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
             $scope.exito = true;
         }, function(resultado){
             $scope.mensaje = 'El incidente no fue modificado. Intentelo más tarde';
+            $scope.errores = true;
+        });
+        $timeout($scope.ocultarMensaje, 3000);
+    }
+
+    // Agrega una nueva especie
+    $scope.agregarEspecie = function(){
+        servicioEspecies.agregarEspecie($scope.nuevaEspecie).then(function(resultado){
+            $scope.obtenerEspecies();
+            $scope.mensaje = 'La especie ha sido agregada';
+            $scope.exito = true;
+        }, function(resultado){
+            $scope.mensaje = 'La especie no fue agregada. Intentelo más tarde';
             $scope.errores = true;
         });
         $timeout($scope.ocultarMensaje, 3000);
