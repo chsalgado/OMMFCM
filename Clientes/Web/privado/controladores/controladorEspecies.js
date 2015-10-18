@@ -9,7 +9,7 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
         "nombreComun":null,
         "nombreCientifico":null,
         "idEstadoEspecie":1
-    }
+    };
 
     // Variables de paginacion
     $scope.paginaActual = 1;
