@@ -1,0 +1,31 @@
+<!-- Modal para agregar especie -->
+<div class="modal fade" id="agregarEspecie">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Agregar Especie</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label">Nombre Común:</label>
+                        <input type="text" class="form-control" ng-model="nuevaEspecie.nombreComun">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Nombre Científico:</label>
+                        <input type="text" class="form-control" ng-model="nuevaEspecie.nombreCientifico">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Estado:</label>
+                        <select class="form-control" ng-model="nuevaEspecie.idEstadoEspecie" ng-options="estado.idEstadoEspecie as estado.estado for estado in estados"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" data-dismiss="modal" ng-click="agregarEspecie()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
