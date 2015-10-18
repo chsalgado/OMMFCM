@@ -9,7 +9,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         "nombreComun":null,
         "nombreCientifico":null,
         "idEstadoEspecie":1
-    }
+    };
 
     // Variables de paginación
     $scope.paginaActual = 1;

@@ -44,11 +44,19 @@ describe('probar servicio de especies', function(){
         });
 
         it('modifica una especie', function(){
-            $httpBackend.expectPUT(servicioBase + 'api/especies/4', {'nombreComun': 'nombreComun', 'nombreCientifico': 'nombreCientifico', 'idEstadoEspecie': 1}).respond(204);
+            $httpBackend.expectPUT(servicioBase + 'api/especies/4', {'nombreComun': 'nombreComun', 'nombreCientifico': 'nombreCientifico', 'idEstadoEspecie': 1}).respond(200);
             servicioEspecies.modificarEspecie(4, 'nombreComun', 'nombreCientifico', 1);
             $httpBackend.flush();
             $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();           
+            $httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it('agrega una nueva especie', function(){
+            $httpBackend.expectPOST(servicioBase + 'api/especies', {'nombreComun': 'nombreComun', 'nombreCientifico': 'nombreCientifico', 'idEstadoEspecie': 1}).respond(201);
+            servicioEspecies.agregarEspecie({'nombreComun': 'nombreComun', 'nombreCientifico': 'nombreCientifico', 'idEstadoEspecie': 1});
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
         });
     });
 });
