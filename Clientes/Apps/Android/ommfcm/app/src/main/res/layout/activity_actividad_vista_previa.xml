@@ -5,7 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.george.ommfcm.ActividadVistaPrevia"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/img_incidente"
@@ -23,7 +24,9 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:onClick="subirIncidente"
-        android:text="@string/btn_subir_incidente">
+        android:text="@string/btn_subir_incidente"
+        android:background="@color/blue1"
+        android:textColor="#ffffff">
     </Button>
 
 </LinearLayout>

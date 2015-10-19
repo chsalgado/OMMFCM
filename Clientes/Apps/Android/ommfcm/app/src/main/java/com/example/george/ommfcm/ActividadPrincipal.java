@@ -1,5 +1,6 @@
 package com.example.george.ommfcm;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,6 +33,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
 
     private static final int GALLERY_REQUEST = 1; // Codigo para identificar la llamada a la aplicación de galeria
     private static final int CAM_REQUEST = 2; // Codigo para identificar la llamada a la aplicacion de la camara
+    private static final int INFO_REQUEST = 4; // Codigo para identificar la llamada a la aplicacion de mas info
     private double latitud = 0; // Variable para guardar latitud
     private double longitud = 0; // Variable para guardar longitud
     private String rutaImagen;
@@ -47,6 +49,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_principal); // Cargar layout
+
 
         crearClienteLocalizacion(); // Crear cliente para localizacion
 
@@ -183,6 +186,11 @@ public class ActividadPrincipal extends AppCompatActivity implements
         startActivityForResult(intentCamara, CAM_REQUEST); // Inicia la aplicación de camara
     }
 
+    public void mostrar_info(View view){
+        Intent intentInfo = new Intent(ActividadPrincipal.this,Actividad_mas_info.class); // Crear nueva accion para mostrar mas informacion
+        startActivityForResult(intentInfo, INFO_REQUEST); // Inicia la actividad de mas_info
+    }
+
     /**
      * Metodo que llama a la aplicacion de galeria del dispositivo para seleccionar una foto
      *
@@ -256,6 +264,11 @@ public class ActividadPrincipal extends AppCompatActivity implements
         startActivity(intentFormulario); // Empezar actividad
     }
 
+    public void mostrar_mas_info() {
+        Intent intentInfo = new Intent(ActividadPrincipal.this,Actividad_mas_info.class); // Crear nueva accion para mostrar mas info
+        startActivity(intentInfo); // Empezar actividad
+    }
+
     /**
      * Metodo que recibe el resultado de la accion de tomar foto de la camara o escoger foto de la galeria
      *
@@ -278,7 +291,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
                 else
                     iniciarFormulario(); // En caso de que no existan coordenadas ir a vista 'Formulario'
 
-            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK ){ // Caso en que la imagen se tomo de la camara
+            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK ) { // Caso en que la imagen se tomo de la camara
 
                 Uri fotoCapturada = data.getData(); // Obtener informacion de la imagen
                 this.rutaImagen = obtenerRutaRealUri(fotoCapturada); // Obtener ruta real de la imagen
@@ -287,6 +300,9 @@ public class ActividadPrincipal extends AppCompatActivity implements
                     iniciarVistaPrevia(); // Si se pudieron obtener las coordenadas ir a 'VistaPrevia'
                 else
                     iniciarFormulario(); // En caso de que no se puedan obtener las coordeandas ir a vista 'Formulario'
+            }else if(requestCode == INFO_REQUEST &&  resultCode == RESULT_OK){ //Caso en el que se muestra mas info de la aplicacion
+
+                mostrar_mas_info(); // Muestra mas detalles e info de la aplicacion
 
             }else {
 
