@@ -127,14 +127,14 @@
 	    {
 	    	$incidenteExistente = Incidente::find($incidente -> idIncidente);
 
-			if(!$incidente -> idEspecie || !$incidente -> km || !$incidente -> ruta)
+			if(!$incidente -> idEspecie)
 			{
 				return 400;	
 			}
 
 			$incidenteExistente -> idEspecie = $incidente -> idEspecie;
-			$incidenteExistente -> ruta = $incidente -> ruta;
 			$incidenteExistente -> km = $incidente -> km;
+			$incidenteExistente -> ruta = $incidente -> ruta;
 			
 			$resultado = $incidenteExistente -> save();
 
@@ -184,6 +184,7 @@
 
 	    	$especieExistente -> nombreComun = $especie -> nombreComun;
 	    	$especieExistente -> nombreCientifico = $especie -> nombreCientifico;
+	    	$especieExistente -> idEstadoEspecie = $especie -> idEstadoEspecie;
 
 	    	$resultado = $especieExistente -> save();
 
@@ -198,6 +199,13 @@
 	    public function eliminarEspecie($id)
 	    {
 	    	$especie = Especie::find($id);
+	    	$incidentes = $especie -> incidentes;
+
+	    	if(count($incidentes))
+	    	{
+	    		return 412;
+	    	}
+
 	    	$resultado = $especie -> delete();
 
 	    	if($resultado)

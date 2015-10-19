@@ -6,7 +6,7 @@
 
 		public function incidentes()
 		{
-    		return $this -> hasMany('Incidente');
+    		return $this -> hasMany('Incidente', 'idEspecie', 'idEspecie');
     	}
 
 		public function estadoEspecie()
