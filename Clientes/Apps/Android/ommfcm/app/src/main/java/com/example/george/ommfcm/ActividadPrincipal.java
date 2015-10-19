@@ -1,5 +1,6 @@
 package com.example.george.ommfcm;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -47,6 +48,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_principal); // Cargar layout
+
 
         crearClienteLocalizacion(); // Crear cliente para localizacion
 
@@ -183,6 +185,11 @@ public class ActividadPrincipal extends AppCompatActivity implements
         startActivityForResult(intentCamara, CAM_REQUEST); // Inicia la aplicación de camara
     }
 
+    public void mostrar_info(View view){
+        Intent intentInfo = new Intent(ActividadPrincipal.this,Actividad_mas_info.class); // Crear nueva accion para mostrar mas informacion
+        startActivity(intentInfo); // Inicia la actividad de mas_info
+    }
+
     /**
      * Metodo que llama a la aplicacion de galeria del dispositivo para seleccionar una foto
      *
@@ -278,7 +285,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
                 else
                     iniciarFormulario(); // En caso de que no existan coordenadas ir a vista 'Formulario'
 
-            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK ){ // Caso en que la imagen se tomo de la camara
+            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK ) { // Caso en que la imagen se tomo de la camara
 
                 Uri fotoCapturada = data.getData(); // Obtener informacion de la imagen
                 this.rutaImagen = obtenerRutaRealUri(fotoCapturada); // Obtener ruta real de la imagen
@@ -286,7 +293,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
                 if (this.longitud != 0.0 && this.latitud != 0.0)
                     iniciarVistaPrevia(); // Si se pudieron obtener las coordenadas ir a 'VistaPrevia'
                 else
-                    iniciarFormulario(); // En caso de que no se puedan obtener las coordeandas ir a vista 'Formulario'
+                    iniciarFormulario(); // En caso de que no se puedan obtener las coordeandas ir a vista 'Formulario
 
             }else {
 
