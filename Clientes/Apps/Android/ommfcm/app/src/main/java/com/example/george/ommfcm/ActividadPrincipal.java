@@ -33,7 +33,6 @@ public class ActividadPrincipal extends AppCompatActivity implements
 
     private static final int GALLERY_REQUEST = 1; // Codigo para identificar la llamada a la aplicación de galeria
     private static final int CAM_REQUEST = 2; // Codigo para identificar la llamada a la aplicacion de la camara
-    private static final int INFO_REQUEST = 4; // Codigo para identificar la llamada a la aplicacion de mas info
     private double latitud = 0; // Variable para guardar latitud
     private double longitud = 0; // Variable para guardar longitud
     private String rutaImagen;
@@ -188,7 +187,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
 
     public void mostrar_info(View view){
         Intent intentInfo = new Intent(ActividadPrincipal.this,Actividad_mas_info.class); // Crear nueva accion para mostrar mas informacion
-        startActivityForResult(intentInfo, INFO_REQUEST); // Inicia la actividad de mas_info
+        startActivity(intentInfo); // Inicia la actividad de mas_info
     }
 
     /**
@@ -264,11 +263,6 @@ public class ActividadPrincipal extends AppCompatActivity implements
         startActivity(intentFormulario); // Empezar actividad
     }
 
-    public void mostrar_mas_info() {
-        Intent intentInfo = new Intent(ActividadPrincipal.this,Actividad_mas_info.class); // Crear nueva accion para mostrar mas info
-        startActivity(intentInfo); // Empezar actividad
-    }
-
     /**
      * Metodo que recibe el resultado de la accion de tomar foto de la camara o escoger foto de la galeria
      *
@@ -299,10 +293,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
                 if (this.longitud != 0.0 && this.latitud != 0.0)
                     iniciarVistaPrevia(); // Si se pudieron obtener las coordenadas ir a 'VistaPrevia'
                 else
-                    iniciarFormulario(); // En caso de que no se puedan obtener las coordeandas ir a vista 'Formulario'
-            }else if(requestCode == INFO_REQUEST &&  resultCode == RESULT_OK){ //Caso en el que se muestra mas info de la aplicacion
-
-                mostrar_mas_info(); // Muestra mas detalles e info de la aplicacion
+                    iniciarFormulario(); // En caso de que no se puedan obtener las coordeandas ir a vista 'Formulario
 
             }else {
 
