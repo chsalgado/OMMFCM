@@ -26,6 +26,9 @@ import CoreLocation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
+    // Unwind segue, para regresar aqui
+    @IBAction func regresaAInicio(segue: UIStoryboardSegue) {}
+    
     @IBAction func botonTomarFoto(sender: UIButton)
     {
         self.mostrarCamara()
