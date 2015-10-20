@@ -34,6 +34,7 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
     $scope.obtenerEstadosEspecies = function(){
         servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
             $scope.estados = resultado;
+            $scope.actualizarPagina(1);
         });
     }
 
@@ -67,9 +68,10 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
                 $scope.avanzar = false;
             }
 
-            angular.forEach($scope.especies, function(inc){
+            angular.forEach($scope.especies, function(esp){
                 // Arreglo que permite saber que especie se está modificando
                 $scope.editando.push.apply($scope.editando, [false]);
+                $scope.nombreEstadoEspecie(esp.idEstadoEspecie);
             });
 
         });

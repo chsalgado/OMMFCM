@@ -46,7 +46,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         servicioEspecies.obtenerEspecies().then(function(resultados){
             $scope.especies = resultados;
             $scope.especiesFiltro = [{"idEspecie": -1, "nombreComun": "- - Todas especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"}];
-            $scope.especiesFiltro.push.apply($scope.especiesFiltro, resultados); 
+            $scope.especiesFiltro.push.apply($scope.especiesFiltro, resultados);
+            $scope.actualizarPagina(1);
         });        
     }
 
@@ -84,6 +85,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
             angular.forEach($scope.incidentes, function(inc){
                 // Arreglo que permite saber que incidente se está modificando
                 $scope.editando.push.apply($scope.editando, [false]);
+                $scope.nombresDeEspecie(inc.idEspecie);
             });
         });
     }
