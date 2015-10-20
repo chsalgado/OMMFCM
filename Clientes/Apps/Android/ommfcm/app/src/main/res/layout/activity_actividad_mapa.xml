@@ -18,7 +18,8 @@
             android:text="Guardar seleccion"
             android:padding="10dp"
             android:layout_marginTop="20dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:onClick="irActividadVistaPrevia"/>
     </fragment>
 
 </RelativeLayout>
