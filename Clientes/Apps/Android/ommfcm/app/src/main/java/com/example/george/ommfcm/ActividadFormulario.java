@@ -1,6 +1,7 @@
 package com.example.george.ommfcm;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +13,9 @@ import android.view.MenuItem;
 import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -35,13 +38,22 @@ public class ActividadFormulario extends AppCompatActivity {
     private static final int MAPA = 1000; // Codigo para recibir la finalizacion de actividad mapa
     private String rutaImagen; // Variable para guardar la ruta de imagen seleccionada de la vista pasada
     private List<Estado> listaEstados; // Lista para los estados guardados en el servidor con id
-    private List<String> listaNombresEstados; // Lista para los estados guardados en el servidor sin id para la busqueda en el autocompletar
     private List<Municipio> listaMunicipiosOrigen; // Lista para los municipios origen guardados en el servidor con id
-    private List<String> listaNombresMunicipiosOrigen; // Lista para los municipios origen guardados en el servidor sin id para la busqueda en el autocompletar
     private List<Municipio> listaMunicipiosDestino; // Lista para los municipios destino guardados en el servidor con id
-    private List<String> listaNombresMunicipiosDestino; // Lista para los municipios destino guardados en el servidor sin id para la busqueda en el autocompletar
     private static final String rutaEstados = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/estados"; // Variable que contiene la ruta del servidor para recuperar los estados
     private static final String rutaMunicipios = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/municipios?estado="; // Variable que contiene la ruta del servidor para recuperar los municipios
+    private ProgressBar pb_origen_estado; // icono de progreso que muestra la descarga de estados del servidor
+    private ProgressBar pb_origen_municipio; // icono de progreso que muestra la descarga de estados del servidor
+    private ProgressBar pb_destino_estado; // icono de progreso que muestra la descarga de municipios del servidor
+    private ProgressBar pb_destino_municipio; // icono de progreso que muestra la descarga de municipios del servidor
+    private AutoCompleteTextView actv_origen_estado; // variable de referencia al campo de texto con autompletar de estados origen
+    private AutoCompleteTextView actv_origen_municipio; // variable de referencia al campo de texto con autompletar de estados destino
+    private AutoCompleteTextView actv_destino_estado; // variable de referencia al campo de texto con autompletar de municipios origen
+    private AutoCompleteTextView actv_destino_municipio; // variable de referencia al campo de texto con autompletar de municipios destino
+    private Estado estado_origen_seleccionado;
+    private Estado estado_destino_seleccionado;
+    private Municipio municipio_origen_seleccionado;
+    private Municipio municipio_destino_seleccionado;
 
     /**
      * Metodo que se llama la primera vez que se crea la vista
@@ -54,6 +66,24 @@ public class ActividadFormulario extends AppCompatActivity {
 
         Intent intent = getIntent(); // Variable para recuperar datos enviados por otra vista
         rutaImagen = intent.getStringExtra("ruta_imagen"); // Recuperacion de la variable de ruta de imagne de la vista pasada
+
+        // Referenciar variables con elementos de la vista
+        pb_origen_estado = (ProgressBar) findViewById(R.id.pb_origen_estado);
+        pb_destino_estado = (ProgressBar) findViewById(R.id.pb_destino_estado);
+        pb_origen_municipio = (ProgressBar) findViewById(R.id.pb_origen_municipio);
+        pb_destino_municipio = (ProgressBar) findViewById(R.id.pb_destino_municipio);
+
+        actv_origen_estado = (AutoCompleteTextView) findViewById(R.id.txt_origen_estado);
+        actv_destino_estado = (AutoCompleteTextView) findViewById(R.id.txt_destino_estado);
+        actv_origen_municipio = (AutoCompleteTextView) findViewById(R.id.txt_origen_municipio);
+        actv_destino_municipio = (AutoCompleteTextView) findViewById(R.id.txt_destino_municipio);
+
+        // Establecer todos los campos de texto como inhabilitados
+        actv_origen_estado.setEnabled(false);
+        actv_destino_estado.setEnabled(false);
+        actv_origen_municipio.setEnabled(false);
+        actv_destino_municipio.setEnabled(false);
+
         conseguirEstados(); // Llamada a metodo para recuperar los estados del servidor
     }
 
@@ -63,9 +93,11 @@ public class ActividadFormulario extends AppCompatActivity {
     private void conseguirEstados(){
         // Inicizalizacion de variables
         this.listaEstados = new ArrayList<Estado>();
-        this.listaNombresEstados = new ArrayList<String>();
         final Context ctx = this.getApplicationContext();
         AsyncHttpClient cliente = new AsyncHttpClient();
+
+        pb_origen_estado.setVisibility(View.VISIBLE); // Mostrar spinner carga estados origen
+        pb_destino_estado.setVisibility(View.VISIBLE); // Mostrar spinner cargar estados destino
 
         // Llamada GET al servidor
         cliente.get(this.rutaEstados, new JsonHttpResponseHandler() {
@@ -79,6 +111,7 @@ public class ActividadFormulario extends AppCompatActivity {
              */
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
+
                 try {
                     JSONArray jarr = responseBody.getJSONArray("estados"); // Arreglo que recupera los estados de la respuesta del servidor
 
@@ -86,23 +119,26 @@ public class ActividadFormulario extends AppCompatActivity {
                     for (int i = 0; i < jarr.length(); i++) {
                         JSONObject r = jarr.getJSONObject(i);
                         listaEstados.add(new Estado(r.getInt("id_estado"), r.getString("estado"))); // Agregar objeto de estado a la lista de estados
-                        listaNombresEstados.add(r.getString("estado")); // Agregar nombre de estado a la lista de nombres de estados
                     }
 
-                    AutoCompleteTextView txt_origen_estados = (AutoCompleteTextView) findViewById(R.id.txt_origen_estado); // Asignar elemento visual de autocompletar para estados origen a una variable para poder editarlo
-                    ArrayAdapter<String> adaptadorEstados = new ArrayAdapter<String>(ctx,
-                            android.R.layout.simple_dropdown_item_1line, listaNombresEstados); // Creacion de un adaptador para el elemento de autocompletar con la lista de nombres de estados
-                    txt_origen_estados.setAdapter(adaptadorEstados); // Agregar adaptador al elemento de autocompletar para estados origen
+                    AdaptadorEstado adaptadorEstados = new AdaptadorEstado(ctx, R.layout.activity_actividad_formulario, R.id.nombre_estado, listaEstados); // Creacion de un adaptador para el elemento de autocompletar con la lista de nombres de estados
+                    actv_origen_estado.setAdapter(adaptadorEstados); // Agregar adaptador al elemento de autocompletar para estados origen
+                    actv_destino_estado.setAdapter(adaptadorEstados); // Agregar adaptador al elemento de autocompletar para estados destino
 
-                    AutoCompleteTextView txt_destino_estados = (AutoCompleteTextView) findViewById(R.id.txt_destino_estado); // Asignar elemento visual de autocompletar para estados destino a una variable para poder editarlo
-                    txt_destino_estados.setAdapter(adaptadorEstados); // Agregar adaptador al elemento de autocompletar para estados destino
+                    addListenerOrigenEstado(actv_origen_estado); // Agregar un listener al autocompletar de estados origen
+                    addListenerDestinoEstado(actv_destino_estado); // Agregar un listener al autocompletar de estados destino
+                    addListenerOrigenMunicipio(actv_origen_municipio);
+                    addListenerDestinoMunicipio(actv_destino_municipio);
 
-                    addListenerOrigenEstado(txt_origen_estados); // Agregar un listener al autocompletar de estados origen
-                    addListenerDestinoEstado(txt_destino_estados); // Agregar un listener al autocompletar de estados destino
+                    actv_origen_estado.setEnabled(true);
+                    actv_destino_estado.setEnabled(true);
 
                 } catch (Exception e) {
                     e.printStackTrace(); // Imprimir la pila del error
                 }
+
+                pb_origen_estado.setVisibility(View.INVISIBLE); // Ocultar spinner carga estados origen
+                pb_destino_estado.setVisibility(View.INVISIBLE); // Ocultar spinner carga estados destino
             }
 
             /**
@@ -116,6 +152,8 @@ public class ActividadFormulario extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable
                     error) {
+                pb_origen_estado.setVisibility(View.INVISIBLE); // Ocultar spinner carga estados origen
+                pb_destino_estado.setVisibility(View.INVISIBLE); // Ocultar spinner carga estados destino
                 error.printStackTrace(); // Imprimir la pila del error
             }
         });
@@ -129,7 +167,6 @@ public class ActividadFormulario extends AppCompatActivity {
     public void conseguirMunicipiosOrigen(int idEstado){
         // Inicializacion de variables
         this.listaMunicipiosOrigen = new ArrayList<Municipio>();
-        this.listaNombresMunicipiosOrigen = new ArrayList<String>();
         final Context ctx = this.getApplicationContext();
         AsyncHttpClient cliente = new AsyncHttpClient();
 
@@ -144,22 +181,27 @@ public class ActividadFormulario extends AppCompatActivity {
                     for (int i = 0; i < jarr.length(); i++) {
                         JSONObject r = jarr.getJSONObject(i);
                         listaMunicipiosOrigen.add(new Municipio(r.getInt("id_municipio"), r.getString("nombre_municipio"))); // Agregar objeto municipio al arreglo de municipios
-                        listaNombresMunicipiosOrigen.add(r.getString("nombre_municipio")); // Agregar nombre de municipios a la lista de nombres
                     }
 
                     AutoCompleteTextView txt_origen_municipio = (AutoCompleteTextView) findViewById(R.id.txt_origen_municipio); // Asignar variable a elemento de autocompletar
-                    ArrayAdapter<String> adaptadorMunicipios = new ArrayAdapter<String>(ctx,
-                            android.R.layout.simple_dropdown_item_1line, listaNombresMunicipiosOrigen); // Creacion de adaptador para el autocompletar con el arrreglo de elementos a buscar
+
+                    AdaptadorMunicipio adaptadorMunicipios = new AdaptadorMunicipio(ctx,
+                            R.layout.activity_actividad_formulario, R.id.nombre_estado, listaMunicipiosOrigen); // Creacion de adaptador para el autocompletar con el arrreglo de elementos a buscar
                     txt_origen_municipio.setAdapter(adaptadorMunicipios); // Agregar adapatdor al elemento de autocompletar
+                    actv_origen_municipio.setEnabled(true);
 
                 } catch (Exception e) {
+
                     e.printStackTrace(); // Imprimir pila de error
                 }
+                pb_origen_municipio.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable
                     error) {
+                pb_origen_municipio.setVisibility(View.INVISIBLE);
                 error.printStackTrace(); // Imprimir pila de error
             }
         });
@@ -173,7 +215,6 @@ public class ActividadFormulario extends AppCompatActivity {
     public void conseguirMunicipiosDestino(int idEstado){
         // Inicializacion de variables
         this.listaMunicipiosDestino = new ArrayList<Municipio>();
-        this.listaNombresMunicipiosDestino = new ArrayList<String>();
         final Context ctx = this.getApplicationContext();
         AsyncHttpClient cliente = new AsyncHttpClient();
 
@@ -188,22 +229,23 @@ public class ActividadFormulario extends AppCompatActivity {
                     for (int i = 0; i < jarr.length(); i++) {
                         JSONObject r = jarr.getJSONObject(i);
                         listaMunicipiosDestino.add(new Municipio(r.getInt("id_municipio"), r.getString("nombre_municipio")));
-                        listaNombresMunicipiosDestino.add(r.getString("nombre_municipio"));
                     }
 
                     AutoCompleteTextView txt_destino_municipio = (AutoCompleteTextView) findViewById(R.id.txt_destino_municipio); // Asignar variable a elemento de autocompletar
-                    ArrayAdapter<String> adaptadorMunicipios = new ArrayAdapter<String>(ctx,
-                            android.R.layout.simple_dropdown_item_1line, listaNombresMunicipiosDestino); // Creacion de adaptador para el autocompletar con el arreglo de elementos a buscar
+                    AdaptadorMunicipio adaptadorMunicipios = new AdaptadorMunicipio(ctx,
+                            R.layout.activity_actividad_formulario, R.id.nombre_estado, listaMunicipiosDestino); // Creacion de adaptador para el autocompletar con el arrreglo de elementos a buscar
                     txt_destino_municipio.setAdapter(adaptadorMunicipios); // Agregar adaptador al elemento de atucompletar
-
+                    actv_destino_municipio.setEnabled(true);
                 } catch (Exception e) {
                     e.printStackTrace(); // Imprimir  pila de errores
                 }
+                pb_destino_municipio.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable
                     error) {
+                pb_destino_municipio.setVisibility(View.INVISIBLE);
                 error.printStackTrace(); // Imprimir pila de errores
             }
         });
@@ -219,14 +261,12 @@ public class ActividadFormulario extends AppCompatActivity {
         txt_origen_estado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String seleccion = (String) parent.getItemAtPosition(position); // Obtiene el string de la opcion seleccionada en el autocompletar
+                Estado seleccion = (Estado) parent.getItemAtPosition(position); // Obtiene el string de la opcion seleccionada en el autocompletar
 
-                // Ciclo que busca la seleccion en la lista de objetos estado
-                for (int i = 0; i < listaEstados.size(); i++) {
-                    if (listaEstados.get(i).getNombre().equals(seleccion)) {
-                        conseguirMunicipiosOrigen(listaEstados.get(i).getId()); // Si se encuentra el elemento se buscan los municipios asociados al estado
-                    }
-                }
+                estado_origen_seleccionado = seleccion;
+                actv_destino_municipio.setEnabled(false);
+                pb_origen_municipio.setVisibility(View.VISIBLE);
+                conseguirMunicipiosOrigen(seleccion.getId()); // Si se encuentra el elemento se buscan los municipios asociados al estado
             }
         });
     }
@@ -241,36 +281,34 @@ public class ActividadFormulario extends AppCompatActivity {
         txt_destino_estado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String seleccion = (String) parent.getItemAtPosition(position); // Obtiene el string de la opcion seleccionada en el autocompletar
+                Estado seleccion = (Estado) parent.getItemAtPosition(position); // Obtiene el string de la opcion seleccionada en el autocompletar
 
-                // Ciclo que busca la seleccion en la lista de objetos estado
-                for(int i = 0; i < listaEstados.size(); i++){
-                    if(listaEstados.get(i).getNombre().equals(seleccion)){
-                        conseguirMunicipiosDestino(listaEstados.get(i).getId()); // Si se encuentra el elemento se buscan los municipios asociados al estado
-                    }
-                }
+                estado_destino_seleccionado = seleccion;
+                actv_destino_municipio.setEnabled(false);
+                pb_destino_municipio.setVisibility(View.VISIBLE);
+                conseguirMunicipiosDestino(seleccion.getId()); // Si se encuentra el elemento se buscan los municipios asociados al estado
             }
         });
     }
 
-    /**
-     * Metodo que llama a la actividad para mostrar el mapa
-     * @param view
-     */
-    public void mostrarMapa(View view){
+    public void addListenerOrigenMunicipio(AutoCompleteTextView txt_origen_municipio){
+        txt_origen_municipio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Municipio seleccion = (Municipio) parent.getItemAtPosition(position); // Obtiene el objeto de la opcion seleccionada en el autocompletar
+                municipio_origen_seleccionado = seleccion;
+            }
+        });
+    }
 
-        AutoCompleteTextView txt_origen_estado = (AutoCompleteTextView) findViewById(R.id.txt_origen_estado);
-        AutoCompleteTextView txt_origen_municipio = (AutoCompleteTextView) findViewById(R.id.txt_origen_municipio);
-        AutoCompleteTextView txt_destino_estado = (AutoCompleteTextView) findViewById(R.id.txt_destino_estado);
-        AutoCompleteTextView txt_destino_municipio = (AutoCompleteTextView) findViewById(R.id.txt_destino_municipio);
-
-        final Intent intent = new Intent(this, ActividadMapa.class);
-        intent.putExtra("OrigenEstado", txt_origen_estado.getText().toString().trim());
-        intent.putExtra("OrigenMunicipio", txt_origen_municipio.getText().toString().trim());
-        intent.putExtra("DestinoEstado", txt_destino_estado.getText().toString().trim());
-        intent.putExtra("DestinoMunicipio", txt_destino_municipio.getText().toString().trim());
-
-        this.startActivityForResult(intent, MAPA);
+    public void addListenerDestinoMunicipio(AutoCompleteTextView txt_destino_municipio){
+        txt_destino_municipio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Municipio seleccion = (Municipio) parent.getItemAtPosition(position); // Obtiene el objeto de la opcion seleccionada en el autocompletar
+                municipio_destino_seleccionado = seleccion;
+            }
+        });
     }
 
     /**
@@ -278,24 +316,104 @@ public class ActividadFormulario extends AppCompatActivity {
      *
      * @param view
      */
-    public void irVistaPrevia(View view){
-        Intent intent = new Intent(this, ActividadVistaPrevia.class);
-        intent.putExtra("ruta_imagen", rutaImagen);
-        this.startActivity(intent);
-    }
+    public void irActividadMapa(View view){
 
-    /**
-     * TODO: Metodo que se llama al regresar de la ventana de mapa
-     *
-     * @param requestCode numero que identifica a la ventana de donde se esta regresando
-     * @param resultCode numero con el codigo del resultado
-     * @param data informacion que se regresa de la ventana
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MAPA && resultCode == RESULT_OK && data != null) {
+        if(validacionCamposTexto()) {
+            AutoCompleteTextView txt_origen_estado = (AutoCompleteTextView) findViewById(R.id.txt_origen_estado);
+            AutoCompleteTextView txt_origen_municipio = (AutoCompleteTextView) findViewById(R.id.txt_origen_municipio);
+            AutoCompleteTextView txt_destino_estado = (AutoCompleteTextView) findViewById(R.id.txt_destino_estado);
+            AutoCompleteTextView txt_destino_municipio = (AutoCompleteTextView) findViewById(R.id.txt_destino_municipio);
 
+            final Intent intent = new Intent(this, ActividadMapa.class);
+            intent.putExtra("OrigenEstado", txt_origen_estado.getText().toString().trim());
+            intent.putExtra("OrigenMunicipio", txt_origen_municipio.getText().toString().trim());
+            intent.putExtra("DestinoEstado", txt_destino_estado.getText().toString().trim());
+            intent.putExtra("DestinoMunicipio", txt_destino_municipio.getText().toString().trim());
+            intent.putExtra("idMunicipioOrigen", this.municipio_origen_seleccionado.getId());
+            intent.putExtra("idMunicipioDestino", this.municipio_destino_seleccionado.getId());
+            intent.putExtra("ruta_imagen", this.rutaImagen);
+
+            this.startActivity(intent);
         }
     }
 
+    /**
+     * Metodo para validar los campos de texto para estado/municipio origen/destino
+     * @return true si los campos contienen datos validos, false en caso contrario
+     */
+    public boolean validacionCamposTexto(){
+
+        String origen_estado_txt = actv_origen_estado.getText().toString().trim();
+        String origen_municipio_txt = actv_origen_municipio.getText().toString().trim();
+        String destino_estado_txt = actv_destino_estado.getText().toString().trim();
+        String destino_muicipio_txt = actv_destino_municipio.getText().toString().trim();
+
+        if(origen_estado_txt.equals("") || origen_municipio_txt.equals("") || destino_estado_txt.equals("") || destino_muicipio_txt.equals("")){
+            mostrarMensaje("Campos faltantes", "Favor de especificar un estado/municipio origen y destino");
+            return false;
+        }
+
+        if(this.estado_origen_seleccionado == null){
+            mostrarMensaje("Estado origen invalido", "Favor de seleccionar un estado valido");
+            return false;
+        }
+
+        if(this.estado_destino_seleccionado == null){
+            mostrarMensaje("Estado destino invalido", "Favor de seleccionar un estado valido");
+            return false;
+        }
+
+        if(this.municipio_origen_seleccionado == null){
+            mostrarMensaje("Municipio origen invalido", "Favor de seleccionar un municipio valido");
+            return false;
+        }
+
+        if(this.municipio_destino_seleccionado == null){
+            mostrarMensaje("Municipio destino invalido", "Favor de seleccionar un municipio valido");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void mostrarMensaje(String titulo, String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    /**
+     * Metodo que cierra el teclado cuando se toca la pantalla
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        View view = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (view instanceof EditText) {
+            View w = getCurrentFocus();
+            int scrcoords[] = new int[2];
+            w.getLocationOnScreen(scrcoords);
+            float x = event.getRawX() + w.getLeft() - scrcoords[0];
+            float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+            if (event.getAction() == MotionEvent.ACTION_UP
+                    && (x < w.getLeft() || x >= w.getRight()
+                    || y < w.getTop() || y > w.getBottom()) ) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
+    }
 }
