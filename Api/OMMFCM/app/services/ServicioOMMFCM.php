@@ -6,6 +6,7 @@
 	use \Eventviva\ImageResize;
 	use Especie;
 	use Estado;
+	use EstadoEspecie;
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -132,6 +133,9 @@
 			}
 
 			$incidenteExistente -> idEspecie = $incidente -> idEspecie;
+			$incidenteExistente -> km = $incidente -> km;
+			$incidenteExistente -> ruta = $incidente -> ruta;
+			
 			$resultado = $incidenteExistente -> save();
 
 			if($resultado)
@@ -180,6 +184,7 @@
 
 	    	$especieExistente -> nombreComun = $especie -> nombreComun;
 	    	$especieExistente -> nombreCientifico = $especie -> nombreCientifico;
+	    	$especieExistente -> idEstadoEspecie = $especie -> idEstadoEspecie;
 
 	    	$resultado = $especieExistente -> save();
 
@@ -194,6 +199,13 @@
 	    public function eliminarEspecie($id)
 	    {
 	    	$especie = Especie::find($id);
+	    	$incidentes = $especie -> incidentes;
+
+	    	if(count($incidentes))
+	    	{
+	    		return 412;
+	    	}
+
 	    	$resultado = $especie -> delete();
 
 	    	if($resultado)
@@ -216,5 +228,12 @@
 	   		$municipios = Estado::find($idEstado) -> municipios;
 
 	   		return $municipios;
+	   	}
+
+	   	public function getEstadosEspecies()
+	   	{
+	   		$estadosEspecies = EstadoEspecie::all();
+
+	   		return $estadosEspecies;
 	   	}
 	}

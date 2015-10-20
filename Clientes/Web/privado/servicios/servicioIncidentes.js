@@ -37,8 +37,8 @@ app.factory('servicioIncidentes', ['$http', function($http){
         };
 
         // Modifica la especie de un incidente
-        var _modificarIncidente = function(idIncidente, idEspecie){
-            return $http.put(servicioBase + 'api/incidentes/' + idIncidente, {'idEspecie': idEspecie}).then(function(resultado){
+        var _modificarIncidente = function(idIncidente, idEspecie, ruta, km){
+            return $http.put(servicioBase + 'api/incidentes/' + idIncidente, {'idEspecie': idEspecie, 'ruta': ruta, 'km': km}).then(function(resultado){
                 return resultado.status;
             });
         };

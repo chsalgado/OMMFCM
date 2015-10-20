@@ -12,5 +12,16 @@
     <string name="btn_detalles"></string>
     <string name="inicio_intro">Bienvenido a la aplicacion de IMT. Para iniciar la generacion del reporte, presione en cualquiera de los dos botones.</string>
     <string name="btn_subir_incidente">Subir incidente</string>
+    <string name="btn_regresar_inicio">  Regresar a inicio  </string>
     <string name="title_activity_actividad_mapa">ActividadMapa</string>
+    <string name="acerca_de">Más informaciÓn</string>
+    <string name="acerca_titulo">Información acerca de la aplicación</string>
+    <string name="acerca_descripcion">La aplicación tiene como objetivo reportar accidentes de animales atropellados en la carretera.</string>
+    <color name="white">#FFFFFF</color>
+    <color name="green1">#BEE7B8</color>
+    <color name="green2">#84B37D</color>
+    <color name="blue1">#549992</color>
+    <color name="green3">#065143</color>
+    <color name="bckgrndgrey">#A2B6B8</color>
+    <string name="gracias">Gracias por tu aportacion</string>
 </resources>

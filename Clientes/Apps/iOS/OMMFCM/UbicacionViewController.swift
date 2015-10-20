@@ -7,31 +7,28 @@
 //
 
 import UIKit
+import Foundation
 
-class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate
+class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate
 {
-    var estados: [String: String]!                  // De memoria
-    var estadosMunicipios: [String: NSDictionary]!  // De memoria
-    
-    // Info actual mostrandose en seleccion
+    // Info actual obtenida
     var informacionSelectorMunicipiosOrigen: [[String: String]] = [[:]]
     var informacionSelectorMunicipiosDestino: [[String: String]] = [[:]]
     var informacionSelectorEstados: [[String: String]]  = [[:]]
     
-    var nombreOrigen: String?
-    var nombreDestino: String?
+    // Info filtrada para autocompletar
+    var informacionFiltradaEstados: [[String: String]] = [[:]]
+    var informacionFiltradaMunicipios: [[String: String]] = [[:]]
     
-    @IBOutlet weak var selectorOrigen: UIPickerView!
-    @IBOutlet weak var selectorDestino: UIPickerView!
+    var campoDeTextoActual: Int?
+    var tecladoEnPantalla: Bool = false
     
-    @IBOutlet weak var kilometro: UILabel!
+    @IBOutlet weak var estadoOrigen: UITextField!
+    @IBOutlet weak var municipioOrigen: UITextField!
+    @IBOutlet weak var estadoDestino: UITextField!
+    @IBOutlet weak var municipioDestino: UITextField!
     
-    @IBAction func cambiarKilometro(sender: UIStepper)
-    {
-        let km = Int(sender.value).description
-        self.kilometro?.text = km
-        Datos.kilometros = km
-    }
+    @IBOutlet weak var opciones: UITableView!
     
     // Unwind segue, para regresar aqui
     @IBAction func regresaAUbicacion(segue: UIStoryboardSegue) {}
@@ -40,13 +37,24 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
     {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: self.view.window)
+        
         //self.cargaPrimerosEstadosMunicipiosDeMemoria() // CargaMemoria
         self.actualizaEstados()
         
-        self.selectorOrigen.delegate = self
-        self.selectorOrigen.dataSource = self
-        self.selectorDestino.delegate = self
-        self.selectorDestino.dataSource = self
+        self.estadoOrigen.delegate = self
+        self.municipioOrigen.delegate = self
+        self.estadoDestino.delegate = self
+        self.municipioDestino.delegate = self
+        
+        self.opciones.delegate = self
+        self.opciones.dataSource = self
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     
     func actualizaEstados()
@@ -83,11 +91,6 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                         }
                     }
                     self.informacionSelectorEstados.removeFirst()
-                    self.performBlock({
-                        self.selectorOrigen.reloadComponent(0)
-                        self.selectorDestino.reloadComponent(0)
-                        }, afterDelay: 0.1)
-                    self.actualizaMunicipios(self.informacionSelectorEstados.first!["idEstado"]!)
                 }
                 else if (resp as! NSHTTPURLResponse).statusCode == 500
                 {
@@ -108,10 +111,10 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
         
         if selector == nil
         {
-            self.actualizaMunicipios(estado, selector: 0)
-            self.actualizaMunicipios(estado, selector: 1)
+            self.actualizaMunicipios(estado, selector: 2)
+            self.actualizaMunicipios(estado, selector: 4)
         }
-        else if selector == 0
+        else if selector == 2
         {
             sesion.dataTaskWithRequest(request, completionHandler:
                 {(data: NSData?, resp: NSURLResponse?, error: NSError?) in
@@ -131,11 +134,6 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                                 self.informacionSelectorMunicipiosOrigen.append(infoMunicipios)
                             }
                             self.informacionSelectorMunicipiosOrigen.removeFirst()
-                            self.performBlock({
-                                self.selectorOrigen.reloadComponent(1)
-                                self.selectorOrigen.selectRow(0, inComponent: 1, animated: true)
-                                self.pickerView(self.selectorOrigen, didSelectRow: 0, inComponent: 1)
-                                }, afterDelay: 0.1)
                         }
                     }
                     else if (resp as! NSHTTPURLResponse).statusCode == 500
@@ -144,7 +142,7 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                     }
             }).resume()
         }
-        else if selector == 1
+        else if selector == 4
         {
             sesion.dataTaskWithRequest(request, completionHandler:
                 {(data: NSData?, resp: NSURLResponse?, error: NSError?) in
@@ -164,11 +162,6 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
                                 self.informacionSelectorMunicipiosDestino.append(infoMunicipios)
                             }
                             self.informacionSelectorMunicipiosDestino.removeFirst()
-                            self.performBlock({
-                                self.selectorDestino.reloadComponent(1)
-                                self.selectorDestino.selectRow(0, inComponent: 1, animated: true)
-                                self.pickerView(self.selectorDestino, didSelectRow: 0, inComponent: 1)
-                                }, afterDelay: 0.1)
                         }
                     }
                     else if (resp as! NSHTTPURLResponse).statusCode == 500
@@ -179,194 +172,222 @@ class UbicacionViewController: UIViewController, UIPickerViewDataSource, UIPicke
         }
     }
     
-    // Funciones de DataSource delegate
-    // Cuantos compomentes tiene, estados y municipios
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+    func filtraEstadosCon(texto: String)
     {
-        return 2
-    }
-    
-    // Cuandos elementos tiene el componente
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-    {
-        if component == 0   // Estados
+        self.informacionFiltradaEstados = []
+        for estados in self.informacionSelectorEstados
         {
-            return self.informacionSelectorEstados.count
-        }
-        else
-        {
-            if pickerView.tag == 0  // Municipios Origen
+            if let estado = estados["estado"]
             {
-                return self.informacionSelectorMunicipiosOrigen.count
-            }
-            else    // Municipios destino
-            {
-                return self.informacionSelectorMunicipiosDestino.count
+                if estado.localizedCaseInsensitiveContainsString(texto)
+                {
+                    self.informacionFiltradaEstados.append(estados)
+                }
             }
         }
     }
     
-    // Funciones de Picker delegate
-    // Se llama a este metodo cuando se selecciono un elemento
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    func filtraMunicipiosCon(texto: String, campo: Int)
     {
-        if component == 0
+        self.informacionFiltradaMunicipios = []
+        if campo == 2
         {
-            let idEstado = self.informacionSelectorEstados[row]["idEstado"]
-            self.actualizaMunicipios(idEstado!, selector: pickerView.tag)
-            //self.actualizaMunicipiosDeMemoria(idEstado!, selector: pickerView.tag)    //CargaMemoria
+            for municipios in self.informacionSelectorMunicipiosOrigen
+            {
+                if let municipio = municipios["municipio"]
+                {
+                    if municipio.localizedCaseInsensitiveContainsString(texto)
+                    {
+                        self.informacionFiltradaMunicipios.append(municipios)
+                    }
+                }
+            }
         }
         else
         {
-            if pickerView.tag == 0
+            for municipios in self.informacionSelectorMunicipiosDestino
             {
-                Datos.municipioOrigen = self.informacionSelectorMunicipiosOrigen[row]["idMunicipio"]
-                Datos.municipioOrigenTexto = self.informacionSelectorMunicipiosOrigen[row]["municipio"]
-                let estado = self.informacionSelectorEstados[self.selectorOrigen.selectedRowInComponent(0)]["estado"]
-                self.nombreOrigen = Datos.municipioOrigenTexto! + " " + estado!
+                if let municipio = municipios["municipio"]
+                {
+                    if municipio.localizedCaseInsensitiveContainsString(texto)
+                    {
+                        self.informacionFiltradaMunicipios.append(municipios)
+                    }
+                }
+            }
+        }
+    }
+    
+    func moverOpcionesA(posicion: CGFloat) {
+        self.opciones.frame.origin = CGPoint(x: self.opciones.frame.origin.x, y: posicion)
+    }
+    
+    // UITextField Delegate
+    func textFieldDidBeginEditing(textField: UITextField)
+    {
+        self.campoDeTextoActual = textField.tag
+        self.moverOpcionesA(textField.frame.origin.y + textField.frame.size.height)
+        //self.opciones.hidden = false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        print("did end edit")
+        self.opciones.hidden = true
+        self.campoDeTextoActual = nil
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if let texto = textField.text
+        {
+            switch textField.tag
+            {
+            case 1, 3:
+                self.filtraEstadosCon(texto + string)
+                
+            case 2, 4:
+                self.filtraMunicipiosCon(texto + string, campo: textField.tag)
+                
+            default:
+                break
+            }
+            self.opciones.reloadData()
+            self.opciones.hidden = false
+        }
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // UITableView Delegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if self.campoDeTextoActual != nil
+        {
+            switch self.campoDeTextoActual!
+            {
+            case 1:
+                self.estadoOrigen.text = self.informacionFiltradaEstados[indexPath.row]["estado"]
+                self.actualizaMunicipios(self.informacionFiltradaEstados[indexPath.row]["idEstado"]!, selector: 2)
+                
+            case 2:
+                self.municipioOrigen.text = self.informacionFiltradaMunicipios[indexPath.row]["municipio"]
+                
+            case 3:
+                self.estadoDestino.text = self.informacionFiltradaEstados[indexPath.row]["estado"]
+                self.actualizaMunicipios(self.informacionFiltradaEstados[indexPath.row]["idEstado"]!, selector: 4)
+                
+            case 4:
+                self.municipioDestino.text = self.informacionFiltradaMunicipios[indexPath.row]["municipio"]
+                
+            default:
+                break
+            }
+        }
+        self.opciones.hidden = true
+    }
+    
+    // UITableView Data Source
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        if self.campoDeTextoActual != nil
+        {
+            switch self.campoDeTextoActual!
+            {
+            case 1, 3:
+                return self.informacionFiltradaEstados.count
+                
+            case 2, 4:
+                return self.informacionFiltradaMunicipios.count
+                
+            default:
+                break
+            }
+        }
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let celda = tableView.dequeueReusableCellWithIdentifier("prototipo")
+        
+        if self.campoDeTextoActual != nil
+        {
+            switch self.campoDeTextoActual!
+            {
+            case 1, 3:
+                celda?.textLabel?.text = self.informacionFiltradaEstados[indexPath.row]["estado"]
+                
+            case 2, 4:
+                celda?.textLabel?.text = self.informacionFiltradaMunicipios[indexPath.row]["municipio"]
+                
+            default:
+                break
+            }
+        }
+        return celda!
+    }
+    
+    @IBAction func botonContinuar(sender: UIButton)
+    {
+        if self.municipioOrigen.text!.characters.count > 0 && self.municipioDestino.text!.characters.count > 0
+        {
+            self.performSegueWithIdentifier("verMapa", sender: self)
+        }
+        else
+        {
+            let aviso = UIAlertController(title: "Error: Origen y/o Destino", message: "Porfavor escribe un origen y destino", preferredStyle: UIAlertControllerStyle.Alert)
+            let accion = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.Default, handler: { _ in })
+            aviso.addAction(accion)
+            self.presentViewController(aviso, animated: true, completion: {})
+        }
+    }
+    
+    func keyboardWillHide(sender: NSNotification)
+    {
+        if self.campoDeTextoActual == 3 || self.campoDeTextoActual == 4
+        {
+            let userInfo: [NSObject : AnyObject] = sender.userInfo!
+            let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+            self.view.frame.origin.y += keyboardSize.height
+        }
+        self.tecladoEnPantalla = false
+    }
+    
+    func keyboardWillShow(sender: NSNotification)
+    {
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        
+        if self.campoDeTextoActual == 3 || self.campoDeTextoActual == 4 && !self.tecladoEnPantalla
+        {
+            self.tecladoEnPantalla = true
+            if keyboardSize.height == offset.height
+            {
+                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    self.view.frame.origin.y -= keyboardSize.height
+                })
             }
             else
             {
-                Datos.municipioDestino = self.informacionSelectorMunicipiosDestino[row]["idMunicipio"]
-                Datos.municipioDestinoTexto = self.informacionSelectorMunicipiosDestino[row]["municipio"]
-                let estado = self.informacionSelectorEstados[self.selectorDestino.selectedRowInComponent(0)]["estado"]
-                self.nombreDestino = Datos.municipioDestinoTexto! + " " + estado!
+                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    self.view.frame.origin.y += keyboardSize.height - offset.height
+                })
             }
         }
     }
     
-    // Muestra la informacion en el elemento, actualiza el que se selecciono
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
-        var pickerLabel = view as? UILabel
-        if pickerLabel == nil
-        {
-            pickerLabel = UILabel()
-            pickerLabel!.font = UIFont(name: "System", size: 15)
-            pickerLabel!.textAlignment = NSTextAlignment.Center
-        }
-        
-        if component == 0   // Estados
-        {
-            pickerLabel?.text = self.informacionSelectorEstados[row]["estado"]
-        }
-        else
-        {
-            if pickerView.tag == 0  // Origen
-            {
-                pickerLabel?.text = self.informacionSelectorMunicipiosOrigen[row]["municipio"]
-            }
-            else
-            {
-                pickerLabel?.text = self.informacionSelectorMunicipiosDestino[row]["municipio"]
-            }
-        }
-        return pickerLabel!
-    }
-    
-    // Estados y municipios de memoria
-    func cargaPrimerosEstadosMunicipiosDeMemoria()
-    {
-        self.obtenerEstadosMunicipiosDeMemoria()
-        self.actualizaEstadosDeMemoria()
-        self.actualizaMunicipiosDeMemoria(self.informacionSelectorEstados.first!["idEstado"]!)// obtengo el estado del primer municipio
-    }
-    
-    func obtenerEstadosMunicipiosDeMemoria()
-    {
-        var path = NSBundle.mainBundle().pathForResource("estados", ofType: "json")
-        var data = NSData(contentsOfFile: path!)
-        var result = try? NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-        
-        if let dic = result as? NSDictionary
-        {
-            if let estadosLeidos = dic["estados"] as? NSDictionary
-            {
-                self.estados = estadosLeidos as! [String : String]
-            }
-        }
-        
-        path = NSBundle.mainBundle().pathForResource("municipios", ofType: "json")
-        data = NSData(contentsOfFile: path!)
-        result = try? NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-        
-        if let dic = result as? NSDictionary
-        {
-            if let estadosLeidos = dic["estados"] as? NSDictionary
-            {
-                self.estadosMunicipios = estadosLeidos as! [String: NSDictionary]
-            }
-        }
-    }
-    
-    func actualizaEstadosDeMemoria()
-    {
-        self.informacionSelectorEstados = [[:]]
-        
-        var infoEstado = [String: String]()
-        
-        for (idEstado, nomEstado) in self.estados
-        {
-            infoEstado["idEstado"] = idEstado
-            infoEstado["estado"] = nomEstado
-            self.informacionSelectorEstados.append(infoEstado)
-        }
-        self.informacionSelectorEstados.removeFirst()
-        self.informacionSelectorEstados.sortInPlace({return $0["estado"] < $1["estado"]})
-    }
-    
-    func actualizaMunicipiosDeMemoria(estado: String, selector: Int? = nil)
-    {
-        if selector == nil
-        {
-            self.actualizaMunicipiosDeMemoria(estado, selector: 0)
-            self.actualizaMunicipiosDeMemoria(estado, selector: 1)
-        }
-        else if selector == 0
-        {
-            self.informacionSelectorMunicipiosOrigen = [[:]]
-            
-            // obtengo los municipios del estado con su llave
-            let municipiosDeEstado = self.estadosMunicipios[estado] as! [String: String]
-            
-            var infoMunicipios: [String: String] = [:]
-            for (idMunicipio, nombreMunicipio) in municipiosDeEstado {
-                infoMunicipios["idMunicipio"] = idMunicipio
-                infoMunicipios["municipio"] = nombreMunicipio
-                infoMunicipios["idEstado"] = estado
-                self.informacionSelectorMunicipiosOrigen.append(infoMunicipios)
-            }
-            self.informacionSelectorMunicipiosOrigen.removeFirst()
-            self.selectorOrigen?.reloadComponent(1)
-        }
-        else if selector == 1
-        {
-            self.informacionSelectorMunicipiosDestino = [[:]]
-            
-            // obtengo los municipios del estado con su llave
-            let municipiosDeEstado = self.estadosMunicipios[estado] as! [String: String]
-            
-            var infoMunicipios: [String: String] = [:]
-            for (idMunicipio, nombreMunicipio) in municipiosDeEstado {
-                infoMunicipios["idMunicipio"] = idMunicipio
-                infoMunicipios["municipio"] = nombreMunicipio
-                infoMunicipios["idEstado"] = estado
-                self.informacionSelectorMunicipiosDestino.append(infoMunicipios)
-            }
-            self.informacionSelectorMunicipiosDestino.removeFirst()
-            self.selectorDestino?.reloadComponent(1)
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "verMapa" {
-            let controladorDestino = segue.destinationViewController as! MapaViewController
-            controladorDestino.nombreOrigen = self.nombreOrigen
-            controladorDestino.nombreDestino = self.nombreDestino
-        }
-    }
-    
-    func performBlock(block:() -> Void, afterDelay delay:NSTimeInterval){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), block)
+        let controladorDestino = segue.destinationViewController as! MapaViewController
+        controladorDestino.nombreOrigen = self.municipioOrigen.text! + " " + self.estadoOrigen.text!
+        controladorDestino.nombreDestino = self.municipioDestino.text! + " " + self.estadoDestino.text!
     }
 }

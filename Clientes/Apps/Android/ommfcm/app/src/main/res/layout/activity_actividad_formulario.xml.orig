@@ -14,15 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:text="Origen"
-        android:layout_weight="0"
-        android:textColor="@color/green3"
-        android:background="@color/green1" />
+<<<<<<< HEAD
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:text="Origen"
+            android:layout_weight="0" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -132,6 +131,99 @@
                 android:visibility="invisible"/>
 
         </FrameLayout>
+=======
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:text="Origen"
+        android:layout_weight="0"
+        android:textColor="@color/green3"
+        android:background="@color/green1" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txt_origen_estado"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estado"
+        android:layout_weight="0"
+        android:textColor="@android:color/black"
+        android:popupBackground="#686868"
+        />
+
+    <AutoCompleteTextView
+        android:id="@+id/txt_origen_municipio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Municipio"
+        android:layout_weight="0"
+        android:popupBackground="#686868"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:text="Destino"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:background="@color/green1"
+        android:textColor="@color/green3" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txt_destino_estado"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estado"
+        android:layout_weight="0"
+        android:popupBackground="#686868"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/txt_destino_municipio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Municipio"
+        android:layout_weight="0"
+        android:popupBackground="#686868"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:text="Km"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:textColor="@color/green3" />
+
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/editText"
+        android:layout_weight="0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:text="Especificar lugar en mapa"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:textColor="@color/green3" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Mostrar mapa"
+        android:layout_weight="0"
+        android:onClick="mostrarMapa"
+        android:background="@color/blue1"
+        android:textColor="#ffffff"/>
+>>>>>>> origin/master
 
     </LinearLayout>
 
@@ -149,9 +241,13 @@
             android:layout_height="wrap_content"
             android:text="Siguiente"
             android:layout_gravity="bottom"
+<<<<<<< HEAD
+            android:onClick="irActividadMapa"/>
+=======
             android:onClick="irVistaPrevia"
             android:background="@color/blue1"
             android:textColor="#ffffff"/>
+>>>>>>> origin/master
     </LinearLayout>
 
 

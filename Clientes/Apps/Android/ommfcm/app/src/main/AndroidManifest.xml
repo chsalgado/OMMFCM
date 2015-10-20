@@ -14,10 +14,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/appicon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCjf595AjHcxVjZVWlNsgrGjUFIoOdO12A" />
@@ -25,7 +24,7 @@
         <activity
             android:name=".ActividadLogo"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,27 +34,29 @@
         <activity
             android:name=".ActividadPrincipal"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ActividadFormulario"
             android:label="@string/title_activity_actividad_formulario"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ActividadConfirmacion"
             android:label="@string/title_activity_actividad_confirmacion"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ActividadVistaPrevia"
             android:label="@string/title_activity_actividad_vista_previa"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ActividadMapa"
             android:label="@string/title_activity_actividad_mapa"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".Actividad_mas_info" >
         </activity>
     </application>
 

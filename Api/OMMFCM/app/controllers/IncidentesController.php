@@ -121,6 +121,8 @@ class IncidentesController extends \BaseController
 		$incidente = new Incidente;
 		$incidente -> idIncidente = $id;
 		$incidente -> idEspecie = Input::get('idEspecie');
+		$incidente -> km = Input::get('km');
+		$incidente -> ruta = Input::get('ruta');
 
 		$resultado = $this->servicioOMMFCM->modificarIncidente($incidente);
 
