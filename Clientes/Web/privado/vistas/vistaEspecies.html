@@ -1,5 +1,5 @@
 <div ng-include="'vistas/modalAgregarEspecie.html'"></div>
-<div ng-init="obtenerEstadosEspecies(); actualizarPagina(1)">
+<div ng-init="obtenerEstadosEspecies();">
 	<div class="row">
         <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
         <div class="alert alert-success fade in retro" ng-show="exito">{{mensaje}}</div>
@@ -25,7 +25,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="especie in especies" ng-init="nombreEstadoEspecie(especie.idEstadoEspecie)">
+				<tr ng-repeat="especie in especies">
 					<td ng-hide="editando[$index]">
 						{{especie.nombreComun}}
 					</td>
