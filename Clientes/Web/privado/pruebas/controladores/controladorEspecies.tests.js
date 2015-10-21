@@ -30,7 +30,7 @@ describe('controlador especies', function(){
 				if(exito){
 					return ($q.resolve({
 						"especies":
-							[{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","idEstadoEspecie":1,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},
+							[{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","idEstadoEspecie":2,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},
 							{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","idEstadoEspecie":1,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"}
 							],
 						"total": 2,
@@ -118,14 +118,10 @@ describe('controlador especies', function(){
 
 	it('actualiza la pagina', function(){
 		cambiarExito(true);
-		$scope.actualizarPagina(1);
-		expect($scope.nombreEstado.length).toBe(0);
-		expect($scope.paginaActual).toEqual(1);
-        expect($scope.avanzar).toBe(true);
-        expect($scope.regresar).toBe(true);
+		$scope.obtenerEstadosEspecies();
+		$timeout.flush();
         expect(mockServicioEspecies.obtenerEspeciesPaginadas).toHaveBeenCalledWith(1, 10);
-        $timeout.flush();
-        expect($scope.especies).toEqual([{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","idEstadoEspecie":1,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","idEstadoEspecie":1,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"}]);
+        expect($scope.especies).toEqual([{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","idEstadoEspecie":2,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","idEstadoEspecie":1,"created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"}]);
         expect($scope.total).toEqual(2);
         expect($scope.desde).toEqual(1);
         expect($scope.hasta).toEqual(2);
@@ -133,20 +129,13 @@ describe('controlador especies', function(){
         expect($scope.regresar).toBe(false);
         expect($scope.avanzar).toBe(false);
         expect($scope.editando).toEqual([false, false]);
-	});
-
-	it('obtiene el nombre del estado de una especie', function(){
-		cambiarExito(true);
-		$scope.obtenerEstadosEspecies();
-		$scope.actualizarPagina(1);
-		$timeout.flush();
-		$scope.nombreEstadoEspecie(2);
-		expect($scope.nombreEstado).toEqual(['Amenazada']);
+        expect($scope.nombreEstado).toEqual(['Amenazada', 'Sin Clasificar']);
 	});
 
 	it('muestra mensaje de exito cuando se elimina una especie', function(){
 		cambiarExito(true);
 		var idEspecie = 4;
+		$scope.obtenerEstadosEspecies();
 		$scope.eliminarEspecie(idEspecie);
 		expect(mockServicioEspecies.eliminarEspecie).toHaveBeenCalledWith(idEspecie);
 		$timeout.flush();
@@ -175,7 +164,7 @@ describe('controlador especies', function(){
 
 	it('muestra mensaje de exito cuando se modifica una especie', function(){
 		cambiarExito(true);
-		$scope.actualizarPagina(1);
+		$scope.obtenerEstadosEspecies();
 		$timeout.flush();
 
 		var index = 1;
@@ -193,7 +182,7 @@ describe('controlador especies', function(){
 
 	it('muestra mensaje de error cuando no se puede modificar una especie', function(){
 		cambiarExito(true);
-		$scope.actualizarPagina(1);
+		$scope.obtenerEstadosEspecies();
 		$timeout.flush();
 
 		cambiarExito(false);
@@ -212,6 +201,7 @@ describe('controlador especies', function(){
 
 	it('muestra mensaje de exito cuando se agrega una especie', function(){
 		cambiarExito(true);
+		$scope.obtenerEstadosEspecies();
 		$scope.agregarEspecie();
 		expect(mockServicioEspecies.agregarEspecie).toHaveBeenCalled();
 		$timeout.flush();
@@ -224,5 +214,5 @@ describe('controlador especies', function(){
 		expect(mockServicioEspecies.agregarEspecie).toHaveBeenCalled();
 		$timeout.flush();
 		expect($scope.mensaje).toBe('La especie no fue agregada. Intentelo más tarde')
-	});
+	}); 	
 });

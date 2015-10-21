@@ -145,14 +145,9 @@ describe('controlador incidentes', function(){
 
     it('actualiza la pagina', function(){
         cambiarExito(true);
-        $scope.actualizarPagina(1);
-        expect($scope.nombreEspecie.length).toBe(0);
-        expect($scope.editando.length).toBe(0);
-        expect($scope.paginaActual).toEqual(1);
-        expect($scope.avanzar).toBe(true);
-        expect($scope.regresar).toBe(true);
-        expect(mockServicioIncidentes.obtenerIncidentes).toHaveBeenCalledWith(1, 10, -1);
+        $scope.obtenerEspecies();
         $timeout.flush();
+        expect(mockServicioIncidentes.obtenerIncidentes).toHaveBeenCalledWith(1, 10, -1);
         expect($scope.incidentes).toEqual([{"idIncidente":26,"idEspecie":15,"fecha":null,"rutaFoto":"as","long":null,"lat":null,"mpioOrigen":3,"mpioDestino":4,"km":null,"created_at":"-0001-11-30 00:00:00","updated_at":"-0001-11-30 00:00:00","rutaThumbnail":"x"},{"idIncidente":27,"idEspecie":15,"fecha":null,"rutaFoto":"as","long":null,"lat":null,"mpioOrigen":3,"mpioDestino":4,"km":null,"created_at":"-0001-11-30 00:00:00","updated_at":"-0001-11-30 00:00:00","rutaThumbnail":"dd"}]);
         expect($scope.total).toEqual(2);
         expect($scope.desde).toEqual(1);
@@ -161,19 +156,12 @@ describe('controlador incidentes', function(){
         expect($scope.regresar).toBe(false);
         expect($scope.avanzar).toBe(false);
         expect($scope.editando).toEqual([false,false]);
-    });
-
-    it('obtiene los nombres de especie de un incidente', function(){
-        cambiarExito(true);
-        $scope.obtenerEspecies();
-        $scope.actualizarPagina(1);
-        $timeout.flush();
-        $scope.nombresDeEspecie(14);
-        expect($scope.nombreEspecie).toEqual(['nombre comun0 - nombre cientifico0']);
+        expect($scope.nombreEspecie).toEqual(['nombre comun1 - nombre cientifico1', 'nombre comun1 - nombre cientifico1'])
     });
 
     it('muestra mensaje de exito cuando se elimina un incidente', function(){
         cambiarExito(true);
+        $scope.obtenerEspecies();
         var idIncidente = 2;
         $scope.eliminarIncidente(idIncidente);
         expect(mockServicioIncidentes.eliminarIncidente).toHaveBeenCalledWith(idIncidente);
@@ -193,7 +181,7 @@ describe('controlador incidentes', function(){
     it('muestra mensaje de éxito cuando se modifica un incidente', function(){
         cambiarExito(true);
         // Se llama para definir editando
-        $scope.actualizarPagina(1);
+        $scope.obtenerEspecies();
         $timeout.flush();
 
         var index = 1;
@@ -212,7 +200,7 @@ describe('controlador incidentes', function(){
     it('muestra mensaje de error cuando no se puede modificar un incidente', function(){
         cambiarExito(true);
         // Se llama para definir editando
-        $scope.actualizarPagina(1);
+        $scope.obtenerEspecies();
         $timeout.flush();
         
         cambiarExito(false);
