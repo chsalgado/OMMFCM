@@ -82,9 +82,7 @@ class MandarViewController: UIViewController
                 self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
                 let accion = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.Default, handler: { _ in })
                 if (response as! NSHTTPURLResponse).statusCode == 200 {
-                    let respuesta = UIAlertController(title: "Enviado", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                    respuesta.addAction(accion)
-                    self.presentViewController(respuesta, animated: true, completion: {})
+                    self.performSegueWithIdentifier("vistaFinal", sender: self)
                     self.envioExitoso = true
                 } else  {
                     let respuesta = UIAlertController(title: "Error", message: error?.description, preferredStyle: UIAlertControllerStyle.Alert)
