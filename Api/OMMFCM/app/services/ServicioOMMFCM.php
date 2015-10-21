@@ -33,20 +33,8 @@
 	    		return 400;
 	    	}
 
-	    	if(is_null($incidente -> idEspecie))
-	    	{
-	    		$incidente -> idEspecie = 0;
-	    	}
-
-	    	if(is_null($incidente -> mpioOrigen))
-	    	{
-	    		$incidente -> mpioOrigen = 0;
-	    	}
-
-	    	if(is_null($incidente -> mpioDestino))
-	    	{
-	    		$incidente -> mpioDestino = 0;
-	    	}
+	    	// Le asignamos la idEspecie 0 para definir que no se le ha asignado ninguna especie
+	    	$incidente -> idEspecie = 0;	    	
 
 	    	$thumbnailAncho = 200;
 	    	$thumbnailAlto = 200;
