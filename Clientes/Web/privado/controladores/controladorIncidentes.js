@@ -31,6 +31,14 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         $scope.errores = false;
     }
 
+    // Regresa nueva especie a sus valores originales
+    // Utilizada para limpiar la forma de agregar especie
+    $scope.limpiarEspecie = function(){
+        $scope.nuevaEspecie.nombreComun = null;
+        $scope.nuevaEspecie.nombreCientifico = null;
+        $scope.nuevaEspecie.idEstadoEspecie = 1;
+    }
+
     // Obtiene los estados que puede tener una especie
     $scope.obtenerEstadosEspecies = function(){
         if(!$scope.estados){
@@ -143,10 +151,12 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         servicioEspecies.agregarEspecie($scope.nuevaEspecie).then(function(resultado){
             $scope.obtenerEspecies();
             $scope.mensaje = 'La especie ha sido agregada';
+            $scope.limpiarEspecie();
             $scope.exito = true;
         }, function(resultado){
             $scope.mensaje = 'La especie no fue agregada. Intentelo más tarde';
             $scope.errores = true;
+            $scope.limpiarEspecie();
         });
         $timeout($scope.ocultarMensaje, 3000);
     }

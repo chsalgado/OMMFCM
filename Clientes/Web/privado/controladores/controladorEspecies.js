@@ -30,6 +30,14 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
         $scope.errores = false;
     }
 
+    // Regresa nueva especie a sus valores originales
+    // Utilizada para limpiar la forma de agregar especie
+    $scope.limpiarEspecie = function(){
+        $scope.nuevaEspecie.nombreComun = null;
+        $scope.nuevaEspecie.nombreCientifico = null;
+        $scope.nuevaEspecie.idEstadoEspecie = 1;
+    }
+
     // Obtiene los estados que puede tener una especie
     $scope.obtenerEstadosEspecies = function(){
         servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
@@ -135,9 +143,11 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
             $scope.actualizarPagina($scope.paginaActual);
             $scope.mensaje = 'La especie ha sido agregada';
             $scope.exito = true;
+            $scope.limpiarEspecie();
         }, function(resultado){
             $scope.mensaje = 'La especie no fue agregada. Intentelo más tarde';
             $scope.errores = true;
+            $scope.limpiarEspecie();
         });
         $timeout($scope.ocultarMensaje, 3000);
     }
