@@ -21,3 +21,7 @@ select.especie{
 .fotoMaxWidth{
 	max-width: 100%;
 }
+
+.fotoLink{
+	cursor: pointer;
+}
