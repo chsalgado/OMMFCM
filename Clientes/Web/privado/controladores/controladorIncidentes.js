@@ -31,6 +31,12 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         $scope.errores = false;
     }
 
+    // Variables para visualizar foto
+    $scope.ruta = 'http://148.243.51.170:8007/obsfauna/public_html/imagenes';
+    $scope.asignarRutaFoto = function(rutaFoto){
+        $scope.rutaFoto = rutaFoto;
+    }
+
     // Regresa nueva especie a sus valores originales
     // Utilizada para limpiar la forma de agregar especie
     $scope.limpiarEspecie = function(){

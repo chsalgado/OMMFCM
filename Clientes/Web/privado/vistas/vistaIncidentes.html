@@ -1,4 +1,5 @@
 <div ng-include="'vistas/modalAgregarEspecie.html'"></div>
+<div ng-include="'vistas/modalVerFoto.html'"></div>
 <div ng-init="obtenerEspecies()">
     <div class="row">
         <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
@@ -33,7 +34,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="incidente in incidentes">
-                    <td><img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (incidente.rutatdumbnail).split('imagenes')[1] }}"></td>
+                    <td><a data-toggle="modal" data-target="#verFoto" class="fotoLink"><img ng-src="{{ (ruta) + (incidente.rutaThumbnail).split('imagenes')[1] }}" ng-click="asignarRutaFoto(incidente.rutaFoto)"></a></td>
                     <td ng-hide="editando[$index]">
                         {{nombreEspecie[$index]}}
                     </td>
