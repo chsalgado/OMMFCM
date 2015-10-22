@@ -135,7 +135,8 @@
 
 	    public function getEspecies($pagina, $resultados)
 	    {
-	   		$especies = Especie::all();
+	    	// Regresar todas las especies, excepto la que tiene id=0 (es la especie default)
+	   		$especies = Especie::where('idEspecie', '>', 0)->get();
 
 	   		// Validar que los dos parámetros de paginación fueron enviados, de lo contrario mandar todas las especies
 	   		if(!is_null($pagina) && !is_null($resultados))
