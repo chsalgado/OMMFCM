@@ -1,0 +1,13 @@
+<!-- Modal para ver foto -->
+<div class="modal fade" id="verFoto">
+    <div class="modal-dialog fotoWidth">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <img ng-src="{{ 'http://148.243.51.170:8007/obsfauna/public_html/imagenes' + (rutaFoto).split('imagenes')[1] }}" class="center-block fotoMaxWidth">
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,3 +13,11 @@ select.especie{
 .menuScrolleable{
 	margin-top: 50px;
 }
+
+.fotoWidth{
+	width: 1000px;
+}
+
+.fotoMaxWidth{
+	max-width: 100%;
+}

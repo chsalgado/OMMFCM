@@ -31,6 +31,11 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         $scope.errores = false;
     }
 
+    // Variable utilizada para visualizar foto en modal
+    $scope.asignarRutaFoto = function(rutaFoto){
+        $scope.rutaFoto = rutaFoto;
+    }
+
     // Regresa nueva especie a sus valores originales
     // Utilizada para limpiar la forma de agregar especie
     $scope.limpiarEspecie = function(){
