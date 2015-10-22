@@ -31,7 +31,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         $scope.errores = false;
     }
 
-    // Variable utilizada para visualizar foto en modal
+    // Variables para visualizar foto
+    $scope.ruta = 'http://148.243.51.170:8007/obsfauna/public_html/imagenes';
     $scope.asignarRutaFoto = function(rutaFoto){
         $scope.rutaFoto = rutaFoto;
     }
