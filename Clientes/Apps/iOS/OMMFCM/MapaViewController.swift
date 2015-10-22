@@ -80,11 +80,6 @@ class MapaViewController: UIViewController, MKMapViewDelegate
         self.localizarPuntos()
     }
     
-    override func prefersStatusBarHidden() -> Bool
-    {
-        return true
-    }
-    
     func localizarPuntos()
     {
         if self.nombreOrigen != nil
