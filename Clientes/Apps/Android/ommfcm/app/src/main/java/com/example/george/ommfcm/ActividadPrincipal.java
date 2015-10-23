@@ -187,9 +187,9 @@ public class ActividadPrincipal extends AppCompatActivity implements
      */
     public void tomar_foto(View view){
         Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // Crear nueva accion para ejecutar la aplicacion de camara
-        File archivoImagen = crearArchivoSalida();
-        uriImagen = Uri.fromFile(archivoImagen);
-        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, uriImagen);
+        File archivoImagen = crearArchivoSalida(); // Crear archivo donde se va a guardar la imagen
+        uriImagen = Uri.fromFile(archivoImagen); // Obtener ruta del archivo
+        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, uriImagen); // Pasar ruta de archivo en el intent 
         startActivityForResult(intentCamara, CAM_REQUEST); // Inicia la aplicación de camara
     }
 
@@ -276,6 +276,10 @@ public class ActividadPrincipal extends AppCompatActivity implements
         startActivity(intentFormulario); // Empezar actividad
     }
 
+    /**
+     * Metodo que crea un archivo de imagen vacio donde se va a guardar la foto capturada
+     * @return archivo creado
+     */
     protected File crearArchivoSalida(){
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
@@ -322,7 +326,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
                 else
                     iniciarFormulario(); // En caso de que no existan coordenadas ir a vista 'Formulario'
 
-            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK) { // Caso en que la imagen se tomo de la camara
+            } else if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) { // Caso en que la imagen se tomo de la camara
 
                 Uri fotoCapturada = uriImagen; // Obtener informacion de la imagen
                 this.rutaImagen = obtenerRutaRealUri(fotoCapturada); // Obtener ruta real de la imagen
