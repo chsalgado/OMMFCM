@@ -15,6 +15,8 @@ class TestMandar: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        Datos.latitud = 0.0
+        Datos.longitud = 0.0
         let sb = UIStoryboard(name: "Main", bundle: nil)
         self.controladorMandar = sb.instantiateViewControllerWithIdentifier("MandarViewController") as! MandarViewController
         let _ = controladorMandar.view
@@ -23,21 +25,6 @@ class TestMandar: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-    }
-    
-    func testColocaInformacion() {
-        let municipioDestino = "Irapuato"
-        let municipioOrigen = "Celaya"
-        let km = "23"
-        Datos.municipioDestinoTexto = municipioDestino
-        Datos.municipioOrigenTexto = municipioOrigen
-        Datos.kilometros = km
-        
-        self.controladorMandar.colocaInformacion()
-        
-        XCTAssertEqual(self.controladorMandar.municipioOrigen.text, municipioOrigen)
-        XCTAssertEqual(self.controladorMandar.municipioDestino.text, municipioDestino)
-        XCTAssertEqual(self.controladorMandar.kilometros.text, km)
     }
     
     func testColocaPuntoEnMapa() {

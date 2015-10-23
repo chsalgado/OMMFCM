@@ -23,14 +23,6 @@ class TestUbicacion: XCTestCase {
         super.tearDown()
     }
     
-    // Prueba cambiar el kilometro en interfaz
-    func testCambiarKilometro() {
-        let sender = UIStepper()
-        sender.value = 55
-        self.controladorUbicacion.cambiarKilometro(sender)
-        XCTAssertEqual(Datos.kilometros, Int(sender.value).description)
-    }
-    
     // Prueba obtener los estados del servicio
     func testActualizaEstados() {
         self.controladorUbicacion.actualizaEstados()
@@ -59,7 +51,7 @@ class TestUbicacion: XCTestCase {
         self.performBlock({
             XCTAssertNotNil(self.controladorUbicacion.informacionSelectorMunicipiosOrigen)
             XCTAssertNotNil(self.controladorUbicacion.informacionSelectorMunicipiosDestino)
-            print(self.controladorUbicacion.informacionSelectorMunicipiosOrigen[1]["municipio"])
+            
             XCTAssertEqual(self.controladorUbicacion.informacionSelectorMunicipiosOrigen[1]["municipio"], municipio)
             XCTAssertEqual(self.controladorUbicacion.informacionSelectorMunicipiosDestino[1]["municipio"], municipio)
             expectativa.fulfill()
@@ -70,39 +62,14 @@ class TestUbicacion: XCTestCase {
         }
     }
     
-    func testObtenerEstadosMunicipiosDeMemoria() {
-        XCTAssertNil(self.controladorUbicacion.estados)
-        XCTAssertNil(self.controladorUbicacion.estadosMunicipios)
-        
-        self.controladorUbicacion.obtenerEstadosMunicipiosDeMemoria()
-        
-        XCTAssertNotNil(self.controladorUbicacion.estados)
-        XCTAssertNotNil(self.controladorUbicacion.estadosMunicipios)
-        XCTAssertEqual(self.controladorUbicacion.estados["1"], "Aguascalientes")
-        let estado = self.controladorUbicacion.estadosMunicipios["1"]  as! [String: String]
-        XCTAssertEqual(estado["1"], "Aguascalientes")
+    // Prueba de mover elemento
+    func testMoverOpcionesA() {
+        let posicion: CGFloat = 100
+        self.controladorUbicacion.moverOpcionesA(posicion)
+        XCTAssertEqual(self.controladorUbicacion.opciones.frame.origin.y, posicion)
     }
     
-    func testActualizaEstadosDeMemoria() {
-        let estado = "Aguascalientes"
-        self.controladorUbicacion.estados = ["1": estado, "2": "Baja California Norte"]
-        
-        self.controladorUbicacion.actualizaEstadosDeMemoria()
-        
-        XCTAssertNotNil(self.controladorUbicacion.informacionSelectorEstados)
-        XCTAssertEqual(self.controladorUbicacion.informacionSelectorEstados[0]["estado"], estado)
-    }
     
-    func testActualizaMunicipiosDeMemoria() {
-        let estado = "1"
-        let municipio = "Aguascalientes"
-        self.controladorUbicacion.estadosMunicipios = [estado: ["1": municipio]]
-        
-        self.controladorUbicacion.actualizaMunicipiosDeMemoria(estado)
-        
-        XCTAssertEqual(self.controladorUbicacion.informacionSelectorMunicipiosOrigen[0]["municipio"], municipio)
-        XCTAssertEqual(self.controladorUbicacion.informacionSelectorMunicipiosDestino[0]["municipio"], municipio)
-    }
     
     // Ejecuta un bloque de codigo despues del tiempo dado
     func performBlock(block:() -> Void, afterDelay delay:NSTimeInterval){

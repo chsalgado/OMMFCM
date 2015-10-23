@@ -226,13 +226,11 @@ class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableVie
     func textFieldDidBeginEditing(textField: UITextField)
     {
         self.campoDeTextoActual = textField.tag
-        self.moverOpcionesA(textField.frame.origin.y + textField.frame.size.height)
-        //self.opciones.hidden = false
+        self.moverOpcionesA(self.view.convertPoint(textField.frame.origin, fromView: textField.superview).y + textField.frame.size.height)
     }
     
     func textFieldDidEndEditing(textField: UITextField)
     {
-        print("did end edit")
         self.opciones.hidden = true
         self.campoDeTextoActual = nil
     }
@@ -366,7 +364,7 @@ class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableVie
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
         
-        if self.campoDeTextoActual == 3 || self.campoDeTextoActual == 4 && !self.tecladoEnPantalla
+        if (self.campoDeTextoActual == 3 || self.campoDeTextoActual == 4) && !self.tecladoEnPantalla
         {
             self.tecladoEnPantalla = true
             if keyboardSize.height == offset.height
@@ -380,6 +378,14 @@ class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableVie
                 UIView.animateWithDuration(0.1, animations: { () -> Void in
                     self.view.frame.origin.y += keyboardSize.height - offset.height
                 })
+            }
+        }
+    }
+    
+    @IBAction func tocoPantalla(sender: UITapGestureRecognizer) {
+        if self.campoDeTextoActual != nil {
+            if self.opciones.hidden {
+                self.view.viewWithTag(self.campoDeTextoActual!)?.resignFirstResponder()
             }
         }
     }
