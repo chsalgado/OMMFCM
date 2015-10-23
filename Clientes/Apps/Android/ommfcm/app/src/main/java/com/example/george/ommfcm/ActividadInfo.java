@@ -3,7 +3,7 @@ package com.example.george.ommfcm;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Actividad_mas_info extends AppCompatActivity {
+public class ActividadInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
