@@ -3,10 +3,15 @@ package com.example.george.ommfcm;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,11 +42,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ActividadMapa extends AppCompatActivity {
     private GoogleMap gMap; // Variable para invocar el mapa
     protected LatLng selected_location;
+    protected String rutaImagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_mapa);
+
+        Intent intent = getIntent(); // Variable para recuperar datos enviados por otra vista
+        rutaImagen = intent.getStringExtra("ruta_imagen");
 
         gMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap(); // Creacion del mapa
 
@@ -63,7 +72,7 @@ public class ActividadMapa extends AppCompatActivity {
             Intent intent = new Intent(this, ActividadVistaPrevia.class);
             intent.putExtra("latitud", selected_location.latitude);
             intent.putExtra("longitud", selected_location.longitude);
-
+            intent.putExtra("ruta_imagen", rutaImagen);
 
             this.startActivity(intent);
         }

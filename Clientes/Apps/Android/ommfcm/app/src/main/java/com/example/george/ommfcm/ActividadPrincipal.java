@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ActividadPrincipal extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
@@ -36,6 +40,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
     private double latitud = 0; // Variable para guardar latitud
     private double longitud = 0; // Variable para guardar longitud
     private String rutaImagen;
+    private Uri uriImagen;
 
     public GoogleApiClient mGoogleApiClient;
 
@@ -182,11 +187,19 @@ public class ActividadPrincipal extends AppCompatActivity implements
      */
     public void tomar_foto(View view){
         Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // Crear nueva accion para ejecutar la aplicacion de camara
+        File archivoImagen = crearArchivoSalida();
+        uriImagen = Uri.fromFile(archivoImagen);
+        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, uriImagen);
         startActivityForResult(intentCamara, CAM_REQUEST); // Inicia la aplicación de camara
     }
 
+    /**
+     * Metodo que invoca a la actividad con mas informacion sobre la aplicacion
+     * @param view Vista donde se ejecuta el metodo
+     */
     public void mostrar_info(View view){
-        Intent intentInfo = new Intent(ActividadPrincipal.this,Actividad_mas_info.class); // Crear nueva accion para mostrar mas informacion
+        Intent intentInfo = new Intent(ActividadPrincipal.this, ActividadInfo.class); // Crear nueva accion para mostrar mas informacion
+
         startActivity(intentInfo); // Inicia la actividad de mas_info
     }
 
@@ -257,10 +270,34 @@ public class ActividadPrincipal extends AppCompatActivity implements
     /**
      * Metodo que inicia la vista 'IniciarFormulario'
      */
-        public void iniciarFormulario() {
+    public void iniciarFormulario() {
         Intent intentFormulario = new Intent(ActividadPrincipal.this, ActividadFormulario.class); // Crear llamada para cambio de vista a 'Formulario'
         intentFormulario.putExtra("ruta_imagen", this.rutaImagen); // Agregar ruta de la imagen a la llamada
         startActivity(intentFormulario); // Empezar actividad
+    }
+
+    protected File crearArchivoSalida(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "Watch_Animal");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_"+ timeStamp + ".jpg");
+        return mediaFile;
     }
 
     /**
@@ -285,9 +322,9 @@ public class ActividadPrincipal extends AppCompatActivity implements
                 else
                     iniciarFormulario(); // En caso de que no existan coordenadas ir a vista 'Formulario'
 
-            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK ) { // Caso en que la imagen se tomo de la camara
+            } else if(requestCode == CAM_REQUEST &&  resultCode == RESULT_OK) { // Caso en que la imagen se tomo de la camara
 
-                Uri fotoCapturada = data.getData(); // Obtener informacion de la imagen
+                Uri fotoCapturada = uriImagen; // Obtener informacion de la imagen
                 this.rutaImagen = obtenerRutaRealUri(fotoCapturada); // Obtener ruta real de la imagen
 
                 if (this.longitud != 0.0 && this.latitud != 0.0)

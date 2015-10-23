@@ -1,21 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="fill_parent"
+    android:padding="20dp"
     tools:context="com.example.george.ommfcm.ActividadVistaPrevia"
     android:orientation="vertical"
     android:background="@color/white">
 
     <ImageView
         android:id="@+id/img_incidente"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="20dp"
         >
     </ImageView>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:name="com.google.android.gms.maps.MapFragment">
+    </fragment>
 
     <Button
         android:id="@+id/btn_subir_incidente"
@@ -26,7 +33,8 @@
         android:onClick="subirIncidente"
         android:text="@string/btn_subir_incidente"
         android:background="@color/blue1"
-        android:textColor="#ffffff">
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp">
     </Button>
 
 </LinearLayout>

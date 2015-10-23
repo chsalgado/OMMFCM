@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Point;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.*;
 
 import org.apache.http.Header;
@@ -37,7 +50,7 @@ public class ActividadVistaPrevia extends AppCompatActivity {
     private double latitud = 0.0;
     private double longitud = 0.0;
     private static String rutaServidor= "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/incidentes"; // Ruta del servidor donde se sube la imagen
-
+    private GoogleMap gMap;
     /**
      * Metodo que se llama al crearse la vista por primera vez
      *
@@ -48,13 +61,18 @@ public class ActividadVistaPrevia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_vista_previa); // Asignar layout de la vista
         Intent intentInfo = getIntent(); // Obtener informacion de la vista pasada
+        gMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         if(intentInfo.hasExtra("ruta_imagen")) { // Verificar que la variable existe
             ImageView imgIncidente = (ImageView) findViewById(R.id.img_incidente); // Variable de la ImageView
             imgRuta = intentInfo.getStringExtra("ruta_imagen"); // Obtener ruta de la imegen
             this.latitud = intentInfo.getDoubleExtra("latitud", 0.0);
             this.longitud = intentInfo.getDoubleExtra("longitud", 0.0);
-            Bitmap bmp = BitmapFactory.decodeFile(imgRuta); // Decodificar imagen
+
+            crearMarcadorMapa();
+
+            Bitmap bmp = decodeFile(imgRuta); // Decodificar imagen
+            bmp = resize(bmp, 1000, 1000);
             imgIncidente.setImageBitmap(bmp); // Asignar imagen decodificada a imageView
             prDialog = new ProgressDialog(this); // Crear un dialogo para mostrar progreso
             prDialog.setCancelable(false);
@@ -73,6 +91,16 @@ public class ActividadVistaPrevia extends AppCompatActivity {
 
         subirImagen();  //Convertir imagen a base 64
 
+    }
+
+    public void crearMarcadorMapa(){
+
+        LatLng selected_point = new LatLng(this.latitud, this.longitud);
+        final MarkerOptions marcador = new MarkerOptions();
+        marcador.position(selected_point);
+        marcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        gMap.addMarker(marcador);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selected_point, 10.0f));
     }
 
     /**
@@ -112,9 +140,6 @@ public class ActividadVistaPrevia extends AppCompatActivity {
                 params.put("fecha", getDateTime()); // Agregar fecha a los parametros
                 params.put("long", latitud); // Agregar longitud a los parametros
                 params.put("lat", longitud); // Agregar latitud a los parametros
-                params.put("mpioOrigen", 2140); // Agregar municipio de origen a los parametros
-                params.put("mpioDestino", 2402); // Agregar municipio de destino a los parametros
-                params.put("km", "79"); // Agregar kilometro a los parametros
                 params.put("extension", ".jpg"); // Agregar extension de la imagen a los parametros
                 realizarLlamadaHTTP(); // Realizar llamada http para subir la imagen
             }
@@ -179,4 +204,89 @@ public class ActividadVistaPrevia extends AppCompatActivity {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+    private Bitmap decodeFile(String path) {//you can provide file path here
+        int orientation;
+        try {
+            if (path == null) {
+                return null;
+            }
+            // decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            // Find the correct scale value. It should be the power of 2.
+            final int REQUIRED_SIZE = 70;
+            int width_tmp = o.outWidth, height_tmp = o.outHeight;
+            int scale = 0;
+            while (true) {
+                if (width_tmp / 2 < REQUIRED_SIZE
+                        || height_tmp / 2 < REQUIRED_SIZE)
+                    break;
+                width_tmp /= 2;
+                height_tmp /= 2;
+                scale++;
+            }
+            // decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            Bitmap bm = BitmapFactory.decodeFile(path, o2);
+            Bitmap bitmap = bm;
+
+            ExifInterface exif = new ExifInterface(path);
+
+            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+
+            Log.e("ExifInteface .........", "rotation =" + orientation);
+
+            //exif.setAttribute(ExifInterface.ORIENTATION_ROTATE_90, 90);
+
+            Log.e("orientation", "" + orientation);
+            Matrix m = new Matrix();
+
+            if ((orientation == ExifInterface.ORIENTATION_ROTATE_180)) {
+                m.postRotate(180);
+                //m.postScale((float) bm.getWidth(), (float) bm.getHeight());
+                // if(m.preRotate(90)){
+                Log.e("in orientation", "" + orientation);
+                bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),bm.getHeight(), m, true);
+                return bitmap;
+            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                m.postRotate(90);
+                Log.e("in orientation", "" + orientation);
+                bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),bm.getHeight(), m, true);
+                return bitmap;
+            }
+            else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                m.postRotate(270);
+                Log.e("in orientation", "" + orientation);
+                bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),bm.getHeight(), m, true);
+                return bitmap;
+            }
+            return bitmap;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private  Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
 }
+

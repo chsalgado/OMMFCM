@@ -22,6 +22,7 @@
     <color name="green2">#84B37D</color>
     <color name="blue1">#549992</color>
     <color name="green3">#065143</color>
-    <color name="bckgrndgrey">#A2B6B8</color>
+    <color name="green4">#84B37D</color>
+    <color name="gris">#A2B6B8</color>
     <string name="gracias">Gracias por tu aportacion</string>
 </resources>
