@@ -123,17 +123,23 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
 
     // Modifica una especie
     $scope.modificarEspecie = function (index, idEspecie, nComun, nCientifico, idEstado){
-        $scope.editando[index] = false;
-        $scope.editandoEs = false;
         
-        servicioEspecies.modificarEspecie(idEspecie, nComun, nCientifico, idEstado).then(function(resultado){
-            $scope.actualizarPagina($scope.paginaActual);
-            $scope.mensaje = 'La especie ha sido modificada';
-            $scope.exito = true;
-        }, function(resultado){
-            $scope.mensaje = 'La especie no fue modificada. Intentelo más tarde';
+        if(nComun != '' && nCientifico != ''){
+            $scope.editando[index] = false;
+            $scope.editandoEs = false;
+            
+            servicioEspecies.modificarEspecie(idEspecie, nComun, nCientifico, idEstado).then(function(resultado){
+                $scope.actualizarPagina($scope.paginaActual);
+                $scope.mensaje = 'La especie ha sido modificada';
+                $scope.exito = true;
+            }, function(resultado){
+                $scope.mensaje = 'La especie no fue modificada. Intentelo más tarde';
+                $scope.errores = true;
+            });
+        }else{
+            $scope.mensaje = 'Debes llenar todos los campos';
             $scope.errores = true;
-        });
+        }
         $timeout($scope.ocultarMensaje, 3000);
     }
 
