@@ -55,7 +55,8 @@
                 android:text="@string/btn_regresar_inicio"
                 android:id="@+id/btn_regresar_inicio"
                 android:background="@color/blue1"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:onClick="startOver" />
         </LinearLayout>
 
     </LinearLayout>
