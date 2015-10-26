@@ -1,10 +1,12 @@
 package com.example.george.ommfcm;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class ActividadConfirmacion extends AppCompatActivity {
 
@@ -35,5 +37,11 @@ public class ActividadConfirmacion extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void startOver(View view){
+        Intent intentReturn = new Intent(ActividadConfirmacion.this, ActividadPrincipal.class); // Crear nueva accion para regresar a la actividad_principal
+        startActivity(intentReturn); // Regresar al usuario a la vista de actividad_principal
+        finish();
     }
 }

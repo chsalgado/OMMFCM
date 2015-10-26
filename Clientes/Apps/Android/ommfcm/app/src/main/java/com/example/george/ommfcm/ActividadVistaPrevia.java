@@ -158,6 +158,8 @@ public class ActividadVistaPrevia extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
                 prDialog.hide(); // Esconder el dialogo de progreso
                 Toast.makeText(getApplicationContext(), "Imagen subida correctamente", Toast.LENGTH_LONG).show(); // Mostrar mensaje de operacion exitosa
+                Intent intentConfirm = new Intent(ActividadVistaPrevia.this, ActividadConfirmacion.class); // Crear nueva accion para mostrar la vista de confirmacion
+                startActivity(intentConfirm);
             }
 
             @Override
