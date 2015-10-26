@@ -42,5 +42,6 @@ public class ActividadConfirmacion extends AppCompatActivity {
     public void startOver(View view){
         Intent intentReturn = new Intent(ActividadConfirmacion.this, ActividadPrincipal.class); // Crear nueva accion para regresar a la actividad_principal
         startActivity(intentReturn); // Regresar al usuario a la vista de actividad_principal
+        finish();
     }
 }
