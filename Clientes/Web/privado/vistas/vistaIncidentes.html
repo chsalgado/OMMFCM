@@ -1,5 +1,6 @@
 <div ng-include="'vistas/modalAgregarEspecie.html'"></div>
 <div ng-include="'vistas/modalVerFoto.html'"></div>
+<div ng-include="'vistas/modalMapa.html'"></div>
 <div ng-init="obtenerEspecies()">
     <div class="row">
         <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
@@ -34,7 +35,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="incidente in incidentes">
-                    <td><a data-toggle="modal" data-target="#verFoto" class="fotoLink"><img ng-src="{{ (ruta) + (incidente.rutaThumbnail).split('imagenes')[1] }}" ng-click="asignarRutaFoto(incidente.rutaFoto)"></a></td>
+                    <td><a data-toggle="modal" data-target="#verFoto" class="link"><img ng-src="{{ (ruta) + (incidente.rutaThumbnail).split('imagenes')[1] }}" ng-click="asignarRutaFoto(incidente.rutaFoto)"></a></td>
                     <td ng-hide="editando[$index]">
                         {{nombreEspecie[$index]}}
                     </td>
@@ -42,7 +43,9 @@
                         <select ng-model="incidente.idEspecie" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
                         </select>
                     </td>
-                    <td><a href=""><i class="fa fa-map-marker"></i> Ver mapa</a></td>
+                    <td>
+                        <a data-toggle="modal" data-target="#mapa" ng-click="mostrarUbicacion($index);" class="link"><i class="fa fa-map-marker"></i> Ver mapa</a>
+                    </td>
                     <td ng-hide="editando[$index]">
                         {{incidente.ruta}}
                     </td>
@@ -80,3 +83,5 @@
         </div>
     </div>
 </div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXzFKyBxdPSXHWvVMNzXhEYHUW3FEnjeg&callback=initMap">
+</script>
