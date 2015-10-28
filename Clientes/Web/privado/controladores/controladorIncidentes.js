@@ -169,6 +169,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
 
     // MAPA
     // Crear el mapa
+    $scope.map;
     $window.initMap = function(){
         $scope.mexico = new google.maps.LatLng(23.945963, -102.537750);
         $scope.mapOptions = {
