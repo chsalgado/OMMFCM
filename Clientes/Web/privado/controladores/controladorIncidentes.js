@@ -1,5 +1,5 @@
 'use strict';
-app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, $filter, servicioIncidentes, servicioEspecies){
+app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$window', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, $filter, $window, servicioIncidentes, servicioEspecies){
 
     // Lista de incidentes
     $scope.incidentes = [];
@@ -59,7 +59,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
     $scope.obtenerEspecies = function(){
         servicioEspecies.obtenerEspecies().then(function(resultados){
             $scope.especies = resultados;
-            $scope.especiesFiltro = [{"idEspecie": -1, "nombreComun": "- - Todas especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"}];
+            $scope.especiesFiltro = [{"idEspecie": -1, "nombreComun": "- - Todas las especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"}];
             $scope.especiesFiltro.push.apply($scope.especiesFiltro, resultados);
             $scope.actualizarPagina(1);
         });        
@@ -166,4 +166,36 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
         });
         $timeout($scope.ocultarMensaje, 3000);
     }
+
+    // MAPA
+    // Crear el mapa
+    $window.initMap = function(){
+        $scope.mexico = new google.maps.LatLng(23.945963, -102.537750);
+        $scope.mapOptions = {
+            zoom: 7,
+            center: $scope.mexico
+        }
+        $scope.map = new google.maps.Map(document.getElementById("map-canvas"), $scope.mapOptions);
+     }
+
+     // Muestra la ubicación del incidente
+     $scope.mostrarUbicacion = function(index){
+        if($scope.marker)
+            $scope.marker.setMap(null);
+        $scope.latLng = {
+            lat: parseFloat($scope.incidentes[index].lat),
+            lng: parseFloat($scope.incidentes[index].long)
+            };
+        $scope.marker = new google.maps.Marker({
+            map: $scope.map,
+            position: $scope.latLng
+        });
+        $timeout($scope.recentrar, 300);
+     }
+
+     // Re-centra el mapa cuando se abre la modal
+     $scope.recentrar = function(){
+        google.maps.event.trigger($scope.map, 'resize');
+        $scope.map.setCenter($scope.latLng);
+     }
 }]);
