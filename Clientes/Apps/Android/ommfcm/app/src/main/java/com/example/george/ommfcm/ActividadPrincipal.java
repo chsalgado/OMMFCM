@@ -189,7 +189,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
         Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // Crear nueva accion para ejecutar la aplicacion de camara
         File archivoImagen = crearArchivoSalida(); // Crear archivo donde se va a guardar la imagen
         uriImagen = Uri.fromFile(archivoImagen); // Obtener ruta del archivo
-        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, uriImagen); // Pasar ruta de archivo en el intent 
+        intentCamara.putExtra(MediaStore.EXTRA_OUTPUT, uriImagen); // Pasar ruta de archivo en el intent
         startActivityForResult(intentCamara, CAM_REQUEST); // Inicia la aplicación de camara
     }
 
