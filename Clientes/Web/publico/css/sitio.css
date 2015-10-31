@@ -1,0 +1,33 @@
+.menuScrolleable{
+	margin-top: 50px;
+}
+.retro{
+	position: fixed;
+	z-index: 3;
+}
+.archivo {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.archivo input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+h3{
+    margin-top: 0px;
+}
+.info{
+    font-size: 14px;
+}
