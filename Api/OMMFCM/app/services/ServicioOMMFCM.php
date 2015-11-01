@@ -7,6 +7,7 @@
 	use Especie;
 	use Estado;
 	use EstadoEspecie;
+	use EstadoEspecie2;
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -174,6 +175,7 @@
 	    	$especieExistente -> nombreComun = $especie -> nombreComun;
 	    	$especieExistente -> nombreCientifico = $especie -> nombreCientifico;
 	    	$especieExistente -> idEstadoEspecie = $especie -> idEstadoEspecie;
+	    	$especieExistente -> idEstadoEspecie2 = $especie -> idEstadoEspecie2;
 
 	    	$resultado = $especieExistente -> save();
 
@@ -224,5 +226,12 @@
 	   		$estadosEspecies = EstadoEspecie::all();
 
 	   		return $estadosEspecies;
+	   	}
+
+	   	public function getEstadosEspecies2()
+	   	{
+	   		$estadosEspecies2 = EstadoEspecie2::all();
+
+	   		return $estadosEspecies2;
 	   	}
 	}
