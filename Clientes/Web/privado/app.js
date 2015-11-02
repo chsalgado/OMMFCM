@@ -1,4 +1,4 @@
-var app=angular.module('appPrivada', ['ngRoute']);
+var app=angular.module('appPrivada', ['ngRoute', 'angular-loading-bar']);
 
 app.config(function($routeProvider, $httpProvider){
 
