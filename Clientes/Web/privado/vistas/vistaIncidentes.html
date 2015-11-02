@@ -1,7 +1,7 @@
 <div ng-include="'vistas/modalAgregarEspecie.html'"></div>
 <div ng-include="'vistas/modalVerFoto.html'"></div>
 <div ng-include="'vistas/modalMapa.html'"></div>
-<div ng-init="obtenerEspecies()">
+<div ng-init="obtenerEspecies(1)">
     <div class="row">
         <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
         <div class="alert alert-success fade in retro" ng-show="exito">{{mensaje}}</div>
@@ -12,7 +12,7 @@
             <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
             </select>
             &nbsp incidentes
-            <button class="btn btn-link" data-toggle="modal" data-target="#agregarEspecie" ng-click="obtenerEstadosEspecies()"><i class="fa fa-plus"></i> Agregar nueva especie</button>
+            <button class="btn btn-link" data-toggle="modal" data-target="#agregarEspecie" ng-click="obtenerEstadosEspecies()" ng-class="{ disabled: editandoIn }"><i class="fa fa-plus"></i> Agregar nueva especie</button>
         </div>
         <div class="pull-right">
             Filtrar por especie:
