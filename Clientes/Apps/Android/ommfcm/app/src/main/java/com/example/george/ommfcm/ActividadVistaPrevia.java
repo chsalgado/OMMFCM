@@ -138,8 +138,11 @@ public class ActividadVistaPrevia extends AppCompatActivity {
             protected void onPostExecute(String msg){
                 prDialog.setMessage("Subiendo imagen");
                 params.put("imagen", imagenBase64); // Agregar string de la imagen a los parametros de la llamada HTTP
-                //params.put("fecha", getDateTime()); // Agregar fecha a los parametros
-                params.put("fecha", lastimgdatetime); // Agregar fecha a los parametros version 2
+                if(lastimgdatetime==null){
+                    params.put("fecha", getDateTime()); // Agregar fecha a los parametros
+                }else {
+                    params.put("fecha", lastimgdatetime); // Agregar fecha a los parametros version 2
+                }
                 params.put("long", longitud); // Agregar longitud a los parametros
                 params.put("lat", latitud); // Agregar latitud a los parametros
                 params.put("extension", ".jpg"); // Agregar extension de la imagen a los parametros
