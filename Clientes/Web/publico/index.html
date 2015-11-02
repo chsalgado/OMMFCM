@@ -8,15 +8,15 @@
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/sitio.css" rel="stylesheet" />
-    <link href="css/bootstrap-select.css" rel="stylesheet" />
-    <link href="css/fileinput.min.css" rel="stylesheet" />
+    <link href="css/loading-bar.css" rel="stylesheet" />
 </head>
 <body>
 
-    <nav class="navbar navbar-inverse">
+    <!-- Menu -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="#/inicio">
                     <img alt="Brand" src="//placehold.it/100x20">
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -29,8 +29,7 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
+                    <li><a href="#/reportar">Reportar</a></li>
                 </ul>
             </div>
         </div>
@@ -38,7 +37,7 @@
 
     <!--load partial views-->
 
-        <div class="container body-content">
+        <div class="container body-content menuScrolleable">
             <div data-ng-view="">
             </div>
         </div>
@@ -53,6 +52,7 @@
     <!-- 3rd party libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="scripts/angular.min.js"></script>
+    <script src="scripts/loading-bar.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
 
 
@@ -60,16 +60,11 @@
     <script src="app.js"></script>
 
     <!-- Load services -->
+    <script src="servicios/servicioIncidentes.js"></script>
 
     <!-- Load controllers -->
     <script src="controladores/controladorReportar.js"></script>
     <script src="controladores/controladorInicio.js"></script>
-
-
-    <!-- Load jquery bootstrap listeners -->
-    <script src="index.js"></script>
-
-
 
 </body>
 </html>
