@@ -1,7 +1,6 @@
 <div ng-init="obtenerEstados(); obtenerMunicipiosOrigen(1); obtenerMunicipiosDestino(1);">
     <h2>Reportar Animal en Carretera</h2>
     <hr />
-    <div id="foto" ng-hide="true">sin foto</div>
     <div class="row">
         <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
         <div class="alert alert-success fade in retro" ng-show="exito">{{mensaje}}</div>
@@ -12,7 +11,7 @@
             <div class="form-group">
                 <div class="archivo btn btn-default">
                     <span><i class="fa fa-camera fa-2x"></i></span>
-                    <input type="file" id="imagen" onchange="encodeImageFileAsURL()" class="upload"/>
+                    <input type="file" id="imagen" onchange="angular.element(this).scope().encodeImageFileAsURL(this)" class="upload"/>
                 </div>
                 <label for="imagen">Seleccionar Imagen</label>
             </div>
@@ -70,33 +69,10 @@
     <br>
     <div id="" class="row">
         <div id="" class="col-xs-12">
-            <button class="col-xs-4 col-xs-offset-4  btn btn-success" ng-click="agregarIncidente()">Enviar</button>
+            <button class="col-xs-4 col-xs-offset-4  btn btn-success" ng-click="validarForma()">Enviar</button>
         </div>
     </div>
 <br>
 </div>
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initMap">
-</script>
-<script type='text/javascript'>
-function encodeImageFileAsURL(){
-    var filesSelected = document.getElementById("imagen").files;
-    if (filesSelected.length > 0)
-    {
-        var fileToLoad = filesSelected[0];
-
-        var fileReader = new FileReader();
-
-        fileReader.onload = function(fileLoadedEvent) {
-            var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-            var newImage = document.createElement('img');
-            newImage.src = srcData;
-            newImage.setAttribute('width', '100%');
-
-            document.getElementById("foto").innerHTML = srcData;
-            document.getElementById("vistaPrevia").innerHTML = newImage.outerHTML;
-        }
-        fileReader.readAsDataURL(fileToLoad);
-    }
-}
 </script>
