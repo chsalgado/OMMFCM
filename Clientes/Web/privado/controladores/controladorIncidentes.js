@@ -56,13 +56,13 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
 
     // Obtiene todas las especies
     // Las especies llenan los selects
-    $scope.obtenerEspecies = function(){
+    $scope.obtenerEspecies = function(pagina){
         servicioEspecies.obtenerEspecies().then(function(resultados){
             $scope.especies = resultados;
             $scope.especiesFiltro = [{"idEspecie": -1, "nombreComun": "- - Todas las especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"}];
             $scope.especiesFiltro.push.apply($scope.especiesFiltro, resultados);
-            $scope.actualizarPagina(1);
-        });        
+            $scope.actualizarPagina(pagina);
+        });
     }
 
     // Obtiene los incidentes para llenar la tabla
@@ -155,7 +155,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     // Agrega una nueva especie
     $scope.agregarEspecie = function(){
         servicioEspecies.agregarEspecie($scope.nuevaEspecie).then(function(resultado){
-            $scope.obtenerEspecies();
+            $scope.obtenerEspecies($scope.paginaActual);
             $scope.mensaje = 'La especie ha sido agregada';
             $scope.limpiarEspecie();
             $scope.exito = true;
