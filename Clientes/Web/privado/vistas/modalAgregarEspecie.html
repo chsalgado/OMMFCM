@@ -19,8 +19,12 @@
                         <input type="text" class="form-control" ng-model="nuevaEspecie.nombreCientifico" required>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Estado:</label>
+                        <label class="control-label">Estado 1:</label>
                         <select class="form-control" ng-model="nuevaEspecie.idEstadoEspecie" ng-options="estado.idEstadoEspecie as estado.estado for estado in estados" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Estado 2:</label>
+                        <select class="form-control" ng-model="nuevaEspecie.idEstadoEspecie2" ng-options="estado.idEstadoEspecie2 as estado.estado for estado in estados2" required></select>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-default" data-dismiss="modal" ng-click="limpiarEspecie()">Cancelar</button>

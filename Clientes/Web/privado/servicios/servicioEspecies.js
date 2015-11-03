@@ -1,5 +1,5 @@
 'use strict';
-app.factory('servicioEspecies', ['$http', function($http){
+app.factory('servicioEspecies', ['$http', '$q', function($http, $q){
 
         var fabricaServicioEspecies = {};
 
@@ -26,9 +26,13 @@ app.factory('servicioEspecies', ['$http', function($http){
 
         // Obtiene los estados que puede tener una especie
         var _obtenerEstadosEspecies = function(){
-            return $http.get(servicioBase + 'api/estadosEspecies').then(function(resultado){
+            var estados1 = $http.get(servicioBase + 'api/estadosEspecies').then(function(resultado){
                 return resultado.data.estadosEspecies;
             });
+            var estados2 = $http.get(servicioBase + 'api/estadosEspecies2').then(function(resultado){
+                return resultado.data.estadosEspecies;
+            });
+            return $q.all([estados1, estados2]);
         }
 
         // Elimina una especie
@@ -39,8 +43,8 @@ app.factory('servicioEspecies', ['$http', function($http){
         };
 
         // Modifica una especie
-        var _modificarEspecie = function(idEspecie, nombreComun, nombreCientifico, idEstadoEspecie){
-            return $http.put(servicioBase + 'api/especies/' + idEspecie, {'nombreComun': nombreComun, 'nombreCientifico': nombreCientifico, 'idEstadoEspecie': idEstadoEspecie}).then(function(resultado){
+        var _modificarEspecie = function(idEspecie, nombreComun, nombreCientifico, idEstadoEspecie, idEstadoEspecie2){
+            return $http.put(servicioBase + 'api/especies/' + idEspecie, {'nombreComun': nombreComun, 'nombreCientifico': nombreCientifico, 'idEstadoEspecie': idEstadoEspecie, 'idEstadoEspecie2': idEstadoEspecie2}).then(function(resultado){
                 return resultado.status;
             });
         };

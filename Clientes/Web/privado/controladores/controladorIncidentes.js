@@ -8,7 +8,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     $scope.nuevaEspecie = {
         "nombreComun":null,
         "nombreCientifico":null,
-        "idEstadoEspecie":1
+        "idEstadoEspecie":1,
+        "idEstadoEspecie2":1
     };
 
     // Variables de paginación
@@ -49,7 +50,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     $scope.obtenerEstadosEspecies = function(){
         if(!$scope.estados){
             servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
-                $scope.estados = resultado;
+                $scope.estados = resultado[0];
+                $scope.estados2 = resultado[1];
             });
         }
     }

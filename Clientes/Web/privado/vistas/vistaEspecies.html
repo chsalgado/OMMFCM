@@ -20,7 +20,8 @@
 				<tr>
 					<th>Nombre común</th>
 					<th>Nombre científico</th>
-					<th>Estado</th>
+					<th>Estado 1</th>
+					<th>Estado 2</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -44,9 +45,15 @@
 					<td ng-show="editando[$index]">
 						<select ng-model="especie.idEstadoEspecie" ng-options="estado.idEstadoEspecie as estado.estado for estado in estados" class="form-control"></select>
 					</td>
+					<td ng-hide="editando[$index]">
+						{{nombreEstado2[$index]}}
+					</td>
+					<td ng-show="editando[$index]">
+						<select ng-model="especie.idEstadoEspecie2" ng-options="estado.idEstadoEspecie2 as estado.estado for estado in estados2" class="form-control"></select>
+					</td>
 					<td>
                         <a ng-hide="editando[$index]" ng-click="editables($index)" class="btn btn-link" ng-class="{ disabled: editandoEs }"><i class="fa fa-edit fa-2x"></i></a>
-                        <a ng-show="editando[$index]" ng-click="modificarEspecie($index, especie.idEspecie, especie.nombreComun, especie.nombreCientifico, especie.idEstadoEspecie)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
+                        <a ng-show="editando[$index]" ng-click="modificarEspecie($index, especie.idEspecie, especie.nombreComun, especie.nombreCientifico, especie.idEstadoEspecie, especie.idEstadoEspecie2)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
 						<a ng-click="eliminarEspecie(especie.idEspecie)" class="btn btn-link" ng-class="{ disabled: editandoEs }"><i class="fa fa-trash fa-2x"></i></a>
 					</td>
 				</tr>
