@@ -17,6 +17,7 @@
     <string name="acerca_de">Más informaciÓn</string>
     <string name="acerca_titulo">Información acerca de la aplicación</string>
     <string name="acerca_descripcion">La aplicación tiene como objetivo reportar accidentes de animales atropellados en la carretera.</string>
+    <string name="precauciones_generales">Precauciones generales para usar la aplicación</string>
     <color name="white">#FFFFFF</color>
     <color name="green1">#BEE7B8</color>
     <color name="green2">#84B37D</color>
@@ -25,4 +26,6 @@
     <color name="green4">#84B37D</color>
     <color name="gris">#A2B6B8</color>
     <string name="gracias">Gracias por tu aportacion</string>
+    <string name="title_activity_actividad_precauciones">ActividadPrecauciones</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
 </resources>
