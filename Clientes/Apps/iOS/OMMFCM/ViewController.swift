@@ -11,12 +11,14 @@ struct Datos
     static var imagen: UIImage?
     static var latitud: CLLocationDegrees?
     static var longitud: CLLocationDegrees?
+    static var fecha: String?
     
     static func borrar()
     {
         self.imagen = nil
         self.latitud = nil
         self.longitud = nil
+        self.fecha = nil
     }
 }
 
@@ -41,6 +43,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func siguienteVista()
     {
+        if Datos.fecha == nil {
+            Datos.fecha = self.formatoAFecha(NSDate())
+        }
+        
         if Datos.latitud != nil
         {
             self.performSegueWithIdentifier("confirmarFoto", sender: self)
@@ -85,6 +91,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         picker.dismissViewControllerAnimated(true, completion: nil)
         Datos.imagen = info[UIImagePickerControllerOriginalImage] as? UIImage
         
+        // Guarda la foto si se tomo con la camara
+        if picker.sourceType == UIImagePickerControllerSourceType.Camera {
+            UIImageWriteToSavedPhotosAlbum(Datos.imagen!, nil, nil, nil)
+        }
+        
         // obtengo coordenadas
         let library = ALAssetsLibrary()
         let url: NSURL? = info[UIImagePickerControllerReferenceURL] as? NSURL
@@ -96,10 +107,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     {
                         Datos.latitud = (asset.valueForProperty(ALAssetPropertyLocation) as! CLLocation!).coordinate.latitude
                         Datos.longitud = (asset.valueForProperty(ALAssetPropertyLocation) as! CLLocation!).coordinate.longitude
-                        self.siguienteVista()
-                    } else {
-                        self.siguienteVista()
                     }
+                    if asset.valueForProperty(ALAssetPropertyDate) != nil
+                    {
+                        Datos.fecha = self.formatoAFecha(asset.valueForProperty(ALAssetPropertyDate) as! NSDate)
+                    }
+                    self.siguienteVista()
                 }, failureBlock:
                 {
                     (error: NSError!) in
@@ -115,8 +128,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerControllerDidCancel(picker: UIImagePickerController)
     {
         picker.dismissViewControllerAnimated(true, completion: {})
-    }    
+    }
+    
+    func formatoAFecha(fecha: NSDate) -> String {
+        let formato = NSDateFormatter()
+        formato.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formato.timeZone = NSTimeZone()
+        return formato.stringFromDate(fecha)
+    }
 }
-
-
-
