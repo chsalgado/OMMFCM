@@ -9,14 +9,14 @@
     <div class="row">
         <div>
             Mostrar: 
-            <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
+            <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados" class="form-control resultados">
             </select>
             &nbsp incidentes
             <button class="btn btn-link" data-toggle="modal" data-target="#agregarEspecie" ng-click="obtenerEstadosEspecies()" ng-class="{ disabled: editandoIn }"><i class="fa fa-plus"></i> Agregar nueva especie</button>
         </div>
         <div class="pull-right">
             Filtrar por especie:
-            <select ng-model="especieSeleccionada" ng-change="actualizarPagina(paginaActual)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especiesFiltro'></select>
+            <select ng-model="especieSeleccionada" ng-change="actualizarPagina(paginaActual)" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especiesFiltro' class="form-control"></select>
         </div>
     </div>
     <hr/>
@@ -40,23 +40,23 @@
                         {{nombreEspecie[$index]}}
                     </td>
                     <td ng-show="editando[$index]">
-                        <select ng-model="incidente.idEspecie" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' class="" data-live-search="true">
+                        <select ng-model="incidente.idEspecie" ng-options='especie.idEspecie as (especie.nombreComun + " - " + especie.nombreCientifico) for especie in especies' data-live-search="true" class="form-control">
                         </select>
                     </td>
                     <td>
-                        <a data-toggle="modal" data-target="#mapa" ng-click="mostrarUbicacion($index);" class="link"><i class="fa fa-map-marker"></i> Ver mapa</a>
+                        <a data-toggle="modal" data-target="#mapa" ng-click="mostrarUbicacion($index);" class="link btn-link"><i class="fa fa-map-marker"></i> Ver mapa</a>
                     </td>
                     <td ng-hide="editando[$index]">
                         {{incidente.ruta}}
                     </td>
                     <td ng-show="editando[$index]">
-                        <input type="text" ng-model="incidente.ruta">
+                        <input type="text" ng-model="incidente.ruta" class="form-control">
                     </td>
                     <td ng-hide="editando[$index]">
                         {{incidente.km}}
                     </td>
                     <td ng-show="editando[$index]">
-                        <input type="text" ng-model="incidente.km">
+                        <input type="text" ng-model="incidente.km" class="form-control">
                     </td>
                     <td>
                         {{incidente.fecha}}
