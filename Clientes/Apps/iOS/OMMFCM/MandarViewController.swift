@@ -49,7 +49,7 @@ class MandarViewController: UIViewController
         let datosFoto = UIImageJPEGRepresentation(Datos.imagen!, 0.5)
         let imgb64 = datosFoto?.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         
-        var incidente: [String: String] = ["extension": ".jpeg", "imagen": imgb64!]
+        var incidente: [String: String] = ["extension": ".jpeg", "imagen": imgb64!, "fecha": Datos.fecha!]
         
         // Coordenadas
         if Datos.latitud != nil && Datos.longitud != nil {
@@ -87,6 +87,7 @@ class MandarViewController: UIViewController
                 } else  {
                     let respuesta = UIAlertController(title: "Error", message: error?.description, preferredStyle: UIAlertControllerStyle.Alert)
                     respuesta.addAction(accion)
+                    
                     self.presentViewController(respuesta, animated: true, completion: {})
                     self.envioExitoso = false
                 }
