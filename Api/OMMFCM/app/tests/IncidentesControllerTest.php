@@ -93,16 +93,7 @@ class IncidentesControllerTest extends TestCase {
 		// Generar Incidente que devuelve el servicio mock
 	    $incidentesEsperados = new Incidente();
 
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo getIncidentes/getIncidentesPorEspecie para que devuelva los incidentes esperados
-	    $mock->shouldReceive('getIncidentes','getIncidentesPorEspecie')->withAnyArgs()->once()->andReturn($incidentesEsperados);
-		
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Invocar al index de incidentesController
+	   	// Invocar al index de incidentesController
 	    $respuestaActual = $this->call('GET', 'api/incidentes', ['pagina' => 'ABC', 'resultados' => '-45', 'idEspecie' => 'Perro']);
 
 	    // Generar respuesta esperada
@@ -132,16 +123,7 @@ class IncidentesControllerTest extends TestCase {
 		// Generar Incidente que devuelve el servicio mock
 	    $incidentesEsperados = new Incidente();
 
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo getIncidentes/getIncidentesPorEspecie para que devuelva los incidentes esperados
-	    $mock->shouldReceive('getIncidentes', 'getIncidentesPorEspecie')->withAnyArgs()->once()->andReturn($incidentesEsperados);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Invocar al index de incidentesController
+	   	// Invocar al index de incidentesController
 	    $respuestaActual = $this->call('GET', 'api/incidentes',['carretera' => 'guanajuato', 'pagina' => 'ABC', 'resultados' => '-45', 'idEspecie' => 'Perro']);
 
 	    // Generar respuesta esperada
@@ -171,16 +153,7 @@ class IncidentesControllerTest extends TestCase {
 		// Generar Incidente que devuelve el servicio mock
 	    $incidentesEsperados = new Incidente();
 
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo getIncidentes/getIncidentesPorEspecie para que devuelva los incidentes esperados
-	    $mock->shouldReceive('getIncidentes', 'getIncidentesPorEspecie')->withAnyArgs()->once()->andReturn($incidentesEsperados);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Invocar al index de incidentesController
+	   	// Invocar al index de incidentesController
 	    $respuestaActual = $this->call('GET', 'api/incidentes');
 
 	    // Generar respuesta esperada
@@ -208,7 +181,7 @@ class IncidentesControllerTest extends TestCase {
 	public function testCrearIncidenteConParametrosValidos()
 	{	 
 		// codigo que regresa el mock
-	   	$codigoEsperado = 200;
+	   	$codigoEsperado = 201;
 
 	   	// obtener los parámetros de la consulta
         $archivoJson = __DIR__ . '/jsons/crearIncidenteParametrosValidos.json';
@@ -346,7 +319,7 @@ class IncidentesControllerTest extends TestCase {
 	public function testCrearIncidenteConParametrosExtras()
 	{	 
 		// Generar código que devuelve el servicio mock
-	   	$codigoEsperado = 404;
+	   	$codigoEsperado = 400;
 
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
@@ -476,7 +449,7 @@ class IncidentesControllerTest extends TestCase {
 	public function testModificarIncidenteSinParametros()
 	{	 
 		// Generar código que devuelve el mock
-	   	$codigoEsperado = 404;
+	   	$codigoEsperado = 400;
 
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
@@ -515,7 +488,7 @@ class IncidentesControllerTest extends TestCase {
 	public function testModificarIncidenteConParametrosExtras()
 	{	 
 		// Generar código que devuelve el mock e incidente esperado
-	   	$codigoEsperado = 404;
+	   	$codigoEsperado = 400;
 
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
@@ -552,7 +525,7 @@ class IncidentesControllerTest extends TestCase {
 	}
 
 	/**
-	 * Prueba la ruta delete api/incidentes con Parámetros extras 
+	 * Prueba la ruta delete api/incidentes con parámetros validos 
 	 * @return [type] [description]
 	 */
 	public function testEliminarIncidente()
@@ -597,7 +570,7 @@ class IncidentesControllerTest extends TestCase {
 	public function testEliminarIncidenteConParametrosExtras()
 	{	 
 		// Generar código que devuelve el mock e incidente esperado
-	   	$codigoEsperado = 404;
+	   	$codigoEsperado = 400;
 
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
@@ -617,7 +590,7 @@ class IncidentesControllerTest extends TestCase {
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
-			'error' => false),
+			'error' => true),
 			$codigoEsperado
 		);
 
@@ -634,10 +607,10 @@ class IncidentesControllerTest extends TestCase {
 	}
 
 	/**
-	 * Prueba la ruta delete api/incidentes con un incidente que no existe 
+	 * Prueba la ruta delete api/incidentes con un incidente que no existe simulando un error interno 
 	 * @return [type] [description]
 	 */
-	public function testEliminarIncidenteConIdInexistente()
+	public function testEliminarIncidenteError()
 	{	 
 		// Generar código que devuelve el mock e incidente esperado
 	   	$codigoEsperado = 404;
@@ -656,7 +629,7 @@ class IncidentesControllerTest extends TestCase {
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
-			'error' => false),
+			'error' => true),
 			$codigoEsperado
 		);
 
