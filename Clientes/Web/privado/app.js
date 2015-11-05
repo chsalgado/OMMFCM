@@ -25,5 +25,5 @@ app.config(function($routeProvider, $httpProvider){
 
 // TODO Remove
 //var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
-var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
-//var servicioBase = 'http://jorgegonzac-001-site1.hostbuddy.com/public_html/index.php/';
+//var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
+var servicioBase = 'http://watch.imt.mx/public_html/index.php/';
