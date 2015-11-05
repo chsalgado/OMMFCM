@@ -204,13 +204,13 @@ public class ActividadPrincipal extends AppCompatActivity implements
     }
 
     /**
-     * Metodo que invoca a la actividad con precauciones para el buen uso de la aplicacion
+     * Metodo que invoca a la actividad_precauciones que incluye recomendaciones para el buen uso de la aplicacion
      * @param view Vista donde se ejecuta el metodo
      */
     public void mostrar_precauciones(View view){
-        Intent intentInfo = new Intent(ActividadPrincipal.this, ActividadPrecauciones.class); // Crear nueva accion para mostrar mas informacion
+        Intent intentPrecauciones = new Intent(ActividadPrincipal.this, ActividadPrecauciones.class); // Crear nueva accion para mostrar mas informacion
 
-        startActivity(intentInfo); // Inicia la actividad de mas_info
+        startActivity(intentPrecauciones); // Inicia la actividad de precauciones
     }
 
     /**
