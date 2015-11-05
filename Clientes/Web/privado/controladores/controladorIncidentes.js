@@ -33,7 +33,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     }
 
     // Variables para visualizar foto
-    $scope.ruta = 'http://148.243.51.170:8007/obsfauna/public_html/imagenes';
+    $scope.ruta = 'http://watch.imt.mx/public_html/imagenes';
     $scope.asignarRutaFoto = function(rutaFoto){
         $scope.rutaFoto = rutaFoto;
     }
