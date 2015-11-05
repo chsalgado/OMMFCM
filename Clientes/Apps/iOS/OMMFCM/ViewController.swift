@@ -26,8 +26,10 @@ import UIKit
 import AssetsLibrary
 import CoreLocation
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate
 {
+    let locationManager = CLLocationManager()
+    
     // Unwind segue, para regresar aqui
     @IBAction func regresaAInicio(segue: UIStoryboardSegue) {}
     
@@ -43,6 +45,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func siguienteVista()
     {
+        self.locationManager.stopUpdatingLocation() // Dejo de obtener una nueva ubicacion
         if Datos.fecha == nil {
             Datos.fecha = self.formatoAFecha(NSDate())
         }
@@ -60,6 +63,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
 
     override func didReceiveMemoryWarning()
@@ -68,8 +73,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // Dispose of any resources that can be recreated.
     }
     
+    // Metodo que se llama cada que el gps tiene una nueva ubicacion
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        // Obtengo la ubicacion y la guardo
+        let ubicacion = locations.last
+        Datos.latitud = ubicacion?.coordinate.latitude
+        Datos.longitud = ubicacion?.coordinate.longitude
+    }
+    
     func mostrarCamara()
     {
+        // Inicia la ubicacion de gps
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+        
+        Datos.borrar()
         let picker = UIImagePickerController()
         picker.sourceType = UIImagePickerControllerSourceType.Camera
         picker.delegate = self
@@ -78,6 +97,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func mostrarGaleria()
     {
+        Datos.borrar()
         let picker = UIImagePickerController()
         picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         picker.delegate = self
@@ -86,7 +106,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
-        Datos.borrar()
         // Se quita la vista: camara o galeria
         picker.dismissViewControllerAnimated(true, completion: nil)
         Datos.imagen = info[UIImagePickerControllerOriginalImage] as? UIImage
