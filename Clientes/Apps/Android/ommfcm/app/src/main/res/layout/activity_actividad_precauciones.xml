@@ -32,61 +32,63 @@
                 android:paddingRight="10dp"/>
 
             <ImageView
-                android:layout_width="268dp"
-                android:layout_height="244dp"
+                android:layout_width="223dp"
+                android:layout_height="159dp"
                 android:id="@+id/imageView4"
-                android:layout_marginTop="5dp"
-                android:padding="30dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
                 android:src="@mipmap/logoapp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_weight="1.32" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/watch"
+                android:textStyle="bold"
+                android:id="@+id/textView5"
+                android:gravity="center"
+                android:background="@color/green2"
+                android:padding="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/blue1"
-                android:padding="40dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/lorem"
-                    android:textColor="@color/white"/>
+                    android:text="@string/before"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/green1"
-                android:padding="40dp">
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/precauciones"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/lorem"
-                    android:textColor="@color/white"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue1"
-                android:padding="40dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/lorem"
-                    android:textColor="@color/white"/>
-
-            </LinearLayout>
+        </LinearLayout>
 
         </LinearLayout>
 
