@@ -40,8 +40,8 @@ public class ActividadFormulario extends AppCompatActivity {
     private List<Estado> listaEstados; // Lista para los estados guardados en el servidor con id
     private List<Municipio> listaMunicipiosOrigen; // Lista para los municipios origen guardados en el servidor con id
     private List<Municipio> listaMunicipiosDestino; // Lista para los municipios destino guardados en el servidor con id
-    private static final String rutaEstados = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/estados"; // Variable que contiene la ruta del servidor para recuperar los estados
-    private static final String rutaMunicipios = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/municipios?estado="; // Variable que contiene la ruta del servidor para recuperar los municipios
+    private static final String rutaEstados = "http://watch.imt.mx/public_html/index.php/api/estados"; // Variable que contiene la ruta del servidor para recuperar los estados
+    private static final String rutaMunicipios = "http://watch.imt.mx/public_html/index.php/api/municipios?estado="; // Variable que contiene la ruta del servidor para recuperar los municipios
     private ProgressBar pb_origen_estado; // icono de progreso que muestra la descarga de estados del servidor
     private ProgressBar pb_origen_municipio; // icono de progreso que muestra la descarga de estados del servidor
     private ProgressBar pb_destino_estado; // icono de progreso que muestra la descarga de municipios del servidor

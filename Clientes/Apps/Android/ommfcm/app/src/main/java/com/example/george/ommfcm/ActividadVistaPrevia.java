@@ -49,7 +49,7 @@ public class ActividadVistaPrevia extends AppCompatActivity {
     String imgRuta; // Variable donde se guarda la ruta de la imagen obtenida de la vista previa
     private double latitud = 0.0;
     private double longitud = 0.0;
-    private static String rutaServidor= "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/incidentes"; // Ruta del servidor donde se sube la imagen
+    private static String rutaServidor= "http://watch.imt.mx/public_html/index.php/api/incidentes"; // Ruta del servidor donde se sube la imagen
     private GoogleMap gMap;
     /**
      * Metodo que se llama al crearse la vista por primera vez
@@ -116,15 +116,15 @@ public class ActividadVistaPrevia extends AppCompatActivity {
              */
             @Override
             protected String doInBackground(Void... params) {
-                BitmapFactory.Options opciones = null;
-                opciones = new BitmapFactory.Options();
-                opciones.inSampleSize = 3;
-                Bitmap bitmap = BitmapFactory.decodeFile(imgRuta, opciones);
+                Bitmap bitmap = decodeFile(imgRuta); // Verificar la posicion de la imagen
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream); // Comprimir imagen
-                byte[] byte_arr = stream.toByteArray(); // Pasar la imagen comprimida a un arreglo de bytes
-                imagenBase64 = Base64.encodeToString(byte_arr, 0); // Convertir imagen a cadena Base 64
+                if(bitmap != null) {
+                    bitmap = resize(bitmap, 1000, 1000); //redimensionar la imagen para que sea de 1000 x 1000
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream); // Comprimir imagen
+                    byte[] byte_arr = stream.toByteArray(); // Pasar la imagen comprimida a un arreglo de bytes
+                    imagenBase64 = Base64.encodeToString(byte_arr, 0); // Convertir imagen a cadena Base 64
+                }
                 return null;
             }
 
@@ -157,7 +157,6 @@ public class ActividadVistaPrevia extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
                 prDialog.hide(); // Esconder el dialogo de progreso
-                Toast.makeText(getApplicationContext(), "Imagen subida correctamente", Toast.LENGTH_LONG).show(); // Mostrar mensaje de operacion exitosa
                 Intent intentConfirm = new Intent(ActividadVistaPrevia.this, ActividadConfirmacion.class); // Crear nueva accion para mostrar la vista de confirmacion
                 startActivity(intentConfirm);
             }
