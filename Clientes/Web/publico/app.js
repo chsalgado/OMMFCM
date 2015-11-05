@@ -2,8 +2,11 @@ var app = angular.module('appPublica', ['ngRoute', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when("/inicio", {
-        controller: "controladorInicio",
         templateUrl: "/vistas/vistaInicio.html"
+    });
+
+    $routeProvider.when("/politicas", {
+        templateUrl: "/vistas/vistaPoliticas.html"
     });
 
     $routeProvider.when("/reportar", {
