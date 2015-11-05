@@ -204,6 +204,16 @@ public class ActividadPrincipal extends AppCompatActivity implements
     }
 
     /**
+     * Metodo que invoca a la actividad con precauciones para el buen uso de la aplicacion
+     * @param view Vista donde se ejecuta el metodo
+     */
+    public void mostrar_precauciones(View view){
+        Intent intentInfo = new Intent(ActividadPrincipal.this, ActividadPrecauciones.class); // Crear nueva accion para mostrar mas informacion
+
+        startActivity(intentInfo); // Inicia la actividad de mas_info
+    }
+
+    /**
      * Metodo que llama a la aplicacion de galeria del dispositivo para seleccionar una foto
      *
      * @param view Vista donde se va a ejecutar este metodo
