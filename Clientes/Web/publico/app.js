@@ -16,4 +16,5 @@ app.config(function ($routeProvider) {
 
 // TODO Remove
 //var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
-var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
+//var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
+var servicioBase = 'http://watch.imt.mx/public_html/index.php/';
