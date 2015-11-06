@@ -60,7 +60,7 @@ class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableVie
     func actualizaEstados()
     {
         // URL del servicio y objeto sesion
-        let urlServicio = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/estados"
+        let urlServicio = "http://watch.imt.mx/public_html/index.php/api/estados"
         let url = NSURL(string: urlServicio)
         let sesion = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
@@ -102,7 +102,7 @@ class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableVie
     func actualizaMunicipios(estado: String, selector: Int? = nil)
     {
         // URL del servicio y objeto sesion
-        let url = NSURL(string: "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/municipios?estado=" + estado)
+        let url = NSURL(string: "http://watch.imt.mx/public_html/index.php/api/municipios?estado=" + estado)
         let sesion = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
         // solicitud
@@ -251,7 +251,10 @@ class UbicacionViewController: UIViewController, UITextFieldDelegate, UITableVie
                 break
             }
             self.opciones.reloadData()
-            self.opciones.hidden = false
+            if self.opciones.numberOfRowsInSection(0) > 0
+            {
+                self.opciones.hidden = false
+            }
         }
         
         return true

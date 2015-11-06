@@ -61,7 +61,7 @@ class MandarViewController: UIViewController
         let datosJson = try? NSJSONSerialization.dataWithJSONObject(incidente, options: .PrettyPrinted)
         
         // URL del servicio y objeto sesion
-        let urlServicio = "http://148.243.51.170:8007/obsfauna/public_html/index.php/api/incidentes"
+        let urlServicio = "http://watch.imt.mx/public_html/index.php/api/incidentes"
         let url = NSURL(string: urlServicio)
         let sesion = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
@@ -71,7 +71,7 @@ class MandarViewController: UIViewController
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.HTTPBody = datosJson
-        
+
         if datosJson != nil
         {
             let aviso = UIAlertController(title: "Enviando...", message: "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -82,11 +82,11 @@ class MandarViewController: UIViewController
             sesion.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
                 self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
                 let accion = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.Default, handler: { _ in })
-                if (response as! NSHTTPURLResponse).statusCode == 200 {
+                if response != nil && (response as! NSHTTPURLResponse).statusCode == 200 {
                     self.performSegueWithIdentifier("vistaFinal", sender: self)
                     self.envioExitoso = true
                 } else  {
-                    let respuesta = UIAlertController(title: "Error", message: error?.description, preferredStyle: UIAlertControllerStyle.Alert)
+                    let respuesta = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
                     respuesta.addAction(accion)
                     
                     self.presentViewController(respuesta, animated: true, completion: {})
