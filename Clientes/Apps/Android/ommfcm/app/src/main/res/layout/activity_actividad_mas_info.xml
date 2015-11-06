@@ -7,54 +7,78 @@
     android:background="@color/green2"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/editText3"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/acerca_titulo"
-            android:textColor="@color/green3"
-            android:textSize="20sp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
-
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView4"
-            android:layout_marginTop="5dp"
-            android:padding="30dp"
-            android:layout_below="@+id/editText3"
-            android:src="@mipmap/logoapp"
-            />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/blue1"
-        android:orientation="vertical"
-        android:padding="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:id="@+id/editText3"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/acerca_titulo"
+                    android:textColor="@color/green3"
+                    android:textSize="20sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/editText2"
-            android:gravity="center_horizontal"
-            android:text="@string/acerca_descripcion"
-            android:textColor="@color/white"
-            android:background="@android:color/transparent"
-            android:textSize="16sp"/>
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="223dp"
+                    android:layout_height="159dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.32"
+                    android:id="@+id/imageView4"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:layout_below="@+id/editText3"
+                    android:src="@mipmap/logoapp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/watch"
+                    android:textStyle="bold"
+                    android:id="@+id/textView5"
+                    android:gravity="center"
+                    android:background="@color/green2"
+                    android:padding="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/blue1"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/editText2"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/acerca_descripcion"
+                    android:textColor="@color/white"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -8,7 +8,8 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     $scope.nuevaEspecie = {
         "nombreComun":null,
         "nombreCientifico":null,
-        "idEstadoEspecie":1
+        "idEstadoEspecie":1,
+        "idEstadoEspecie2":1
     };
 
     // Variables de paginación
@@ -32,7 +33,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     }
 
     // Variables para visualizar foto
-    $scope.ruta = 'http://148.243.51.170:8007/obsfauna/public_html/imagenes';
+    $scope.ruta = 'http://watch.imt.mx/public_html/imagenes';
     $scope.asignarRutaFoto = function(rutaFoto){
         $scope.rutaFoto = rutaFoto;
     }
@@ -49,20 +50,21 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     $scope.obtenerEstadosEspecies = function(){
         if(!$scope.estados){
             servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
-                $scope.estados = resultado;
+                $scope.estados = resultado[0];
+                $scope.estados2 = resultado[1];
             });
         }
     }
 
     // Obtiene todas las especies
     // Las especies llenan los selects
-    $scope.obtenerEspecies = function(){
+    $scope.obtenerEspecies = function(pagina){
         servicioEspecies.obtenerEspecies().then(function(resultados){
             $scope.especies = resultados;
             $scope.especiesFiltro = [{"idEspecie": -1, "nombreComun": "- - Todas las especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"}];
             $scope.especiesFiltro.push.apply($scope.especiesFiltro, resultados);
-            $scope.actualizarPagina(1);
-        });        
+            $scope.actualizarPagina(pagina);
+        });
     }
 
     // Obtiene los incidentes para llenar la tabla
@@ -155,7 +157,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
     // Agrega una nueva especie
     $scope.agregarEspecie = function(){
         servicioEspecies.agregarEspecie($scope.nuevaEspecie).then(function(resultado){
-            $scope.obtenerEspecies();
+            $scope.obtenerEspecies($scope.paginaActual);
             $scope.mensaje = 'La especie ha sido agregada';
             $scope.limpiarEspecie();
             $scope.exito = true;

@@ -1,17 +1,32 @@
 'use strict';
-app.factory('servicioIncidentes', ['$http', function ($http) {
+app.factory('servicioIncidentes', ['$http', function($http) {
 
-    var servicioIncidentesFactory = {};
+    var fabricaServicioIncidentes = {};
 
-    var _crearIncidente = function () {
+    // Obtiene los estados
+    var _obtenerEstados = function(){
+    	return $http.get(servicioBase + 'api/estados').then(function(resultado){
+    		return resultado.data.estados;
+    	});
+    };
 
-        return $http.get(serviceBase + 'api/players?teamId=' + teamId + '&page=1&take=30').then(function (results) {
-            return results;
+    // Obtiene los municipios asociados a un estado
+    var _obtenerMunicipios = function(idEstado){
+    	return $http.get(servicioBase + 'api/municipios?estado=' + idEstado).then(function(resultado){
+    		return resultado.data.municipios;
+    	});
+    };
+
+    // Agrega un incidente
+    var _agregarIncidente = function(incidente){
+        return $http.post(servicioBase + 'api/incidentes', incidente).then(function(resultado){
+            return resultado.status;
         });
     };
 
-    servicioIncidentesFactory = _crearIncidente;
+    fabricaServicioIncidentes.obtenerEstados = _obtenerEstados;
+    fabricaServicioIncidentes.obtenerMunicipios = _obtenerMunicipios;
+    fabricaServicioIncidentes.agregarIncidente = _agregarIncidente;
 
-    return servicioIncidentesFactory;
-
+    return fabricaServicioIncidentes;
 }]);

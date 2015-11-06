@@ -19,8 +19,8 @@ class EspeciesController extends \BaseController
 	{
 		$pagina = Request::get('pagina');
 	   	$resultados = Request::get('resultados');
-		$especies = $this->servicioOMMFCM->getEspecies($pagina, $resultados);
-
+	   	$especies = $this->servicioOMMFCM->getEspecies($pagina, $resultados);
+	
 		return Response::json(array(
 			'error' => false,
 			'especies' => $especies -> toArray()),
@@ -51,6 +51,8 @@ class EspeciesController extends \BaseController
 		$especie -> nombreComun = Input::get('nombreComun');
 		$especie -> nombreCientifico = Input::get('nombreCientifico');
 		$especie -> idEstadoEspecie = Input::get('idEstadoEspecie');
+		$especie -> idEstadoEspecie2 = Input::get('idEstadoEspecie2');
+
 		$resultado = $this->servicioOMMFCM->crearEspecie($especie);
 
 		if ($resultado <= 400)
@@ -108,6 +110,7 @@ class EspeciesController extends \BaseController
 		$especie -> nombreComun = Input::get('nombreComun');
 		$especie -> nombreCientifico = Input::get('nombreCientifico');
 		$especie -> idEstadoEspecie = Input::get('idEstadoEspecie');
+		$especie -> idEstadoEspecie2 = Input::get('idEstadoEspecie2');
 
 		$resultado = $this->servicioOMMFCM->modificarEspecie($especie);
 

@@ -8,7 +8,8 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
     $scope.nuevaEspecie = {
         "nombreComun":null,
         "nombreCientifico":null,
-        "idEstadoEspecie":1
+        "idEstadoEspecie":1,
+        "idEstadoEspecie2":1
     };
 
     // Variables de paginacion
@@ -41,7 +42,8 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
     // Obtiene los estados que puede tener una especie
     $scope.obtenerEstadosEspecies = function(){
         servicioEspecies.obtenerEstadosEspecies().then(function(resultado){
-            $scope.estados = resultado;
+            $scope.estados = resultado[0];
+            $scope.estados2 = resultado[1];
             $scope.actualizarPagina(1);
         });
     }
@@ -55,6 +57,7 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
     $scope.actualizarPagina = function(pagina){
         // Arreglo que guarda el nombre del estado de cada especie
         $scope.nombreEstado = [];
+        $scope.nombreEstado2 = [];
 
         $scope.editando = [];
         $scope.paginaActual = pagina;
@@ -79,21 +82,25 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
             angular.forEach($scope.especies, function(esp){
                 // Arreglo que permite saber que especie se está modificando
                 $scope.editando.push.apply($scope.editando, [false]);
-                $scope.nombreEstadoEspecie(esp.idEstadoEspecie);
+                $scope.nombreEstadoEspecie(esp.idEstadoEspecie, esp.idEstadoEspecie2);
             });
 
         });
     }
 
     // Obtiene el nombre del estado de una especie
-    $scope.nombreEstadoEspecie = function(idEstadoEspecie){
+    $scope.nombreEstadoEspecie = function(idEstadoEspecie, idEstadoEspecie2){
         // Encuentra el estado con el id recibido
         $scope.nEstado = $filter('filter')($scope.estados, function(resultado){
             return resultado.idEstadoEspecie === idEstadoEspecie;
         })[0];
+        $scope.nEstado2 = $filter('filter')($scope.estados2, function(resultado){
+            return resultado.idEstadoEspecie2 === idEstadoEspecie2;
+        })[0];
 
         // Agrega el nombre al arreglo para mostrarlo en la tabla
         $scope.nombreEstado.push.apply($scope.nombreEstado, [$scope.nEstado.estado]);
+        $scope.nombreEstado2.push.apply($scope.nombreEstado2, [$scope.nEstado2.estado]);
     }
 
     // Elimina una especie
@@ -122,13 +129,13 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
     }
 
     // Modifica una especie
-    $scope.modificarEspecie = function (index, idEspecie, nComun, nCientifico, idEstado){
+    $scope.modificarEspecie = function (index, idEspecie, nComun, nCientifico, idEstado, idEstado2){
         
         if(nComun != '' && nCientifico != ''){
             $scope.editando[index] = false;
             $scope.editandoEs = false;
             
-            servicioEspecies.modificarEspecie(idEspecie, nComun, nCientifico, idEstado).then(function(resultado){
+            servicioEspecies.modificarEspecie(idEspecie, nComun, nCientifico, idEstado, idEstado2).then(function(resultado){
                 $scope.actualizarPagina($scope.paginaActual);
                 $scope.mensaje = 'La especie ha sido modificada';
                 $scope.exito = true;

@@ -10,13 +10,31 @@
     <string name="btn_tomar_foto"></string>
     <string name="btn_escoger_imagen"></string>
     <string name="btn_detalles"></string>
-    <string name="inicio_intro">Bienvenido a la aplicacion de IMT. Para iniciar la generacion del reporte, presione en cualquiera de los dos botones.</string>
+    <string name="btn_precauciones"></string>
+    <string name="watch">Wild Animals in Transport Corridors and Highways</string>
+    <string name="inicio_intro">Bienvenido a la aplicacion del IMT. Para iniciar la generacion del reporte, presione en cualquiera de los dos botones.</string>
     <string name="btn_subir_incidente">Subir incidente</string>
     <string name="btn_regresar_inicio">  Regresar a inicio  </string>
     <string name="title_activity_actividad_mapa">ActividadMapa</string>
     <string name="acerca_de">Más informaciÓn</string>
     <string name="acerca_titulo">Información acerca de la aplicación</string>
-    <string name="acerca_descripcion">La aplicación tiene como objetivo reportar accidentes de animales atropellados en la carretera.</string>
+    <string name="acerca_descripcion">
+        WATCHMX es una herramienta para el monitoreo de la fauna que cruza las carreteras en México y que puede representar un
+        peligro para la seguridad de los usuarios de la red de carreteras en el país y la posible pérdida de la especie por el
+        atropellamiento. \n\n
+        El seguimiento se da a través de fotografías tomadas por los usuarios de la red de carreteras y enviadas al Observatorio
+        de Movilidad y Mortalidad de Fauna del Instituto Mexicano de transporte, mediante la cuales se integrará un sistema para:\n\n
+        •	Monitorear las especies que cruzan o que son atropelladas en las carreteras. \n\n
+        •	Identificar los puntos críticos de la red que ponen en peligro a los usuarios de la red y a las especies. \n\n
+        •	Generar reportes para auxiliar en la toma de decisiones en la búsqueda de implementar medidas de mitigación. \n\n
+        •	Reducir la mortalidad de especies de fauna en las carreteras y preservarlas para el futuro. \n\n
+        •	Aumentar la seguridad de las carreteras. \n\n\n
+        WATCH es el acrónimo de “Wild Animals in Transport Corridors and Highways”, que en español significa “Animales Silvestres
+        en Corredores de Transporte y Carreteras”. Si deseas conocer más o tienes dudas envíanos un correo a watch@imt.mx o
+        visita www.imt.mx\n\n
+
+    </string>
+    <string name="precauciones_generales">REGLAS DE SEGURIDAD</string>
     <color name="white">#FFFFFF</color>
     <color name="green1">#BEE7B8</color>
     <color name="green2">#84B37D</color>
@@ -25,4 +43,16 @@
     <color name="green4">#84B37D</color>
     <color name="gris">#A2B6B8</color>
     <string name="gracias">Gracias por tu aportacion</string>
+    <string name="title_activity_actividad_precauciones">ActividadPrecauciones</string>
+    <string name="before">Antes de tomar la fotografía debes tener especial precaución de:</string>
+    <string name="precauciones">
+        •	Disminuye la velocidad y recuerda encender las luces preventivas del vehículo antes de detenerlo. \n\n
+        •	Detener el vehículo fuera de la calzada. \n\n
+        •	Poner especial atención a la circulación de vehículos para que no comprometas tu seguridad al tomar la fotografía. \n\n
+        •	Evitar remover la especie de fauna de la calzada. \n\n
+        •	En caso de contar con copiloto, es preferible que éste realice la toma de la fotografía. \n\n
+        •	En ningún caso, como conductor, utilices tu teléfono o equipo fotográfico para tomar la imagen sin detener completamente el vehículo en un lugar seguro.\n\n
+
+        Recuerda que tu seguridad es primero.\n\n
+    </string>
 </resources>

@@ -7,26 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6825F40F1BC48CB20030F18C /* prueba.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6825F40E1BC48CB20030F18C /* prueba.jpg */; settings = {ASSET_TAGS = (); }; };
-		682F57B81BB3891400CE961A /* estados.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B71BB3891400CE961A /* estados.json */; settings = {ASSET_TAGS = (); }; };
-		682F57BA1BB3A41500CE961A /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B91BB3A41500CE961A /* municipios.json */; settings = {ASSET_TAGS = (); }; };
+		6825F40F1BC48CB20030F18C /* prueba.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6825F40E1BC48CB20030F18C /* prueba.jpg */; };
+		682F57B81BB3891400CE961A /* estados.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B71BB3891400CE961A /* estados.json */; };
+		682F57BA1BB3A41500CE961A /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B91BB3A41500CE961A /* municipios.json */; };
 		683CBC0E1BBCA00000F103AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 683CBC0D1BBCA00000F103AF /* CoreLocation.framework */; };
 		685B8B851BABB88A0030B63A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B841BABB88A0030B63A /* AppDelegate.swift */; };
 		685B8B871BABB88A0030B63A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B861BABB88A0030B63A /* ViewController.swift */; };
 		685B8B8C1BABB88A0030B63A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B8B1BABB88A0030B63A /* Assets.xcassets */; };
 		685B8B8F1BABB88A0030B63A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B8D1BABB88A0030B63A /* LaunchScreen.storyboard */; };
 		685B8BA51BABB88A0030B63A /* OMMFCMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BA41BABB88A0030B63A /* OMMFCMUITests.swift */; };
-		685B8BB31BABC00B0030B63A /* MandarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB21BABC00B0030B63A /* MandarViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		685B8BB51BB22E6D0030B63A /* UbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		685B8BB71BB246960030B63A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB61BB246960030B63A /* MapaViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		685B8BB31BABC00B0030B63A /* MandarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB21BABC00B0030B63A /* MandarViewController.swift */; };
+		685B8BB51BB22E6D0030B63A /* UbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */; };
+		685B8BB71BB246960030B63A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB61BB246960030B63A /* MapaViewController.swift */; };
+		686A2F711BE95DE300988624 /* icono_admiracion.png in Resources */ = {isa = PBXBuildFile; fileRef = 686A2F701BE95DE300988624 /* icono_admiracion.png */; };
 		68AB60131BB9D27B00021C42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B881BABB88A0030B63A /* Main.storyboard */; };
-		68B090DE1BC37FB5005E7DFD /* TestMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DD1BC37FB5005E7DFD /* TestMapa.swift */; settings = {ASSET_TAGS = (); }; };
-		68B090E01BC43959005E7DFD /* TestUbicacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DF1BC43959005E7DFD /* TestUbicacion.swift */; settings = {ASSET_TAGS = (); }; };
-		68B090E21BC458AF005E7DFD /* TestMandar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090E11BC458AF005E7DFD /* TestMandar.swift */; settings = {ASSET_TAGS = (); }; };
+		68B090DE1BC37FB5005E7DFD /* TestMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DD1BC37FB5005E7DFD /* TestMapa.swift */; };
+		68B090E01BC43959005E7DFD /* TestUbicacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DF1BC43959005E7DFD /* TestUbicacion.swift */; };
+		68B090E21BC458AF005E7DFD /* TestMandar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090E11BC458AF005E7DFD /* TestMandar.swift */; };
 		68CA54131BBC5923008EA0FE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CA54121BBC5923008EA0FE /* MapKit.framework */; };
-		68D1906A1BC5DFFB007037A9 /* camara.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D190671BC5DFFB007037A9 /* camara.png */; settings = {ASSET_TAGS = (); }; };
-		68D1906B1BC5DFFB007037A9 /* galeria.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D190681BC5DFFB007037A9 /* galeria.png */; settings = {ASSET_TAGS = (); }; };
-		68D1906C1BC5DFFB007037A9 /* logo imt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68D190691BC5DFFB007037A9 /* logo imt.jpg */; settings = {ASSET_TAGS = (); }; };
+		68D1906C1BC5DFFB007037A9 /* logo imt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68D190691BC5DFFB007037A9 /* logo imt.jpg */; };
+		68FEFCF61BD71C86001724D7 /* camara_icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 68FEFCF41BD71C86001724D7 /* camara_icono.png */; };
+		68FEFCF71BD71C86001724D7 /* carpeta_icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 68FEFCF51BD71C86001724D7 /* carpeta_icono.png */; };
+		68FEFCF91BD73E08001724D7 /* icono_confirmacion.png in Resources */ = {isa = PBXBuildFile; fileRef = 68FEFCF81BD73E08001724D7 /* icono_confirmacion.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,13 +68,15 @@
 		685B8BB21BABC00B0030B63A /* MandarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandarViewController.swift; sourceTree = "<group>"; };
 		685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbicacionViewController.swift; sourceTree = "<group>"; };
 		685B8BB61BB246960030B63A /* MapaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		686A2F701BE95DE300988624 /* icono_admiracion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono_admiracion.png; sourceTree = "<group>"; };
 		68B090DD1BC37FB5005E7DFD /* TestMapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMapa.swift; sourceTree = "<group>"; };
 		68B090DF1BC43959005E7DFD /* TestUbicacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUbicacion.swift; sourceTree = "<group>"; };
 		68B090E11BC458AF005E7DFD /* TestMandar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMandar.swift; sourceTree = "<group>"; };
 		68CA54121BBC5923008EA0FE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		68D190671BC5DFFB007037A9 /* camara.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camara.png; sourceTree = "<group>"; };
-		68D190681BC5DFFB007037A9 /* galeria.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = galeria.png; sourceTree = "<group>"; };
 		68D190691BC5DFFB007037A9 /* logo imt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "logo imt.jpg"; sourceTree = "<group>"; };
+		68FEFCF41BD71C86001724D7 /* camara_icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camara_icono.png; sourceTree = "<group>"; };
+		68FEFCF51BD71C86001724D7 /* carpeta_icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carpeta_icono.png; sourceTree = "<group>"; };
+		68FEFCF81BD73E08001724D7 /* icono_confirmacion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono_confirmacion.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,8 +171,10 @@
 		68D190661BC5DFFB007037A9 /* Imagenes */ = {
 			isa = PBXGroup;
 			children = (
-				68D190671BC5DFFB007037A9 /* camara.png */,
-				68D190681BC5DFFB007037A9 /* galeria.png */,
+				686A2F701BE95DE300988624 /* icono_admiracion.png */,
+				68FEFCF81BD73E08001724D7 /* icono_confirmacion.png */,
+				68FEFCF41BD71C86001724D7 /* camara_icono.png */,
+				68FEFCF51BD71C86001724D7 /* carpeta_icono.png */,
 				68D190691BC5DFFB007037A9 /* logo imt.jpg */,
 			);
 			path = Imagenes;
@@ -241,6 +247,7 @@
 				TargetAttributes = {
 					685B8B801BABB88A0030B63A = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = VRHKHKC28X;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -283,11 +290,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				68AB60131BB9D27B00021C42 /* Main.storyboard in Resources */,
+				686A2F711BE95DE300988624 /* icono_admiracion.png in Resources */,
 				682F57BA1BB3A41500CE961A /* municipios.json in Resources */,
+				68FEFCF61BD71C86001724D7 /* camara_icono.png in Resources */,
+				68FEFCF71BD71C86001724D7 /* carpeta_icono.png in Resources */,
 				682F57B81BB3891400CE961A /* estados.json in Resources */,
 				685B8B8F1BABB88A0030B63A /* LaunchScreen.storyboard in Resources */,
-				68D1906B1BC5DFFB007037A9 /* galeria.png in Resources */,
-				68D1906A1BC5DFFB007037A9 /* camara.png in Resources */,
+				68FEFCF91BD73E08001724D7 /* icono_confirmacion.png in Resources */,
 				68D1906C1BC5DFFB007037A9 /* logo imt.jpg in Resources */,
 				685B8B8C1BABB88A0030B63A /* Assets.xcassets in Resources */,
 			);
@@ -461,11 +470,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OMMFCM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.imt.OMMFCM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -473,11 +485,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OMMFCM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.imt.OMMFCM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

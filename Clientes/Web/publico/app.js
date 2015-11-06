@@ -1,32 +1,23 @@
-var app = angular.module('appPublica', ['ngRoute']);
+var app = angular.module('appPublica', ['ngRoute', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when("/inicio", {
-        controller: "controladorInicio",
         templateUrl: "/vistas/vistaInicio.html"
     });
 
-    $routeProvider.when("/", {
-        controller: "controladorInicio",
-        templateUrl: "/vistas/vistaInicio.html"
+    $routeProvider.when("/politicas", {
+        templateUrl: "/vistas/vistaPoliticas.html"
     });
 
     $routeProvider.when("/reportar", {
-        controller: "",
+        controller: "controladorReportar",
         templateUrl: "/vistas/vistaReportar.html"
     });
-    
-    $routeProvider.when("/reportaralt", {
-        controller: "",
-        templateUrl: "/vistas/vistaReportarAlt.html"
-    });
-
 
     $routeProvider.otherwise({ redirectTo: "/inicio" });
 });
 
-var serviceBase = 'http://localhost:8000/';
-app.constant({
-    apiServiceBaseUri: serviceBase,
-});
-
+// TODO Remove
+//var servicioBase = 'http://localhost/OMMFCM/Api/OMMFCM/public/';
+//var servicioBase = 'http://148.243.51.170:8007/obsfauna/public_html/index.php/';
+var servicioBase = 'http://watch.imt.mx/public_html/index.php/';

@@ -7,20 +7,21 @@
 	<div class="row">
         <div>
             Mostrar: 
-            <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados">
+            <select ng-change="actualizarPagina(paginaActual)" ng-options="res for res in resultadosDisponibles" ng-model="resultados" class="form-control resultados">
             </select>
             &nbsp especies
-            <button class="btn btn-link" data-toggle="modal" data-target="#agregarEspecie"><i class="fa fa-plus"></i> Agregar nueva especie</button>
+            <button class="btn btn-link" data-toggle="modal" data-target="#agregarEspecie" ng-class="{ disabled: editandoEs }"><i class="fa fa-plus"></i> Agregar nueva especie</button>
         </div>
 	</div>
 	<hr>
 	<div class="row">
-		<table class="table table-stripedd">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Nombre común</th>
 					<th>Nombre científico</th>
-					<th>Estado</th>
+					<th>Estado 1</th>
+					<th>Estado 2</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -30,23 +31,29 @@
 						{{especie.nombreComun}}
 					</td>
 					<td ng-show="editando[$index]">
-						<input type="text" ng-model="especie.nombreComun">
+						<input type="text" ng-model="especie.nombreComun" class="form-control">
 					</td>
 					<td ng-hide="editando[$index]">
 						{{especie.nombreCientifico}}
 					</td>
 					<td ng-show="editando[$index]">
-						<input type="text" ng-model="especie.nombreCientifico">
+						<input type="text" ng-model="especie.nombreCientifico" class="form-control">
 					</td>
 					<td ng-hide="editando[$index]">
 						{{nombreEstado[$index]}}
 					</td>
 					<td ng-show="editando[$index]">
-						<select ng-model="especie.idEstadoEspecie" ng-options="estado.idEstadoEspecie as estado.estado for estado in estados"></select>
+						<select ng-model="especie.idEstadoEspecie" ng-options="estado.idEstadoEspecie as estado.estado for estado in estados" class="form-control"></select>
+					</td>
+					<td ng-hide="editando[$index]">
+						{{nombreEstado2[$index]}}
+					</td>
+					<td ng-show="editando[$index]">
+						<select ng-model="especie.idEstadoEspecie2" ng-options="estado.idEstadoEspecie2 as estado.estado for estado in estados2" class="form-control"></select>
 					</td>
 					<td>
                         <a ng-hide="editando[$index]" ng-click="editables($index)" class="btn btn-link" ng-class="{ disabled: editandoEs }"><i class="fa fa-edit fa-2x"></i></a>
-                        <a ng-show="editando[$index]" ng-click="modificarEspecie($index, especie.idEspecie, especie.nombreComun, especie.nombreCientifico, especie.idEstadoEspecie)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
+                        <a ng-show="editando[$index]" ng-click="modificarEspecie($index, especie.idEspecie, especie.nombreComun, especie.nombreCientifico, especie.idEstadoEspecie, especie.idEstadoEspecie2)" class="btn btn-link"><i class="fa fa-floppy-o fa-2x"></i></a>
 						<a ng-click="eliminarEspecie(especie.idEspecie)" class="btn btn-link" ng-class="{ disabled: editandoEs }"><i class="fa fa-trash fa-2x"></i></a>
 					</td>
 				</tr>

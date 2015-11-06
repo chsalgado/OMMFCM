@@ -7,6 +7,7 @@
 	use Especie;
 	use Estado;
 	use EstadoEspecie;
+	use EstadoEspecie2;
 	
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -39,8 +40,6 @@
 	    	$thumbnailAncho = 200;
 	    	$thumbnailAlto = 200;
 			$imagen = base64_decode($imagen64);
-			$imagenThumbnail = ImageResize::createFromString(base64_decode($imagen64));
-			$imagenThumbnail -> resize($thumbnailAncho, $thumbnailAlto);
 			$ruta = public_path() . "/imagenes/incidentes/";
 			$nombreImagen 	= "incidente_" . time();
 			$rutaThumbnail = $ruta . $nombreImagen . "_thumbnail" . $extensionImg;
@@ -52,7 +51,9 @@
 			{
 				return 500;
 			}
-
+			
+			$imagenThumbnail = new ImageResize($ruta . $nombreImagen, $imagen);
+			$imagenThumbnail -> resize($thumbnailAncho, $thumbnailAlto);
 			$resultado = $imagenThumbnail -> save($rutaThumbnail);
 
 			if(!$resultado)
@@ -174,6 +175,7 @@
 	    	$especieExistente -> nombreComun = $especie -> nombreComun;
 	    	$especieExistente -> nombreCientifico = $especie -> nombreCientifico;
 	    	$especieExistente -> idEstadoEspecie = $especie -> idEstadoEspecie;
+	    	$especieExistente -> idEstadoEspecie2 = $especie -> idEstadoEspecie2;
 
 	    	$resultado = $especieExistente -> save();
 
@@ -224,5 +226,12 @@
 	   		$estadosEspecies = EstadoEspecie::all();
 
 	   		return $estadosEspecies;
+	   	}
+
+	   	public function getEstadosEspecies2()
+	   	{
+	   		$estadosEspecies2 = EstadoEspecie2::all();
+
+	   		return $estadosEspecies2;
 	   	}
 	}

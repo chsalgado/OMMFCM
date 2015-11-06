@@ -46,10 +46,11 @@ class MandarViewController: UIViewController
     {
         // Datos a enviar
         // Foto
+        Datos.imagen = self.corregirOrientacion(Datos.imagen!)
         let datosFoto = UIImageJPEGRepresentation(Datos.imagen!, 0.5)
         let imgb64 = datosFoto?.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         
-        var incidente: [String: String] = ["extension": ".jpeg", "imagen": imgb64!]
+        var incidente: [String: String] = ["extension": ".jpeg", "imagen": imgb64!, "fecha": Datos.fecha!]
         
         // Coordenadas
         if Datos.latitud != nil && Datos.longitud != nil {
@@ -87,6 +88,7 @@ class MandarViewController: UIViewController
                 } else  {
                     let respuesta = UIAlertController(title: "Error", message: error?.description, preferredStyle: UIAlertControllerStyle.Alert)
                     respuesta.addAction(accion)
+                    
                     self.presentViewController(respuesta, animated: true, completion: {})
                     self.envioExitoso = false
                 }
@@ -97,5 +99,24 @@ class MandarViewController: UIViewController
             print("error: no pudo convertir a Json")
             self.envioExitoso = false
         }
+    }
+    
+    // Se redibuja la imagen si es necesario para que quede en la orientacion correcta
+    // Esto es porque iOS y OSX no rotan la imagen y solo guardan en metadata su orientacion (EXIF)
+    func corregirOrientacion(imagen:UIImage) -> UIImage
+    {
+        // Si la foto esta en orientacion correcta se regresa la misma
+        if (imagen.imageOrientation == UIImageOrientation.Up)
+        {
+            return imagen;
+        }
+        
+        // Se redibuja la imagen tomando en cuenta solo los graficos
+        UIGraphicsBeginImageContextWithOptions(imagen.size, false, imagen.scale);
+        let rect = CGRect(x: 0, y: 0, width: imagen.size.width, height: imagen.size.height)
+        imagen.drawInRect(rect)
+        let imagenNormal : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        return imagenNormal;
     }
 }
