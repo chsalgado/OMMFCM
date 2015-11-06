@@ -116,7 +116,7 @@
 	    {
 	    	$incidenteExistente = Incidente::find($incidente -> idIncidente);
 
-			if(!$incidente -> idEspecie)
+			if(is_null($incidente -> idEspecie))
 			{
 				return 400;	
 			}
