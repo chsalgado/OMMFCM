@@ -17,8 +17,8 @@
                                 <rect key="frame" x="0.0" y="63" width="320" height="159"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo imt.jpg" id="43o-XE-uKm">
-                                        <rect key="frame" x="34" y="25" width="252" height="111"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_transparente.png" id="43o-XE-uKm">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                 </subviews>
@@ -28,30 +28,30 @@
                                 <rect key="frame" x="0.0" y="230" width="320" height="156"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="El IMT es una institución referente a nivel nacional e internacional, en todos los modos de transporte y su logística" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FbG-df-DLP">
-                                        <rect key="frame" x="8" y="8" width="304" height="118"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.51764705879999995" green="0.70196078429999997" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="0gu-xR-Bbz">
-                                        <rect key="frame" x="290" y="134" width="22" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="290" y="8" width="22" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                         <color key="tintColor" red="0.51764705879999995" green="0.70196078429999997" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="MQ5-LJ-Odu" kind="push" id="dvx-pq-I7Z"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Pgg-2n-HaA">
-                                        <rect key="frame" x="8" y="134" width="22" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="260" y="8" width="22" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                                         <color key="tintColor" red="0.51764705879999995" green="0.70196078429999997" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" backgroundImage="icono_admiracion.png"/>
                                         <connections>
                                             <segue destination="SBQ-8y-BI3" kind="push" id="GcS-Ge-oAi"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bienvenido a la aplicacion del IMT. Para iniciar la generacion del reporte, presione en cualquiera de los dos botones." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FbG-df-DLP">
+                                        <rect key="frame" x="8" y="38" width="304" height="118"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.51764705879999995" green="0.70196078429999997" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -72,7 +72,7 @@
                                 <color key="backgroundColor" red="0.51764705882352935" green="0.70196078431372544" blue="0.49019607843137253" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="khD-gm-Rnf" userLabel="VistaDerecha">
-                                <rect key="frame" x="170" y="418" width="130" height="130"/>
+                                <rect key="frame" x="170.00000018339887" y="418" width="130" height="130"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9mk-jj-Irv">
@@ -112,10 +112,10 @@
             </objects>
             <point key="canvasLocation" x="906" y="406"/>
         </scene>
-        <!--Tips-->
+        <!--Reglas de seguridad-->
         <scene sceneID="ue2-2B-QyH">
             <objects>
-                <viewController id="SBQ-8y-BI3" sceneMemberID="viewController">
+                <viewController id="SBQ-8y-BI3" customClass="InformacionViewController" customModule="OMMFCM" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="foG-V8-SFE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -124,14 +124,48 @@
                                 <rect key="frame" x="0.0" y="224" width="320" height="344"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hzZ-TV-Zta">
-                                        <rect key="frame" x="40" y="39" width="241" height="265"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <string key="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" id="FGJ-Ur-FfN">
+                                        <rect key="frame" x="8" y="-18" width="304" height="354"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <attributedString key="attributedText">
+                                            <fragment>
+                                                <string key="content">Antes de tomar la fotografía debes tener especial precaución de:
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">•	Disminuye la velocidad y recuerda encender las luces preventivas del vehículo antes de detenerlo
+•	Detener el vehículo fuera de la calzada
+•	Poner especial atención a la circulación de vehículos para que no comprometas tu seguridad al tomar la fotografía
+•	Evitar remover la especie de fauna de la calzada
+•	En caso de contar con copiloto, es preferible que éste realice la toma de la fotografía
+•	En ningún caso, como conductor, utilices tu teléfono o equipo fotográfico para tomar la imagen sin detener completamente el vehículo en un lugar seguro.
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Recuerda que tu seguridad es primero.
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.3294117647" green="0.59999999999999998" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -139,11 +173,15 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="224"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tips" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wh0-dO-Imn">
-                                        <rect key="frame" x="8" y="55" width="304" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.023529411760000001" green="0.31764705879999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_transparente.png" id="1Wp-7Z-fHK">
+                                        <rect key="frame" x="0.0" y="32" width="320" height="159"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wild Animals in Transport Corridors and Highways" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dPd-Mf-FFf">
+                                        <rect key="frame" x="8" y="195" width="304" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.047058823529411764" green="0.25490196078431371" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -152,9 +190,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tips" id="Teu-2T-kly">
+                    <navigationItem key="navigationItem" title="Reglas de seguridad" id="Teu-2T-kly">
                         <barButtonItem key="backBarButtonItem" title="Regresar" id="uO8-Gi-4cA"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="textoInformacion" destination="FGJ-Ur-FfN" id="l1W-R2-sc3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rJl-Xf-a0P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -163,7 +204,7 @@
         <!--Acerca de-->
         <scene sceneID="mCB-SQ-nSF">
             <objects>
-                <viewController id="MQ5-LJ-Odu" sceneMemberID="viewController">
+                <viewController id="MQ5-LJ-Odu" customClass="InformacionViewController" customModule="OMMFCM" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mBy-43-SJr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,14 +213,186 @@
                                 <rect key="frame" x="0.0" y="224" width="320" height="344"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7ly-xP-SqS">
-                                        <rect key="frame" x="40" y="39" width="241" height="265"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" id="EM0-qO-Tvf">
+                                        <rect key="frame" x="8" y="-19" width="304" height="355"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <string key="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <attributedString key="attributedText">
+                                            <fragment content="WATCH">
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="mx">
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <integer key="NSSuperScript" value="-1"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content"> es una herramienta para el monitoreo de la fauna que cruza las carreteras en México y que puede representar un peligro para la seguridad de los usuarios de la red de carreteras en el país y la posible pérdida de la especie por el atropellamiento.
+El seguimiento se da a través de fotografías tomadas por los usuarios de la red de carreteras y enviadas al Observatorio de Movilidad y Mortalidad de Fauna del Instituto Mexicano de transporte, mediante la cuales se integrará un sistema para:
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">•	</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Symbol"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Monitorear las especies que cruzan o que son atropelladas en las carreteras
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">•	</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Symbol"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Identificar los puntos críticos de la red que ponen en peligro a los usuarios de la red y a las especies
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">•	</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Symbol"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Generar reportes para auxiliar en la toma de decisiones en la búsqueda de implementar medidas de mitigación
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">•	</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Symbol"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Reducir la mortalidad de especies de fauna en las carreteras y preservarlas para el futuro
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">•	</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Symbol"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">Aumentar la seguridad de las carreteras
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" firstLineHeadIndent="18" headIndent="36" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">WATCH es el acrónimo de “Wild Animals in Transport Corridors and Highways”, que en español significar “Animales Silvestres en Corredores de Transporte y Carreteras”. Si deseas conocer más o tienes dudas envíanos un correo a </string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="watch@imt.mx">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.019607843137254902" green="0.38823529411764707" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <url key="NSLink" string="mailto:watch@imt.mx"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <integer key="NSUnderline" value="1"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" o visita ">
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="www.imt.mx">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.019607843137254902" green="0.38823529411764707" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <url key="NSLink" string="http://www.imt.mx"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                    <integer key="NSUnderline" value="1"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="11" name="Calibri"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="8" tailIndent="441.89999999999998" lineHeightMultiple="1.0791666666666666" defaultTabInterval="35.399999999999999">
+                                                        <tabStops/>
+                                                    </paragraphStyle>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.32941176470588235" green="0.59999999999999998" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -187,10 +400,14 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="224"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Información acerca de la aplicación" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lJH-K5-8iW">
-                                        <rect key="frame" x="8" y="55" width="304" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_transparente.png" id="HKz-Lk-wqV">
+                                        <rect key="frame" x="0.0" y="33" width="320" height="159"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wild Animals in Transport Corridors and Highways" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F9p-X8-6Dk">
+                                        <rect key="frame" x="8" y="195" width="304" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.023529411760000001" green="0.31764705879999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -203,6 +420,9 @@
                     <navigationItem key="navigationItem" title="Acerca de" id="p18-Pn-iGn">
                         <barButtonItem key="backBarButtonItem" title="Regresar" id="FRQ-71-U9p"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="textoInformacion" destination="EM0-qO-Tvf" id="wU5-jI-hjf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OPq-WA-02B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -556,7 +776,7 @@
         <image name="carpeta_icono.png" width="512" height="512"/>
         <image name="icono_admiracion.png" width="120" height="106"/>
         <image name="icono_confirmacion.png" width="500" height="500"/>
-        <image name="logo imt.jpg" width="470" height="283"/>
+        <image name="logo_transparente.png" width="1400" height="1400"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="KWU-pY-L1Z"/>

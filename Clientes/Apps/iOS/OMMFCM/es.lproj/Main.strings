@@ -1,0 +1,90 @@
+
+/* Class = "UIButton"; normalTitle = "Regresar a inicio"; ObjectID = "3re-4G-Foy"; */
+"3re-4G-Foy.normalTitle" = "Regresar a inicio";
+
+/* Class = "UILabel"; text = "Estado"; ObjectID = "4Qp-nv-QhR"; */
+"4Qp-nv-QhR.text" = "Estado";
+
+/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo"; ObjectID = "7ly-xP-SqS"; */
+"7ly-xP-SqS.text" = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
+
+/* Class = "UIBarButtonItem"; title = "Regresar"; ObjectID = "FRQ-71-U9p"; */
+"FRQ-71-U9p.title" = "Regresar";
+
+/* Class = "UILabel"; text = "El IMT es una institución referente a nivel nacional e internacional, en todos los modos de transporte y su logística"; ObjectID = "FbG-df-DLP"; */
+"FbG-df-DLP.text" = "El IMT es una institución referente a nivel nacional e internacional, en todos los modos de transporte y su logística";
+
+/* Class = "UIBarButtonItem"; title = "Regresar"; ObjectID = "PEc-zb-Ecu"; */
+"PEc-zb-Ecu.title" = "Regresar";
+
+/* Class = "UIViewController"; title = "Selecciona una Ubicación"; ObjectID = "SfP-Un-q9y"; */
+"SfP-Un-q9y.title" = "Selecciona una Ubicación";
+
+/* Class = "UIViewController"; title = "Confirma datos"; ObjectID = "TAi-1z-2bJ"; */
+"TAi-1z-2bJ.title" = "Confirma datos";
+
+/* Class = "UINavigationItem"; title = "Tips"; ObjectID = "Teu-2T-kly"; */
+"Teu-2T-kly.title" = "Tips";
+
+/* Class = "UILabel"; text = "Tips"; ObjectID = "Wh0-dO-Imn"; */
+"Wh0-dO-Imn.text" = "Tips";
+
+/* Class = "UILabel"; text = "Municipio"; ObjectID = "X5B-zM-uMN"; */
+"X5B-zM-uMN.text" = "Municipio";
+
+/* Class = "UIButton"; normalTitle = "Enviar"; ObjectID = "Zf3-Sc-1yj"; */
+"Zf3-Sc-1yj.normalTitle" = "Enviar";
+
+/* Class = "UIButton"; normalTitle = "Continuar"; ObjectID = "bIS-9j-NAE"; */
+"bIS-9j-NAE.normalTitle" = "Continuar";
+
+/* Class = "UIBarButtonItem"; title = "Regresar"; ObjectID = "bVw-3A-pac"; */
+"bVw-3A-pac.title" = "Regresar";
+
+/* Class = "UINavigationItem"; title = "Ubicación"; ObjectID = "bqJ-Bf-MPz"; */
+"bqJ-Bf-MPz.title" = "Ubicación";
+
+/* Class = "UIBarButtonItem"; title = "Regresar"; ObjectID = "c5O-2L-maT"; */
+"c5O-2L-maT.title" = "Regresar";
+
+/* Class = "UILabel"; text = "Municipio"; ObjectID = "fae-qn-4RS"; */
+"fae-qn-4RS.text" = "Municipio";
+
+/* Class = "UINavigationItem"; title = "Foto"; ObjectID = "geU-Ox-zYk"; */
+"geU-Ox-zYk.title" = "Foto";
+
+/* Class = "UILabel"; text = "Destino"; ObjectID = "gmc-HM-NeA"; */
+"gmc-HM-NeA.text" = "Destino";
+
+/* Class = "UILabel"; text = "Gracias por tu aportación"; ObjectID = "hJX-ih-Aqy"; */
+"hJX-ih-Aqy.text" = "Gracias por tu aportación";
+
+/* Class = "UILabel"; text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo"; ObjectID = "hzZ-TV-Zta"; */
+"hzZ-TV-Zta.text" = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
+
+/* Class = "UILabel"; text = "Información acerca de la aplicación"; ObjectID = "lJH-K5-8iW"; */
+"lJH-K5-8iW.text" = "Información acerca de la aplicación";
+
+/* Class = "UILabel"; text = "Origen"; ObjectID = "naG-tU-xgP"; */
+"naG-tU-xgP.text" = "Origen";
+
+/* Class = "UINavigationItem"; title = "Acerca de"; ObjectID = "p18-Pn-iGn"; */
+"p18-Pn-iGn.title" = "Acerca de";
+
+/* Class = "UIButton"; normalTitle = "Aceptar"; ObjectID = "qYz-8x-bSS"; */
+"qYz-8x-bSS.normalTitle" = "Aceptar";
+
+/* Class = "UINavigationItem"; title = "Mapa"; ObjectID = "tTC-uC-gnn"; */
+"tTC-uC-gnn.title" = "Mapa";
+
+/* Class = "UIBarButtonItem"; title = "Regresar"; ObjectID = "uO8-Gi-4cA"; */
+"uO8-Gi-4cA.title" = "Regresar";
+
+/* Class = "UIBarButtonItem"; title = "Regresa"; ObjectID = "v9C-5V-c5k"; */
+"v9C-5V-c5k.title" = "Regresa";
+
+/* Class = "UINavigationItem"; title = "Confirmar"; ObjectID = "wHb-2U-2uL"; */
+"wHb-2U-2uL.title" = "Confirmar";
+
+/* Class = "UILabel"; text = "Estado"; ObjectID = "xSS-xa-3eQ"; */
+"xSS-xa-3eQ.text" = "Estado";

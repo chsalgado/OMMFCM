@@ -11,6 +11,7 @@
 		682F57B81BB3891400CE961A /* estados.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B71BB3891400CE961A /* estados.json */; };
 		682F57BA1BB3A41500CE961A /* municipios.json in Resources */ = {isa = PBXBuildFile; fileRef = 682F57B91BB3A41500CE961A /* municipios.json */; };
 		683CBC0E1BBCA00000F103AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 683CBC0D1BBCA00000F103AF /* CoreLocation.framework */; };
+		683DE4B11BEBFB3F006C09F9 /* InformacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683DE4B01BEBFB3F006C09F9 /* InformacionViewController.swift */; };
 		685B8B851BABB88A0030B63A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B841BABB88A0030B63A /* AppDelegate.swift */; };
 		685B8B871BABB88A0030B63A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8B861BABB88A0030B63A /* ViewController.swift */; };
 		685B8B8C1BABB88A0030B63A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B8B1BABB88A0030B63A /* Assets.xcassets */; };
@@ -20,12 +21,12 @@
 		685B8BB51BB22E6D0030B63A /* UbicacionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */; };
 		685B8BB71BB246960030B63A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685B8BB61BB246960030B63A /* MapaViewController.swift */; };
 		686A2F711BE95DE300988624 /* icono_admiracion.png in Resources */ = {isa = PBXBuildFile; fileRef = 686A2F701BE95DE300988624 /* icono_admiracion.png */; };
+		6895E3211BED314A00782DCF /* logo_transparente.png in Resources */ = {isa = PBXBuildFile; fileRef = 6895E3201BED314A00782DCF /* logo_transparente.png */; };
 		68AB60131BB9D27B00021C42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 685B8B881BABB88A0030B63A /* Main.storyboard */; };
 		68B090DE1BC37FB5005E7DFD /* TestMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DD1BC37FB5005E7DFD /* TestMapa.swift */; };
 		68B090E01BC43959005E7DFD /* TestUbicacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090DF1BC43959005E7DFD /* TestUbicacion.swift */; };
 		68B090E21BC458AF005E7DFD /* TestMandar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B090E11BC458AF005E7DFD /* TestMandar.swift */; };
 		68CA54131BBC5923008EA0FE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CA54121BBC5923008EA0FE /* MapKit.framework */; };
-		68D1906C1BC5DFFB007037A9 /* logo imt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68D190691BC5DFFB007037A9 /* logo imt.jpg */; };
 		68FEFCF61BD71C86001724D7 /* camara_icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 68FEFCF41BD71C86001724D7 /* camara_icono.png */; };
 		68FEFCF71BD71C86001724D7 /* carpeta_icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 68FEFCF51BD71C86001724D7 /* carpeta_icono.png */; };
 		68FEFCF91BD73E08001724D7 /* icono_confirmacion.png in Resources */ = {isa = PBXBuildFile; fileRef = 68FEFCF81BD73E08001724D7 /* icono_confirmacion.png */; };
@@ -53,6 +54,7 @@
 		682F57B71BB3891400CE961A /* estados.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = estados.json; sourceTree = "<group>"; };
 		682F57B91BB3A41500CE961A /* municipios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = municipios.json; sourceTree = "<group>"; };
 		683CBC0D1BBCA00000F103AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		683DE4B01BEBFB3F006C09F9 /* InformacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformacionViewController.swift; sourceTree = "<group>"; };
 		685B8B811BABB88A0030B63A /* OMMFCM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMMFCM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		685B8B841BABB88A0030B63A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		685B8B861BABB88A0030B63A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,11 +71,13 @@
 		685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UbicacionViewController.swift; sourceTree = "<group>"; };
 		685B8BB61BB246960030B63A /* MapaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
 		686A2F701BE95DE300988624 /* icono_admiracion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono_admiracion.png; sourceTree = "<group>"; };
+		6886939B1BEAC720003F9297 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		6886939C1BEAC721003F9297 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6895E3201BED314A00782DCF /* logo_transparente.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_transparente.png; sourceTree = "<group>"; };
 		68B090DD1BC37FB5005E7DFD /* TestMapa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMapa.swift; sourceTree = "<group>"; };
 		68B090DF1BC43959005E7DFD /* TestUbicacion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUbicacion.swift; sourceTree = "<group>"; };
 		68B090E11BC458AF005E7DFD /* TestMandar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMandar.swift; sourceTree = "<group>"; };
 		68CA54121BBC5923008EA0FE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		68D190691BC5DFFB007037A9 /* logo imt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "logo imt.jpg"; sourceTree = "<group>"; };
 		68FEFCF41BD71C86001724D7 /* camara_icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camara_icono.png; sourceTree = "<group>"; };
 		68FEFCF51BD71C86001724D7 /* carpeta_icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carpeta_icono.png; sourceTree = "<group>"; };
 		68FEFCF81BD73E08001724D7 /* icono_confirmacion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono_confirmacion.png; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 				685B8BB61BB246960030B63A /* MapaViewController.swift */,
 				685B8BB41BB22E6D0030B63A /* UbicacionViewController.swift */,
 				685B8B861BABB88A0030B63A /* ViewController.swift */,
+				683DE4B01BEBFB3F006C09F9 /* InformacionViewController.swift */,
 				685B8B881BABB88A0030B63A /* Main.storyboard */,
 				685B8B8B1BABB88A0030B63A /* Assets.xcassets */,
 				68D190661BC5DFFB007037A9 /* Imagenes */,
@@ -171,11 +176,11 @@
 		68D190661BC5DFFB007037A9 /* Imagenes */ = {
 			isa = PBXGroup;
 			children = (
+				6895E3201BED314A00782DCF /* logo_transparente.png */,
 				686A2F701BE95DE300988624 /* icono_admiracion.png */,
 				68FEFCF81BD73E08001724D7 /* icono_confirmacion.png */,
 				68FEFCF41BD71C86001724D7 /* camara_icono.png */,
 				68FEFCF51BD71C86001724D7 /* carpeta_icono.png */,
-				68D190691BC5DFFB007037A9 /* logo imt.jpg */,
 			);
 			path = Imagenes;
 			sourceTree = "<group>";
@@ -269,7 +274,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 			);
 			mainGroup = 685B8B781BABB88A0030B63A;
@@ -297,7 +301,7 @@
 				682F57B81BB3891400CE961A /* estados.json in Resources */,
 				685B8B8F1BABB88A0030B63A /* LaunchScreen.storyboard in Resources */,
 				68FEFCF91BD73E08001724D7 /* icono_confirmacion.png in Resources */,
-				68D1906C1BC5DFFB007037A9 /* logo imt.jpg in Resources */,
+				6895E3211BED314A00782DCF /* logo_transparente.png in Resources */,
 				685B8B8C1BABB88A0030B63A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,6 +333,7 @@
 				685B8BB71BB246960030B63A /* MapaViewController.swift in Sources */,
 				685B8B871BABB88A0030B63A /* ViewController.swift in Sources */,
 				685B8B851BABB88A0030B63A /* AppDelegate.swift in Sources */,
+				683DE4B11BEBFB3F006C09F9 /* InformacionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +375,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				685B8B891BABB88A0030B63A /* Base */,
+				6886939B1BEAC720003F9297 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -378,6 +384,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				685B8B8E1BABB88A0030B63A /* Base */,
+				6886939C1BEAC721003F9297 /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
