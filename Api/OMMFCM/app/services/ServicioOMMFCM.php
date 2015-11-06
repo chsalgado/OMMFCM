@@ -40,8 +40,6 @@
 	    	$thumbnailAncho = 200;
 	    	$thumbnailAlto = 200;
 			$imagen = base64_decode($imagen64);
-			$imagenThumbnail = ImageResize::createFromString(base64_decode($imagen64));
-			$imagenThumbnail -> resize($thumbnailAncho, $thumbnailAlto);
 			$ruta = public_path() . "/imagenes/incidentes/";
 			$nombreImagen 	= "incidente_" . time();
 			$rutaThumbnail = $ruta . $nombreImagen . "_thumbnail" . $extensionImg;
@@ -53,7 +51,9 @@
 			{
 				return 500;
 			}
-
+			
+			$imagenThumbnail = new ImageResize($ruta . $nombreImagen, $imagen);
+			$imagenThumbnail -> resize($thumbnailAncho, $thumbnailAlto);
 			$resultado = $imagenThumbnail -> save($rutaThumbnail);
 
 			if(!$resultado)

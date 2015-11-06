@@ -19,8 +19,8 @@ class EspeciesController extends \BaseController
 	{
 		$pagina = Request::get('pagina');
 	   	$resultados = Request::get('resultados');
-		$especies = $this->servicioOMMFCM->getEspecies($pagina, $resultados);
-
+	   	$especies = $this->servicioOMMFCM->getEspecies($pagina, $resultados);
+	
 		return Response::json(array(
 			'error' => false,
 			'especies' => $especies -> toArray()),
