@@ -31,7 +31,7 @@ h3{
 .info{
     font-size: 14px;
 }
-.navbar{
+.btn-success, .navbar{
     background-color: #84B37D;
 }
 .icon-bar{
@@ -41,7 +41,7 @@ h3{
     color: #065143;
     font-weight: bold;
 }
-.btn-success, .navbar-nav>li>a:hover, .panel-success>.panel-heading{
+.navbar-nav>li>a:hover, .panel-success>.panel-heading{
     background-color: #BEE7B8;
     font-weight: bold;
 }
