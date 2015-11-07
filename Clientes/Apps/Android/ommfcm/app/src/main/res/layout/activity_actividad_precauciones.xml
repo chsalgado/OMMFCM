@@ -37,7 +37,7 @@
                 android:id="@+id/imageView4"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
-                android:src="@mipmap/watchv5"
+                android:src="@mipmap/watchicon"
                 android:layout_gravity="center"
                 android:layout_weight="1.32" />
 
