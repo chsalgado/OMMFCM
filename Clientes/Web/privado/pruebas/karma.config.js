@@ -22,7 +22,8 @@ module.exports = function(config) {
       '../controladores/*.js',
       '../servicios/*.js',
       'servicios/*.tests.js',
-      'controladores/*.tests.js'
+      'controladores/*.tests.js',
+      '../scripts/loading-bar.js'
     ],
 
 

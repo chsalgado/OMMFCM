@@ -26,8 +26,8 @@ describe('controlador incidentes', function(){
             mockServicioEspecies.obtenerEspecies.and.callFake(function(){
                 if(exito){
                     return ($q.resolve([
-                        {"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},
-                        {"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"}
+                        {"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44","idEstadoEspecie":1,"idEstadoEspecie2":1},
+                        {"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44","idEstadoEspecie":1,"idEstadoEspecie2":1}
                     ]));
                 }
                 return ($q.reject());
@@ -35,7 +35,10 @@ describe('controlador incidentes', function(){
 
             mockServicioEspecies.obtenerEstadosEspecies.and.callFake(function(){
                 if(exito){
-                    return ($q.resolve([{"idEstadoEspecie":1,"estado":"Sin Clasificar","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"},{"idEstadoEspecie":2,"estado":"Amenazada","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"}]));
+                    return ($q.resolve([
+                        [{"idEstadoEspecie":1,"estado":"Sin Clasificar","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"},{"idEstadoEspecie":2,"estado":"Amenazada","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"}],
+                        [{"idEstadoEspecie2":1,"estado":"Endemica","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"},{"idEstadoEspecie2":2,"estado":"No Endemica","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"}]
+                        ]));
                 }
                 return ($q.reject());
             });
@@ -87,7 +90,7 @@ describe('controlador incidentes', function(){
 
     it('asigna variables iniciales', function(){
         expect($scope.incidentes.length).toBe(0);
-        expect($scope.nuevaEspecie).toEqual({"nombreComun":null,"nombreCientifico":null,"idEstadoEspecie":1});
+        expect($scope.nuevaEspecie).toEqual({"nombreComun":null,"nombreCientifico":null,"idEstadoEspecie":1, "idEstadoEspecie2":1});
         expect($scope.paginaActual).toEqual(1);
         expect($scope.resultadosDisponibles.length).toBe(5);
         expect($scope.resultados).toEqual(10);
@@ -96,7 +99,10 @@ describe('controlador incidentes', function(){
         expect($scope.exito).toBe(false);
         expect($scope.errores).toBe(false);
         expect($scope.editandoIn).toBe(false);
+        expect($scope.ruta).toEqual('http://watch.imt.mx/public_html/imagenes');
+        expect($scope.rutaFoto).toBeUndefined();
         expect($scope.estados).toBeUndefined();
+        expect($scope.estados2).toBeUndefined();
         expect($scope.especies).toBeUndefined();
         expect($scope.especiesFiltro).toBeUndefined();
         expect($scope.nombreEspecie).toBeUndefined();
@@ -115,6 +121,7 @@ describe('controlador incidentes', function(){
         expect(mockServicioEspecies.obtenerEstadosEspecies).toHaveBeenCalled();
         $timeout.flush();
         expect($scope.estados).toEqual([{"idEstadoEspecie":1,"estado":"Sin Clasificar","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"},{"idEstadoEspecie":2,"estado":"Amenazada","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"}]);
+        expect($scope.estados2).toEqual([{"idEstadoEspecie2":1,"estado":"Endemica","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"},{"idEstadoEspecie2":2,"estado":"No Endemica","created_at":"2015-10-16 00:00:00","updated_at":"2015-10-16 00:00:00"}]);
     });
 
     it('falla al obtener los estados que puede tener una especie', function(){
@@ -123,20 +130,23 @@ describe('controlador incidentes', function(){
         expect(mockServicioEspecies.obtenerEstadosEspecies).toHaveBeenCalled();
         $timeout.flush();
         expect($scope.estados).toBeUndefined();
+        expect($scope.estados2).toBeUndefined();
     });
 
     it('obtiene todas las especies', function(){
         cambiarExito(true);
-        $scope.obtenerEspecies();
-        expect(mockServicioEspecies.obtenerEspecies).toHaveBeenCalled();
+        var pagina = 1;
+        $scope.obtenerEspecies(pagina);
+        expect(mockServicioEspecies.obtenerEspecies).toHaveBeenCalledWith();
         $timeout.flush();
-        expect($scope.especies).toEqual([{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"}]);
-        expect($scope.especiesFiltro).toEqual([{"idEspecie": -1, "nombreComun": "- - Todas las especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"},{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"},{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44"}]);
+        expect($scope.especies).toEqual([{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44","idEstadoEspecie":1,"idEstadoEspecie2":1},{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44","idEstadoEspecie":1,"idEstadoEspecie2":1}]);
+        expect($scope.especiesFiltro).toEqual([{"idEspecie": -1, "nombreComun": "- - Todas las especies", "nombreCientifico": "-", "created_at":"2015-09-19 00:00:00","updated_at":"2015-09-19 00:00:00"},{"idEspecie":14,"nombreComun":"nombre comun0","nombreCientifico":"nombre cientifico0","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44","idEstadoEspecie":1,"idEstadoEspecie2":1},{"idEspecie":15,"nombreComun":"nombre comun1","nombreCientifico":"nombre cientifico1","created_at":"2015-09-20 03:22:44","updated_at":"2015-09-20 03:22:44","idEstadoEspecie":1,"idEstadoEspecie2":1}]);
     });
 
     it('falla al obtener todas las especies', function(){
         cambiarExito(false);
-        $scope.obtenerEspecies();
+        var pagina = 1;
+        $scope.obtenerEspecies(pagina);
         expect(mockServicioEspecies.obtenerEspecies).toHaveBeenCalled();
         $timeout.flush();
         expect($scope.especies).toBeUndefined();
@@ -145,7 +155,8 @@ describe('controlador incidentes', function(){
 
     it('actualiza la pagina', function(){
         cambiarExito(true);
-        $scope.obtenerEspecies();
+        var pagina = 1;
+        $scope.obtenerEspecies(pagina);
         $timeout.flush();
         expect(mockServicioIncidentes.obtenerIncidentes).toHaveBeenCalledWith(1, 10, -1);
         expect($scope.incidentes).toEqual([{"idIncidente":26,"idEspecie":15,"fecha":null,"rutaFoto":"as","long":null,"lat":null,"mpioOrigen":3,"mpioDestino":4,"km":null,"created_at":"-0001-11-30 00:00:00","updated_at":"-0001-11-30 00:00:00","rutaThumbnail":"x"},{"idIncidente":27,"idEspecie":15,"fecha":null,"rutaFoto":"as","long":null,"lat":null,"mpioOrigen":3,"mpioDestino":4,"km":null,"created_at":"-0001-11-30 00:00:00","updated_at":"-0001-11-30 00:00:00","rutaThumbnail":"dd"}]);
