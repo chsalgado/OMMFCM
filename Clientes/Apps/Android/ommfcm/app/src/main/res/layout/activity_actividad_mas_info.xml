@@ -44,7 +44,7 @@
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
                     android:layout_below="@+id/editText3"
-                    android:src="@mipmap/watchicon"
+                    android:src="@mipmap/watchv5"
                     />
 
                 <TextView
