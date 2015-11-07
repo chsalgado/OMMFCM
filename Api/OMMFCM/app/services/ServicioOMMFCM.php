@@ -12,14 +12,27 @@
 
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
-		public function getIncidentes()
+		public function getIncidentesPorReporte($reporte)
 		{
-			// Debido a la concatenación de los estados especies a la consulta, se dificultó usar los modelos de Eloquent
+			$columnas;
+			if($reporte == 1)
+			{
+				// columnas especiales para el excel
+				$columnas = array('fecha', 'ruta', 'km','nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2');
+			}
+			
+			if($reporte == 2)
+			{
+				// columnas especiales para el mapa
+				$columnas = array('fecha', 'lat', 'long', 'especies.idEspecie','nombreCientifico', 'nombreComun');
+			}
+
+			// obtener incidentes
 			$incidentes = DB::table('incidentes')
 						->join('especies', 'especies.idEspecie', '=', 'incidentes.idEspecie')
 						->join('estadosEspecies', 'estadosEspecies.idEstadoEspecie', '=', 'especies.idEstadoEspecie')
 						->join('estadosEspecies2', 'estadosEspecies2.idEstadoEspecie2', '=', 'especies.idEstadoEspecie2')
-						->get(array('fecha', 'km', 'ruta', 'lat', 'long', 'nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2'));
+						->get($columnas);				
 
 			return $incidentes;
 		}
@@ -236,14 +249,14 @@
 
 	   	public function getEstadosEspecies()
 	   	{
-	   		$estadosEspecies = EstadoEspecie::all();
+	   		$estadosEspecies = EstadoEspecie::where('idEstadoEspecie', '>', '0')->get();
 
 	   		return $estadosEspecies;
 	   	}
 
 	   	public function getEstadosEspecies2()
 	   	{
-	   		$estadosEspecies2 = EstadoEspecie2::all();
+	   		$estadosEspecies2 = EstadoEspecie2::where('idEstadoEspecie2', '>', '0')->get();
 
 	   		return $estadosEspecies2;
 	   	}
