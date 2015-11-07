@@ -1,6 +1,7 @@
 'use strict';
-app.factory('servicioIncidentes', ['$http', function($http) {
+app.factory('servicioIncidentes', ['$http', 'ngServicio', function($http, ngServicio) {
 
+    var servicioBase = ngServicio.apiServicioBase;
     var fabricaServicioIncidentes = {};
 
     // Obtiene los estados
