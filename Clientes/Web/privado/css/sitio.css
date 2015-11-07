@@ -46,3 +46,7 @@
     color: #619859;
     outline: none;
 }
+.navbar-brand{
+    padding: 0px;
+    padding-left: 10px;
+}
