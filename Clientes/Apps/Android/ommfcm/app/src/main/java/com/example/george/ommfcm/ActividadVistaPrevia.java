@@ -50,6 +50,7 @@ public class ActividadVistaPrevia extends AppCompatActivity {
     private double latitud = 0.0;
     private double longitud = 0.0;
     private static String rutaServidor= "http://watch.imt.mx/public_html/index.php/api/incidentes"; // Ruta del servidor donde se sube la imagen
+    private String lastimgdatetime;
     private GoogleMap gMap;
     /**
      * Metodo que se llama al crearse la vista por primera vez
