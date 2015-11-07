@@ -8,10 +8,23 @@
 	use Estado;
 	use EstadoEspecie;
 	use EstadoEspecie2;
-	
+	use DB;
+
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
-		public function getIncidentes($pagina, $resultados)
+		public function getIncidentes()
+		{
+			// Debido a la concatenación de los estados especies a la consulta, se dificultó usar los modelos de Eloquent
+			$incidentes = DB::table('incidentes')
+						->join('especies', 'especies.idEspecie', '=', 'incidentes.idEspecie')
+						->join('estadosEspecies', 'estadosEspecies.idEstadoEspecie', '=', 'especies.idEstadoEspecie')
+						->join('estadosEspecies2', 'estadosEspecies2.idEstadoEspecie2', '=', 'especies.idEstadoEspecie2')
+						->get(array('fecha', 'km', 'ruta', 'lat', 'long', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2', 'nombreCientifico', 'nombreComun'));
+
+			return $incidentes;
+		}
+
+		public function getIncidentesPaginados($pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
 	   		$incidentes = Incidente::paginate($resultados);
