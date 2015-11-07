@@ -43,9 +43,17 @@ app.factory('servicioIncidentes', ['$http', function($http){
             });
         };
 
+        // Otener todos los incidentes para descargar un excel
+        var _obtenerExcel = function(){
+            return $http.get(servicioBase + 'api/incidentes?reporte=1').then(function(resultado){
+                return resultado.data.incidentes;                    
+            });            
+        }
+
         fabricaServicioIncidentes.obtenerIncidentes = _obtenerIncidentes;
         fabricaServicioIncidentes.eliminarIncidente = _eliminarIncidente;
         fabricaServicioIncidentes.modificarIncidente = _modificarIncidente;
+        fabricaServicioIncidentes.obtenerExcel = _obtenerExcel;
 
         return fabricaServicioIncidentes;
 }]);

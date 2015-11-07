@@ -169,6 +169,65 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
         $timeout($scope.ocultarMensaje, 3000);
     }
 
+    // Descarga los incidentes a un Excel
+    $scope.obtenerExcel = function(){
+        servicioIncidentes.obtenerExcel().then(function(resultado){
+            // Si resultado no es un objeto JSON.parse convierte el string en objeto
+            var arrInc = typeof resultado != 'object' ? JSON.parse(resultado) : resultado;
+
+            var XLS = '';
+
+            // Generar los encabezados
+            var encabezado = "";
+            for(var index in arrInc[0]){
+                encabezado += index + ',';
+            }
+            encabezado = encabezado.slice(0, -1);
+            XLS += encabezado + '\r\n';
+
+            // Extraer cada renglón
+            for(var i = 0; i < arrInc.length; i++){
+                var renglon = "";
+
+                // Extraer cada columna
+                for(var index in arrInc[i]){
+                    renglon += '"' + arrInc[i][index] + '",';
+                }
+
+                renglon.slice(0, renglon.length - 1);
+                XLS += renglon + '\r\n';
+            }
+
+            // Verifica que los datos se crearon bien
+            if(XLS == ''){
+                $scope.mensaje = "No ha sido posible extraer los datos. Inténtelo más tarde";
+                $scope.errores = true;
+            }
+
+            // Nombre del archivo
+            var nombreArch = "Reporte_de_incidentes";
+
+            // Formato de archivo
+            var uri = 'data:text/csv;charset=utf-8,' + escape(XLS);
+
+            // Generar link que descargará archivo
+            // Esconder el link y dar click automático
+            // Remover link
+            var link = document.createElement("a");
+            link.href = uri;
+            link.setAttribute('style', 'visibility:hidden');
+            link.download = nombreArch + ".csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }, function(resultado){
+            $scope.mensaje = "No ha sido posible extraer los datos. Inténtelo más tarde";
+            $scope.errores = true;            
+        });
+        $timeout($scope.ocultarMensaje, 3000);
+
+    }
+
     // MAPA
     // Crear el mapa
     $scope.map;
