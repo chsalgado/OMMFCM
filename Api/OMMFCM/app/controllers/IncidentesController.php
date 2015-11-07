@@ -20,13 +20,14 @@ class IncidentesController extends \BaseController
 		$pagina = Request::get('pagina');
 	   	$resultados = Request::get('resultados');
 	   	$idEspecie = Request::get('idEspecie');
+	   	$reporte = Request::get('reporte');
 
 	   	if(is_null($idEspecie))	
 		{
 			if(is_null($pagina))
 			{
-				// El método getIncidentes regresa un array, mientras que los otros métodos regresan una colección. Por eso se debe tratar diferente
-				$incidentes = $this->servicioOMMFCM->getIncidentes();
+				// El método getIncidentesPorReporte regresa un array, mientras que los otros métodos regresan una colección. Por eso se debe tratar diferente
+				$incidentes = $this->servicioOMMFCM->getIncidentesPorReporte($reporte);
 				
 				return Response::json(array(
 					'error' => false,
