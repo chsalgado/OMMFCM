@@ -94,9 +94,9 @@ public class ActividadPrincipal extends AppCompatActivity implements
         if (mLastLocation != null) {
             this.latitud = mLastLocation.getLatitude(); // Asignar latitud a variable de clase
             this.longitud = mLastLocation.getLongitude(); // Asignar longitud a variable de clase
-            Log.d("ActividadPrincipal", String.valueOf(mLastLocation.getLatitude()) + " - " + mLastLocation.getLongitude());
+            //Log.d("ActividadPrincipal", String.valueOf(mLastLocation.getLatitude()) + " - " + mLastLocation.getLongitude());
         } else {
-            Log.d("ActividadPrincipal", "No se detectaron coordenadas");
+            //Log.d("ActividadPrincipal", "No se detectaron coordenadas");
         }
     }
 
@@ -107,7 +107,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
      */
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Log.d("ActividadPrincipal", "No se pudieron obtener las coordenadas");
+        //Log.d("ActividadPrincipal", "No se pudieron obtener las coordenadas");
     }
 
     /**
@@ -117,7 +117,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
      */
     @Override
     public void onConnectionSuspended(int cause) {
-        Log.d("ActividadPrincipal", "Conexión suspendida");
+        //Log.d("ActividadPrincipal", "Conexión suspendida");
         //mGoogleApiClient.connect();
     }
 
@@ -300,7 +300,7 @@ public class ActividadPrincipal extends AppCompatActivity implements
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()){
             if (!mediaStorageDir.mkdirs()){
-                Log.d("MyCameraApp", "failed to create directory");
+                //Log.d("MyCameraApp", "failed to create directory");
                 return null;
             }
         }
@@ -350,13 +350,13 @@ public class ActividadPrincipal extends AppCompatActivity implements
 
                 Toast.makeText(this, "Favor de escoger una imagen",
                         Toast.LENGTH_LONG).show(); // Mostrar mensaje de error
-                Log.d("ActividadPrincipal", "resultCode= " + resultCode );
+                //Log.d("ActividadPrincipal", "resultCode= " + resultCode );
             }
 
         } catch (Exception e) {
             Toast.makeText(this, "Error en la aplicación, favor de intentar de nuevo", Toast.LENGTH_LONG)
                     .show(); // Mostrar mensaje de error
-            Log.d("ActividadPrincipal", "Error: " + e.toString());
+            //Log.d("ActividadPrincipal", "Error: " + e.toString());
         }
 
     }
