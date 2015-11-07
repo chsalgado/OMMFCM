@@ -156,8 +156,17 @@ public class ActividadVistaPrevia extends AppCompatActivity {
      */
     public void realizarLlamadaHTTP(){
         prDialog.setMessage("Subiendo imagen al servidor");
-        AsyncHttpClient client = new AsyncHttpClient();
+        final AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(10000);
+        client.setResponseTimeout(10000);
+
         client.post(rutaServidor, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                //Log.d("ActividadVistaPrevia", "Http client: " + client.getHttpClient().toString());
+                //Log.d("ActividadVistaPrevia", "Http context: " + client.getHttpContext().toString());
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
@@ -171,7 +180,7 @@ public class ActividadVistaPrevia extends AppCompatActivity {
                     error) {
                 prDialog.hide(); // Esconder el dialogo de progreso
 
-                Log.d("ActividadVistaPrevia", "Error: " + error.toString());
+                //Log.d("ActividadVistaPrevia", "Error: " + error.toString());
 
                 if (statusCode == 404) {
                     Toast.makeText(getApplicationContext(),
@@ -189,6 +198,21 @@ public class ActividadVistaPrevia extends AppCompatActivity {
                                     "2. El servidor no esta funcionando", Toast.LENGTH_LONG)
                             .show(); // Mostrar error
                 }
+            }
+
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+
+            }
+
+            @Override
+            public void onRetry(int retryNum){
+                //Log.d("ActividadVistaPrevia", "Retry num: " + retryNum);
+            }
+
+            @Override
+            public void onFinish() {
+                // Completed the request (either success or failure)
             }
         });
     }
