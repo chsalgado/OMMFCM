@@ -2,7 +2,8 @@
 	namespace services;
 
 	interface ServicioOMMFCMInterface {  
-	    public function getIncidentes($pagina, $resultados);
+	    public function getIncidentes();
+	    public function getIncidentesPaginados($pagina, $resultados);
 	    public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados); 
 	    public function crearIncidente($incidente, $imagen64, $extensionImg);
 	    public function eliminarIncidente($id);

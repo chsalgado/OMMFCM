@@ -23,7 +23,21 @@ class IncidentesController extends \BaseController
 
 	   	if(is_null($idEspecie))	
 		{
-			$incidentes = $this->servicioOMMFCM->getIncidentes($pagina, $resultados);
+			if(is_null($pagina))
+			{
+				// El método getIncidentes regresa un array, mientras que los otros métodos regresan una colección. Por eso se debe tratar diferente
+				$incidentes = $this->servicioOMMFCM->getIncidentes();
+				
+				return Response::json(array(
+					'error' => false,
+					'incidentes' => $incidentes),
+					200
+				);				
+			}
+			else
+			{
+				$incidentes = $this->servicioOMMFCM->getIncidentesPaginados($pagina, $resultados);							
+			}
 		}
 		else
 		{
