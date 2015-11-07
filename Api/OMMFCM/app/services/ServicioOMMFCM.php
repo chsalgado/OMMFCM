@@ -19,7 +19,7 @@
 						->join('especies', 'especies.idEspecie', '=', 'incidentes.idEspecie')
 						->join('estadosEspecies', 'estadosEspecies.idEstadoEspecie', '=', 'especies.idEstadoEspecie')
 						->join('estadosEspecies2', 'estadosEspecies2.idEstadoEspecie2', '=', 'especies.idEstadoEspecie2')
-						->get(array('fecha', 'km', 'ruta', 'lat', 'long', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2', 'nombreCientifico', 'nombreComun'));
+						->get(array('fecha', 'km', 'ruta', 'lat', 'long', 'nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2'));
 
 			return $incidentes;
 		}
