@@ -69,3 +69,10 @@ p{
 img{
     margin: 3px;
 }
+.navbar-brand{
+    padding: 0px;
+    padding-left: 10px
+}
+.navbar-brand>img{
+    margin: 0px;
+}
