@@ -2,6 +2,8 @@
 
 class EspeciesControllerTest extends TestCase 
 {
+	/// OBTENER ESPECIES ///
+
 	/**
 	 * Prueba la ruta get api/especies enviando parámetros válidos.
 	 *
@@ -9,10 +11,13 @@ class EspeciesControllerTest extends TestCase
 	 */
 	public function testObtenerEspeciesConParametrosValidos()
 	{
+	   	// Generar código esperado
+		$codigoEsperado = 200;
+	   	
 	   	// Generar especies que devuelve el servicio mock
 	   	$especiesEsperadas = new Especie();
 	   	$especiesEsperadas -> nombreComun = 'especieTest';
-
+ 
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
 
@@ -23,13 +28,13 @@ class EspeciesControllerTest extends TestCase
 	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
 	 
 	    // Invocar al index de especiesControllers
-	    $respuestaActual = $this->call('GET', 'api/especies', ['pagina' => '1', 'resultados' => '2']);
+	    $respuestaActual = $this->call('GET', 'api/especies?pagina=1&resultados=2');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
 			'error' => false,
 			'especies' => $especiesEsperadas -> toArray()),
-			200
+			$codigoEsperado
 		);
 
 	    // Comparar que contenido y código sean iguales
@@ -51,8 +56,8 @@ class EspeciesControllerTest extends TestCase
 	 */
 	public function testObtenerEspeciesConParametrosInvalidos()
 	{
-	   	// Generar especies que devuelve el servicio mock
-	   	$especiesEsperadas = new Especie();
+	   	// Generar código esperado
+		$codigoEsperado = 400;
 
 	   	// Invocar al index de especiesControllers
 	    $respuestaActual = $this->call('GET', 'api/especies', ['pagina' => 'ABC', 'resultados' => '-2']);
@@ -60,7 +65,7 @@ class EspeciesControllerTest extends TestCase
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
 			'error' => true),
-			400
+			$codigoEsperado
 		);
 
 	    // Comparar que contenido y código sean iguales
@@ -82,8 +87,8 @@ class EspeciesControllerTest extends TestCase
 	 */
 	public function testObtenerEspeciesConParametrosExtras()
 	{
-	   	// Generar especies que devuelve el servicio mock
-	   	$especiesEsperadas = new Especie();
+	   	// Generar código esperado
+	   	$codigoEsperado = 404;
 
 	   	// Invocar al index de especiesControllers
 	    $respuestaActual = $this->call('GET', 'api/especies', ['pagina' => 'ABC', 'resultados' => '-2', 'parametroExtra' => 'extra']);
@@ -91,7 +96,7 @@ class EspeciesControllerTest extends TestCase
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
 			'error' => true),
-			404
+			$codigoEsperado
 		);
 
 	    // Comparar que contenido y código sean iguales
@@ -113,16 +118,30 @@ class EspeciesControllerTest extends TestCase
 	 */
 	public function testObtenerEspeciesSinParametros()
 	{
+	   // Generar código esperado
+		$codigoEsperado = 200;
+	   	
 	   	// Generar especies que devuelve el servicio mock
 	   	$especiesEsperadas = new Especie();
+	   	$especiesEsperadas -> nombreComun = 'especieTest';
+ 
+	   	// Crear servicio mock
+		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
 
+		// Mockear la llamada a metodo getEspecies para que devuelva las especies esperadas
+	    $mock->shouldReceive('getEspecies')->withAnyArgs()->once()->andReturn($especiesEsperadas);
+	 
+	 	// Inyectar servicio mock
+	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
+	 
 	    // Invocar al index de especiesControllers
 	    $respuestaActual = $this->call('GET', 'api/especies');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
-			'error' => true),
-			404
+			'error' => false,
+			'especies' => $especiesEsperadas -> toArray()),
+			$codigoEsperado
 		);
 
 	    // Comparar que contenido y código sean iguales
@@ -137,27 +156,22 @@ class EspeciesControllerTest extends TestCase
             $respuestaActual);
 	}
 
+	/// CREAR ESPECIES ///
+	
 	/**
-	 * Prueba la ruta post api/especies con parámetros válidos 
+	 * Prueba la ruta post api/especies con respuesta exitosa del servicio 
 	 * @return [type] [description]
 	 */
-	public function testCrearEspecieConParametrosValidos()
+	public function testCrearEspecieExito()
 	{	 
 	   	// codigo que regresa el mock
 	   	$codigoEsperado = 201;
 
 		// obtener los parámetros de la consulta
-        $archivoJson = __DIR__ . '/jsons/especieConParametrosValidos.json';
+        $archivoJson = __DIR__ . '/jsons/crearEspecieConParametrosValidos.json';
 	   	$datos = json_decode(file_get_contents($archivoJson), true);
  
-		// Generar Especie que devuelve la ruta
- 	   	$especieEsperada = new Especie();
-	   	$especieEsperada -> nombreComun = $datos['nombreComun'];
-	   	$especieEsperada -> nombreCientifico = $datos['nombreCientifico'];
-	   	$especieEsperada -> idEstadoEspecie = $datos['idEstadoEspecie'];
-	   	$especieEsperada -> idEstadoEspecie2 = $datos['idEstadoEspecie2'];
-
-	   	// Crear servicio mock
+		// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
 
 		// Mockear la llamada a metodo crearEspecie para obtener el codigo esperado
@@ -171,8 +185,7 @@ class EspeciesControllerTest extends TestCase
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
-			'error' => false,
-			'especie' => $especieEsperada),
+			'error' => false),
 			$codigoEsperado
 		);
 
@@ -189,10 +202,10 @@ class EspeciesControllerTest extends TestCase
 	}
 
 	/**
-	 * Prueba la ruta post api/especies con parámetros invalidos 
+	 * Prueba la ruta post api/especies cuando el servicio devuelve un error 
 	 * @return [type] [description]
 	 */
-	public function testCrearEspecieConParametrosInvalidos()
+	public function testCrearEspecieConError()
 	{	 
 		// Generar el código que devuelve el servicio mock
 	   	$codigoEsperado = 400;
@@ -207,7 +220,7 @@ class EspeciesControllerTest extends TestCase
 	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
 
 	    // Obtener los parámetros de la consulta
-        $archivoJson = __DIR__ . '/jsons/especieConParametrosInvalidos.json';
+        $archivoJson = __DIR__ . '/jsons/crearEspecieConParametrosInvalidos.json';
 	   	$datos = json_decode(file_get_contents($archivoJson), true);
 
 	   	// Invocar al store de especies
@@ -232,25 +245,16 @@ class EspeciesControllerTest extends TestCase
 	}
 
 	/**
-	 * Prueba la ruta post api/especies sin enviar parámetros
+	 * Prueba la ruta post api/especies con parámetros inválidos en la URL
 	 * @return [type] [description]
 	 */
-	public function testCrearEspecieSinParametros()
+	public function testCrearEspecieConParametroEnUrl()
 	{	 
-		// Generar código que devuelve el mock
-	   	$codigoEsperado = 400;
+		// Generar el código que devuelve el servicio mock
+	   	$codigoEsperado = 404;
 
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo crearEspecie para obtener el codigo esperado
-	    $mock->shouldReceive('crearEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Invocar al store de especies
-	    $respuestaActual = $this->call('POST', 'api/especies');
+	   	// Invocar al store de especies
+	    $respuestaActual = $this->call('POST', 'api/especies?unParametro=1');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
@@ -269,71 +273,23 @@ class EspeciesControllerTest extends TestCase
             'statusCode',
             $respuestaActual);
 	}
+	
+	/// MODIFICAR ESPECIES ///
 
 	/**
-	 * Prueba la ruta post api/especies con parámetros extras 
+	 * Prueba la ruta put api/especies con respuesta exitosa del servicio 
 	 * @return [type] [description]
 	 */
-	public function testCrearEspecieConParametrosExtras()
-	{	 
-		// Generar código que devuelve el servicio mock
-	   	$codigoEsperado = 400;
-
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo crearEspecie para obtener el codigo esperado
-	    $mock->shouldReceive('crearEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Obtener los parámetros de la consulta
-        $archivoJson = __DIR__ . '/jsons/especieConParametrosExtras.json';
-	   	$datos = json_decode(file_get_contents($archivoJson), true);
-	    
-	    // Invocar al store de especies
-	    $respuestaActual = $this->call('POST', 'api/especies', $datos);
-
-	    // Generar respuesta esperada
-	    $respuestaEsperada = Response::json(array(
-			'error' => true),
-			$codigoEsperado
-		);
-
-	    // Comparar que contenido y código sean iguales
-		$this->assertAttributeEquals(
-            PHPUnit_Framework_Assert::readAttribute($respuestaEsperada, 'data'),  /* valor esperado */
-            'data',  /* nombre del atributo */
-            $respuestaActual); /* objeto actual */
-
-		$this->assertAttributeEquals(
-            PHPUnit_Framework_Assert::readAttribute($respuestaEsperada, 'statusCode'), 
-            'statusCode',
-            $respuestaActual);
-	}
-
-	/**
-	 * Prueba la ruta put api/especies con parámetros válidos 
-	 * @return [type] [description]
-	 */
-	public function testModificarEspecieConParametrosValidos()
+	public function testModificarEspecieExito()
 	{	 
 	   	// codigo que regresa el mock
 	   	$codigoEsperado = 200;
 
 		// obtener los parámetros de la consulta
-        $archivoJson = __DIR__ . '/jsons/especieConParametrosValidos.json';
+        $archivoJson = __DIR__ . '/jsons/modificarEspecieConParametrosValidos.json';
 	   	$datos = json_decode(file_get_contents($archivoJson), true);
  
-		// Generar Especie que devuelve la ruta
- 	   	$especieEsperada = new Especie();
-	   	$especieEsperada -> nombreComun = $datos['nombreComun'];
-	   	$especieEsperada -> nombreCientifico = $datos['nombreCientifico'];
-	   	$especieEsperada -> idEstadoEspecie = $datos['idEstadoEspecie'];
-	   	$especieEsperada -> idEstadoEspecie2 = $datos['idEstadoEspecie2'];
-
-	   	// Crear servicio mock
+		// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
 
 		// Mockear la llamada a metodo modificarEspecie para obtener el codigo esperado
@@ -347,8 +303,7 @@ class EspeciesControllerTest extends TestCase
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
-			'error' => false,
-			'especie' => $especieEsperada),
+			'error' => false),
 			$codigoEsperado
 		);
 
@@ -365,10 +320,10 @@ class EspeciesControllerTest extends TestCase
 	}
 
 	/**
-	 * Prueba la ruta put api/especies con parámetros invalidos 
+	 * Prueba la ruta put api/especies cuando el servicio devuelve un error 
 	 * @return [type] [description]
 	 */
-	public function testModificarEspecieConParametrosInvalidos()
+	public function testModificarEspecieConError()
 	{	 
 		// Generar el código que devuelve el servicio mock
 	   	$codigoEsperado = 400;
@@ -376,17 +331,17 @@ class EspeciesControllerTest extends TestCase
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
 
-		// Mockear la llamada a metodo modificarEspecie para obtener el codigo esperado
+		// Mockear la llamada a metodo crearEspecie para obtener el codigo esperado
 	    $mock->shouldReceive('modificarEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
 	 
 	 	// Inyectar servicio mock
 	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
 
 	    // Obtener los parámetros de la consulta
-        $archivoJson = __DIR__ . '/jsons/especieConParametrosInvalidos.json';
+        $archivoJson = __DIR__ . '/jsons/modificarEspecieConParametrosInvalidos.json';
 	   	$datos = json_decode(file_get_contents($archivoJson), true);
 
-	   	// Invocar al update de especies
+	   	// Invocar al store de especies
 	    $respuestaActual = $this->call('PUT', 'api/especies/1', $datos);
 
 	    // Generar respuesta esperada
@@ -408,25 +363,16 @@ class EspeciesControllerTest extends TestCase
 	}
 
 	/**
-	 * Prueba la ruta put api/especies sin enviar parámetros
+	 * Prueba la ruta put api/especies con parámetros inválidos en la URL
 	 * @return [type] [description]
 	 */
-	public function testModificarEspecieSinParametros()
+	public function testModificarEspecieConParametroEnUrl()
 	{	 
-		// Generar código que devuelve el mock
-	   	$codigoEsperado = 400;
+		// Generar el código esperado
+	   	$codigoEsperado = 404;
 
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo modificarEspecie para obtener el codigo esperado
-	    $mock->shouldReceive('modificarEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Invocar al update de especies
-	    $respuestaActual = $this->call('PUT', 'api/especies/1');
+	   	// Invocar al store de especies
+	    $respuestaActual = $this->call('PUT', 'api/especies/1?unParametro=1');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
@@ -446,54 +392,13 @@ class EspeciesControllerTest extends TestCase
             $respuestaActual);
 	}
 
+	/// ELIMINAR ESPECIES ///
+	
 	/**
-	 * Prueba la ruta put api/especies con parámetros extras 
+	 * Prueba la ruta delete api/especies con respuesta exitosa del servicio 
 	 * @return [type] [description]
 	 */
-	public function testModificarEspecieConParametrosExtras()
-	{	 
-		// Generar el código que devuelve el servicio mock
-	   	$codigoEsperado = 400;
-
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo modificarEspecie para obtener el codigo esperado
-	    $mock->shouldReceive('modificarEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Obtener los parámetros de la consulta
-        $archivoJson = __DIR__ . '/jsons/especieConParametrosExtras.json';
-	   	$datos = json_decode(file_get_contents($archivoJson), true);
-
-	   	// Invocar al update de especies
-	    $respuestaActual = $this->call('PUT', 'api/especies/1', $datos);
-
-	    // Generar respuesta esperada
-	    $respuestaEsperada = Response::json(array(
-			'error' => true),
-			$codigoEsperado
-		);
-
-	    // Comparar que contenido y código sean iguales
-		$this->assertAttributeEquals(
-            PHPUnit_Framework_Assert::readAttribute($respuestaEsperada, 'data'),  /* valor esperado */
-            'data',  /* nombre del atributo */
-            $respuestaActual); /* objeto actual */
-
-		$this->assertAttributeEquals(
-            PHPUnit_Framework_Assert::readAttribute($respuestaEsperada, 'statusCode'), 
-            'statusCode',
-            $respuestaActual);
-	}
-
-	/**
-	 * Prueba la ruta delete api/especies con parámetros validos 
-	 * @return [type] [description]
-	 */
-	public function testEliminarEspecie()
+	public function testEliminarEspecieExito()
 	{	 
 		// Generar código que devuelve el mock
 	   	$codigoEsperado = 204;
@@ -529,13 +434,13 @@ class EspeciesControllerTest extends TestCase
 	}
 
 	/**
-	 * Prueba la ruta delete api/especies con parámetros extras 
+	 * Prueba la ruta delete api/especies cuando el servicio devuelve un error 
 	 * @return [type] [description]
 	 */
-	public function testEliminarEspecieConParametrosExtras()
+	public function testEliminarEspecieConError()
 	{	 
 		// Generar código que devuelve el mock
-	   	$codigoEsperado = 400;
+	   	$codigoEsperado = 404;
 
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
@@ -571,25 +476,16 @@ class EspeciesControllerTest extends TestCase
 	}
 
 	/**
-	 * Prueba la ruta delete api/especies con una especie que no existe simulando un error interno 
+	 * Prueba la ruta delete api/especies con parámetros inválidos en la URL 
 	 * @return [type] [description]
 	 */
-	public function testEliminarEspecieError()
+	public function testEliminarEspecieConParametroEnUrl()
 	{	 
-		// Generar código que devuelve el mock
+		// Generar código qesperado
 	   	$codigoEsperado = 404;
 
-	   	// Crear servicio mock
-		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
-
-		// Mockear la llamada a metodo eliminarEspecie para obtener el codigo esperado
-	    $mock->shouldReceive('eliminarEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
-	 
-	 	// Inyectar servicio mock
-	    $this->app->instance('Services\ServicioOMMFCMInterface', $mock);
-
-	    // Invocar al delete de especies
-	    $respuestaActual = $this->call('DELETE', 'api/especies/-1');
+	   	// Invocar al delete de especies
+	    $respuestaActual = $this->call('DELETE', 'api/especies/1?unParametro=1');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(

@@ -9,6 +9,7 @@
 	use EstadoEspecie;
 	use EstadoEspecie2;
 	use DB;
+	use Validator;
 
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -177,13 +178,20 @@
 
 	    public function crearEspecie($especie)
 	    {
+			$validator = Validator::make($especie -> toArray(), Especie::$reglasCrearEspecie);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
 			$nuevaEspecie = new Especie;
 			$nuevaEspecie = $especie;
 			$resultado = $nuevaEspecie -> save(); 
 
 	    	if($resultado)
 	    	{
-				return 200;	    		
+				return 201;	    		
 	    	}
 
 	    	return 500;
@@ -191,7 +199,15 @@
 
 	    public function modificarEspecie($especie)
 	    {
-	    	$especieExistente = Especie::find($especie -> idEspecie);
+	    	$validator = Validator::make($especie -> toArray(), Especie::$reglasModificarEspecie);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
+	    	// El find ahora lo hace una instancia de especie para poder hacer el mock
+	    	$especieExistente = $especie ->find($especie -> idEspecie);
 	    	
 	    	if(is_null($especieExistente))
 	    	{
@@ -213,17 +229,30 @@
 	    	return 500;
 	    }
 
-	    public function eliminarEspecie($id)
+	    public function eliminarEspecie($especie)
 	    {
-	    	$especie = Especie::find($id);
-	    	$incidentes = $especie -> incidentes;
+	    	$validator = Validator::make($especie -> toArray(), Especie::$reglasBorrarEspecie);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
+	    	$especieExistente = $especie ->find($especie -> idEspecie);
+
+	    	if(is_null($especieExistente))
+	    	{
+	    		return 404;
+	    	}
+
+	    	$incidentes = $especieExistente -> incidentes;
 
 	    	if(count($incidentes))
 	    	{
 	    		return 412;
 	    	}
 
-	    	$resultado = $especie -> delete();
+	    	$resultado = $especieExistente -> delete();
 
 	    	if($resultado)
 	    	{
