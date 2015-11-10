@@ -80,8 +80,6 @@ class EspeciesController extends \BaseController
 			return Response::json(array('error' => true), 404);
 		}
 
-		$especie = new Especie;
-
 		// El controlador unicamente toma parametros de la solicitud y crea un modelo usando massive assignment
 		$especie = new Especie(Input::all());
 

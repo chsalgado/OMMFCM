@@ -60,7 +60,7 @@ class EspeciesControllerTest extends TestCase
 		$codigoEsperado = 400;
 
 	   	// Invocar al index de especiesControllers
-	    $respuestaActual = $this->call('GET', 'api/especies', ['pagina' => 'ABC', 'resultados' => '-2']);
+	    $respuestaActual = $this->call('GET', 'api/especies?pagina=ABC&resultados=-2');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
@@ -91,7 +91,7 @@ class EspeciesControllerTest extends TestCase
 	   	$codigoEsperado = 404;
 
 	   	// Invocar al index de especiesControllers
-	    $respuestaActual = $this->call('GET', 'api/especies', ['pagina' => 'ABC', 'resultados' => '-2', 'parametroExtra' => 'extra']);
+	    $respuestaActual = $this->call('GET', 'api/especies?pagina=ABC&resultados=-2&parametroExtra=extra']);
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(
@@ -331,7 +331,7 @@ class EspeciesControllerTest extends TestCase
 	   	// Crear servicio mock
 		$mock = Mockery::mock('Services\ServicioOMMFCMInterface');
 
-		// Mockear la llamada a metodo crearEspecie para obtener el codigo esperado
+		// Mockear la llamada a metodo modificarEspecie para obtener el codigo esperado
 	    $mock->shouldReceive('modificarEspecie')->withAnyArgs()->once()->andReturn($codigoEsperado);
 	 
 	 	// Inyectar servicio mock
