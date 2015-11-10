@@ -75,7 +75,7 @@ app.controller('controladorEspecies', ['$scope', '$timeout', '$filter', 'servici
             if(pagina == 1){
                 $scope.regresar = false;
             }
-            if(pagina == $scope.ultimaPagina){
+            if(pagina == $scope.ultimaPagina || $scope.ultimaPagina == 0){
                 $scope.avanzar = false;
             }
 
