@@ -1,4 +1,4 @@
-var app=angular.module('appPrivada', ['ngRoute', 'angular-loading-bar']);
+var app=angular.module('appPrivada', ['ngRoute', 'angular-loading-bar', 'appPrivada.config']);
 
 app.config(function($routeProvider, $httpProvider){
 
@@ -16,6 +16,10 @@ app.config(function($routeProvider, $httpProvider){
 
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
+});
+
+app.config(function($httpProvider){
+    $httpProvider.interceptors.push('servicioAutenticacion');
 });
 
 var servicioBase = 'http://watch.imt.mx/public_html/index.php/';
