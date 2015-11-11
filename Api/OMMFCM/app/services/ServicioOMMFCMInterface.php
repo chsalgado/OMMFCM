@@ -6,7 +6,7 @@
 	    public function getIncidentesPaginados($pagina, $resultados);
 	    public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados); 
 	    public function crearIncidente($incidente, $imagen64, $extensionImg);
-	    public function eliminarIncidente($id);
+	    public function eliminarIncidente($especie);
 	    public function modificarIncidente($incidente);
 	    public function getEspecies($pagina, $resultados);
 	    public function crearEspecie($especie);

@@ -6,9 +6,14 @@ class EspeciesController extends \BaseController
 	public $servicioOMMFCM;
 
     public function __construct(ServicioOMMFCMInterface $servicioOMMFCM)
-     {
+    {
         $this->servicioOMMFCM = $servicioOMMFCM; 
-     }
+    }
+
+    public function tearDown()
+	{
+		Mockery::close();
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -17,26 +22,28 @@ class EspeciesController extends \BaseController
 	 */
 	public function index()
 	{
+		$responseCode = 200;
+		$paramsQty = count(Request::query());
+
 		$pagina = Request::get('pagina');
-	   	$resultados = Request::get('resultados');
-	   	$especies = $this->servicioOMMFCM->getEspecies($pagina, $resultados);
+		$resultados = Request::get('resultados');
+		
+		if($paramsQty != 0)
+		{
+			if($paramsQty != 2 || !Request::has('pagina') || !Request::has('resultados'))
+			{
+				return Response::json(array('error' => true), 404);
+			}
+			
+			if(!is_numeric($pagina) || !is_numeric($resultados))
+			{
+				return Response::json(array('error' => true), 400);
+			}
+		}
+		   	
+		$especies = $this->servicioOMMFCM->getEspecies($pagina, $resultados);
 	
-		return Response::json(array(
-			'error' => false,
-			'especies' => $especies -> toArray()),
-			200
-		);
-	}
-
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
+		return Response::json(array('error' => false, 'especies' => $especies -> toArray()), $responseCode);
 	}
 
 
@@ -47,55 +54,18 @@ class EspeciesController extends \BaseController
 	 */
 	public function store()
 	{
-		$especie = new Especie;		
-		$especie -> nombreComun = Input::get('nombreComun');
-		$especie -> nombreCientifico = Input::get('nombreCientifico');
-		$especie -> idEstadoEspecie = Input::get('idEstadoEspecie');
-		$especie -> idEstadoEspecie2 = Input::get('idEstadoEspecie2');
+		if(count(Request::query()) != 0)
+		{
+			return Response::json(array('error' => true), 404);
+		}
+
+		// El controlador unicamente toma parametros de la solicitud y crea un modelo usando massive assignment
+		$especie = new Especie(Input::all());		
 
 		$resultado = $this->servicioOMMFCM->crearEspecie($especie);
 
-		if ($resultado <= 400)
-		{
-			return Response::json(array(
-				'error' => false,
-				'especie' => $especie),
-				$resultado
-			);
-		}
-		else
-		{
-			return Response::json(array(
-				'error' => true),
-				$resultado
-			);
-		}		
+		return Response::json(array('error' => $resultado >= 400), $resultado);
 	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
 
 	/**
 	 * Update the specified resource in storage.
@@ -105,30 +75,20 @@ class EspeciesController extends \BaseController
 	 */
 	public function update($id)
 	{
-		$especie = new Especie;
+		if(count(Request::query()) != 0)
+		{
+			return Response::json(array('error' => true), 404);
+		}
+
+		// El controlador unicamente toma parametros de la solicitud y crea un modelo usando massive assignment
+		$especie = new Especie(Input::all());
+
+		// El id no es parte de $fillable en el modelo ni de Input:all, por lo que la asignamos manualmente
 		$especie -> idEspecie = $id;
-		$especie -> nombreComun = Input::get('nombreComun');
-		$especie -> nombreCientifico = Input::get('nombreCientifico');
-		$especie -> idEstadoEspecie = Input::get('idEstadoEspecie');
-		$especie -> idEstadoEspecie2 = Input::get('idEstadoEspecie2');
 
 		$resultado = $this->servicioOMMFCM->modificarEspecie($especie);
 
-		if ($resultado <= 400)
-		{
-			return Response::json(array(
-				'error' => false,
-				'especie' => $especie),
-				$resultado
-			);
-		}
-		else
-		{
-			return Response::json(array(
-				'error' => true),
-				$resultado
-			);
-		}	
+		return Response::json(array('error' => $resultado >= 400), $resultado);
 	}
 
 
@@ -140,21 +100,16 @@ class EspeciesController extends \BaseController
 	 */
 	public function destroy($id)
 	{		
-		$resultado = $this->servicioOMMFCM->eliminarEspecie($id);
-
-		if ($resultado < 400)
+		if(count(Request::query()) != 0)
 		{
-			return Response::json(array(
-				'error' => false),
-				$resultado
-			);
+			return Response::json(array('error' => true), 404);
 		}
-		else
-		{
-			return Response::json(array(
-				'error' => true),
-				$resultado
-			);
-		}	
+
+		$especie = new Especie;
+		$especie -> idEspecie = $id;
+
+		$resultado = $this->servicioOMMFCM->eliminarEspecie($especie);
+
+		return Response::json(array('error' => $resultado >= 400), $resultado);
 	}
 }
