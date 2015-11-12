@@ -1,6 +1,5 @@
 'use strict';
-app.controller('controladorReportar', ['$scope', '$window', '$filter', '$timeout', 'servicioIncidentes', function($scope, $window, $filter, $timeout, servicioIncidentes){
-    addEventListener('load', $window.initMap, false);
+app.controller('controladorReportar', ['$scope', '$filter', '$timeout', 'servicioIncidentes', function($scope, $filter, $timeout, servicioIncidentes){
 
     // Modelo con el formato requerido por input date
     $scope.fecha = new Date();
@@ -54,7 +53,7 @@ app.controller('controladorReportar', ['$scope', '$window', '$filter', '$timeout
         $scope.incidente.extension = '';
         $scope.fecha = new Date();
         $scope.foto = '';
-        document.getElementById("vistaPrevia").innerHTML = '<img src="/img/vistaPrevia.png" width="100%" title="Vista Previa">'
+        document.getElementById("vistaPrevia").innerHTML = '<img src="img/vistaPrevia.png" width="100%" title="Vista Previa">'
         angular.element("input[type='file']").val(null);
         $scope.limpiarMapa();
         $scope.ruta.origen.idEstado = 1;
@@ -127,7 +126,7 @@ app.controller('controladorReportar', ['$scope', '$window', '$filter', '$timeout
 
     /****************** MAPA ******************/
     // Inicializa el mapa
-    $window.initMap = function(){
+    $scope.initMap = function(){
         $scope.directionsService = new google.maps.DirectionsService();
         $scope.directionsDisplay = new google.maps.DirectionsRenderer();
         $scope.mexico = new google.maps.LatLng(23.045963, -102.537750);
