@@ -47,6 +47,5 @@
     outline: none;
 }
 .navbar-brand{
-    padding: 0px;
-    padding-left: 10px;
+    padding: 0px 10px 0px 10px;
 }
