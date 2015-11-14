@@ -5,10 +5,15 @@
     <title>WATCH</title>
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/sitio.css" rel="stylesheet" />
     <link href="css/loading-bar.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link href="css/ng-tags-input.bootstrap.css" rel="stylesheet" />
+    <link href="css/ng-tags-input.css" rel="stylesheet">
+    <link href="css/sitio.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -31,7 +36,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#/incidentes">Incidentes</a></li>
                     <li><a href="#/especies">Especies</a></li>
-                    <li><a href="#">Reporte</a></li>
+                    <li><a href="#/reporte">Reporte</a></li>
                 </ul>
             </div>
         </div>
@@ -39,26 +44,31 @@
 
         <!--Load partial views-->
 ​
-        <div class="container body-content menuScrolleable">
-            <div data-ng-view="">
-            </div>
+    <div class="container body-content menuScrolleable">
+        <div data-ng-view="">
         </div>
-​
-        <!--End of partial view-->
-        <div id="push"></div>
     </div>
+​
+    <!--End of partial view-->
+    <div id="push"></div>
 ​
     <footer class="background-midnight-blue color-white">
         
     </footer>
 ​
     <!-- 3rd party libraries -->
+
+    <script src="scripts/lodash.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/angular-route.min.js"></script>
     <script src="scripts/loading-bar.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="scripts/angular-simple-logger.min.js"></script>
+    <script src="scripts/angular-google-maps.js"></script>
+    <script src="scripts/ui-bootstrap-tpls-0.14.3.js"></script>
+    <script src="scripts/ng-tags-input.js"></script>
 ​
     <!-- Load app main script -->
     <script src="app.js"></script>
@@ -66,10 +76,12 @@
     <!-- Load services -->
     <script src="servicios/servicioIncidentes.js"></script>
     <script src="servicios/servicioEspecies.js"></script>
+    <script src="servicios/servicioReporteMapa.js"></script>
 ​
     <!-- Load controllers -->
     <script src="controladores/controladorIncidentes.js"></script>
     <script src="controladores/controladorEspecies.js"></script>
+    <script src="controladores/controladorReporteMapa.js"></script>
 ​
 </body>
 </html>

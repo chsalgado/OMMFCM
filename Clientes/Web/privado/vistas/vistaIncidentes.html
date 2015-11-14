@@ -45,7 +45,7 @@
                         </select>
                     </td>
                     <td>
-                        <a data-toggle="modal" data-target="#mapa" ng-click="mostrarUbicacion($index);" class="link btn-link"><i class="fa fa-map-marker"></i> Ver mapa</a>
+                        <a data-toggle="modal" data-target="#mapa" ng-click="mostrarUbicacion($index);" ng-disabled="modal_desabilitado" class="link btn-link"><i class="fa fa-map-marker"></i>Ver mapa</a>
                     </td>
                     <td ng-hide="editando[$index]">
                         {{incidente.ruta}}
@@ -84,5 +84,3 @@
         </div>
     </div>
 </div>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXzFKyBxdPSXHWvVMNzXhEYHUW3FEnjeg&callback=initMap">
-</script>
