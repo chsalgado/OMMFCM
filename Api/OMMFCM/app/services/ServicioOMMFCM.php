@@ -42,7 +42,7 @@
 		public function getIncidentesPaginados($pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::paginate($resultados);
+	   		$incidentes = Incidente::orderBy('fecha', 'asc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
@@ -50,7 +50,7 @@
 	   	public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->paginate($resultados);
+	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->orderBy('fecha', 'asc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
