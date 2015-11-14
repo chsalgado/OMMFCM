@@ -19,7 +19,7 @@
 			if($reporte == 1)
 			{
 				// columnas especiales para el excel
-				$columnas = array('fecha', 'ruta', 'km','nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2');
+				$columnas = array('fecha', 'ruta', 'km', 'lat', 'long', 'nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2');
 			}
 			
 			if($reporte == 2)
@@ -33,6 +33,7 @@
 						->join('especies', 'especies.idEspecie', '=', 'incidentes.idEspecie')
 						->join('estadosEspecies', 'estadosEspecies.idEstadoEspecie', '=', 'especies.idEstadoEspecie')
 						->join('estadosEspecies2', 'estadosEspecies2.idEstadoEspecie2', '=', 'especies.idEstadoEspecie2')
+						->orderBy('fecha', 'asc')
 						->get($columnas);				
 
 			return $incidentes;
