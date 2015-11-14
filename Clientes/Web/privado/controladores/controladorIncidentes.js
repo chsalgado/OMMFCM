@@ -268,6 +268,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
      // Re-centra el mapa cuando se abre la modal
     function recentrar(lat, lon){
         google.maps.event.trigger($scope.map.control.getGMap(), "resize");
+
         $scope.map.center.latitude = lat;
         $scope.map.center.longitude = lon;
         $scope.zoom = 9;

@@ -24,7 +24,7 @@ app.config(function($routeProvider, $httpProvider){
 });
 
 app.config(function(uiGmapGoogleMapApiProvider, $httpProvider){
-	$httpProvider.interceptors.push('servicioAutenticacion');
+    $httpProvider.interceptors.push('servicioAutenticacion');
     uiGmapGoogleMapApiProvider.configure({
         //    key: 'your api key',
         v: '3.20', //defaults to latest 3.X anyhow
