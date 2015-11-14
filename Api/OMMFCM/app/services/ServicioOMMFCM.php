@@ -42,7 +42,7 @@
 		public function getIncidentesPaginados($pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::paginate($resultados);
+	   		$incidentes = Incidente::orderBy('fecha', 'asc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
@@ -50,7 +50,7 @@
 	   	public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->paginate($resultados);
+	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->orderBy('fecha', 'asc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
@@ -165,13 +165,13 @@
 	    public function getEspecies($pagina, $resultados)
 	    {
 	    	// Regresar todas las especies, excepto la que tiene id=0 (es la especie default)
-	   		$especies = Especie::all();
+	   		$especies = Especie::orderBy('nombreComun', 'asc')->get();
 
 	   		// Validar que los dos parámetros de paginación fueron enviados, de lo contrario mandar todas las especies
 	   		if(!is_null($pagina) && !is_null($resultados))
 	   		{
 				Especie::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-		   		$especies = Especie::where('idEspecie', '>', 0)->paginate($resultados);	   			
+		   		$especies = Especie::where('idEspecie', '>', 0)->orderBy('nombreComun', 'asc')->paginate($resultados);	   			
 	   		}
 
 	   		return $especies;	    	
