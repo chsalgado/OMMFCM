@@ -1,4 +1,4 @@
-var app=angular.module('appPrivada', ['ngRoute', 'angular-loading-bar', 'uiGmapgoogle-maps', 'ui.bootstrap', 'ngTagsInput']);
+var app=angular.module('appPrivada', ['ngRoute', 'angular-loading-bar', 'uiGmapgoogle-maps', 'ui.bootstrap', 'ngTagsInput', 'appPrivada.config']);
 
 app.config(function($routeProvider, $httpProvider){
 
@@ -23,7 +23,8 @@ app.config(function($routeProvider, $httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.config(function(uiGmapGoogleMapApiProvider){
+app.config(function(uiGmapGoogleMapApiProvider, $httpProvider){
+	$httpProvider.interceptors.push('servicioAutenticacion');
     uiGmapGoogleMapApiProvider.configure({
         //    key: 'your api key',
         v: '3.20', //defaults to latest 3.X anyhow

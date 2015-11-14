@@ -1,4 +1,4 @@
-<div ng-init="obtenerEstados(); obtenerMunicipiosOrigen(1); obtenerMunicipiosDestino(1);">
+<div ng-init="obtenerEstados(); obtenerMunicipiosOrigen(1); obtenerMunicipiosDestino(1); initMap();">
     <h2>Reportar Animal en Carretera</h2>
     <hr />
     <div class="row">
@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="col-sm-6">
-            <h3>Incidente</h3>
+            <h3>1. Incidente <span class="info"><i class="fa fa-info-circle" title="Imagen y fecha en la que sucedió el incidente"></i></span></h3>
             <div class="form-group">
                 <div class="archivo btn btn-default">
                     <span><i class="fa fa-camera fa-2x"></i></span>
@@ -16,7 +16,7 @@
                 <label for="imagen">Seleccionar Imagen</label>
             </div>
             <div class="form-group">
-                <label for="fecha">Fecha</label> <i class="fa fa-info-circle" title="Fecha en la que sucedió el incidente"></i>
+                <label for="fecha">Fecha</label>
                 <input class="form-control"  id="fecha" type="date" ng-model="fecha"/>
             </div>
         </div>
@@ -27,7 +27,7 @@
     <hr/>
     <div class="row">
         <div class="col-sm-12">
-            <h3>Origen <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h3>
+            <h3>2. Origen <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h3>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
@@ -45,7 +45,7 @@
     <hr/>
     <div class="row">
         <div class="col-sm-12">
-            <h3>Destino <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h3>
+            <h3>3. Destino <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h3>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
@@ -60,9 +60,10 @@
             </div>
         </div>
     </div>
+    <hr/>
     <div class="row">
         <div class="col-sm-12">
-        <label>Selecciona la ubicación del incidente</label>
+            <h3>4. Selecciona la ubicación del incidente <span class="info"><i class="fa fa-info-circle" title="Dando click en el mapa, selecciona la ubicación"></i></span></h3>
         </div>
     </div>
     <div style="display:block; height:600px; width:100%;" id="map-canvas"></div>
@@ -74,5 +75,3 @@
     </div>
 <br>
 </div>
-<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initMap">
-</script>

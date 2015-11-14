@@ -9,6 +9,7 @@
 	use EstadoEspecie;
 	use EstadoEspecie2;
 	use DB;
+	use Validator;
 
 	class ServicioOMMFCM implements ServicioOMMFCMInterface{
 		
@@ -18,7 +19,7 @@
 			if($reporte == 1)
 			{
 				// columnas especiales para el excel
-				$columnas = array('fecha', 'ruta', 'km','nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2');
+				$columnas = array('fecha', 'ruta', 'km', 'lat', 'long', 'nombreCientifico', 'nombreComun', 'estadosEspecies.estado', 'estadosEspecies2.estado AS estado2');
 			}
 			
 			if($reporte == 2)
@@ -32,6 +33,7 @@
 						->join('especies', 'especies.idEspecie', '=', 'incidentes.idEspecie')
 						->join('estadosEspecies', 'estadosEspecies.idEstadoEspecie', '=', 'especies.idEstadoEspecie')
 						->join('estadosEspecies2', 'estadosEspecies2.idEstadoEspecie2', '=', 'especies.idEstadoEspecie2')
+						->orderBy('fecha', 'asc')
 						->get($columnas);				
 
 			return $incidentes;
@@ -40,7 +42,7 @@
 		public function getIncidentesPaginados($pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::paginate($resultados);
+	   		$incidentes = Incidente::orderBy('fecha', 'asc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
@@ -48,7 +50,7 @@
 	   	public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->paginate($resultados);
+	   		$incidentes = Incidente::where('idEspecie', '=', $idEspecie)->orderBy('fecha', 'asc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
@@ -163,13 +165,13 @@
 	    public function getEspecies($pagina, $resultados)
 	    {
 	    	// Regresar todas las especies, excepto la que tiene id=0 (es la especie default)
-	   		$especies = Especie::all();
+	   		$especies = Especie::orderBy('nombreComun', 'asc')->get();
 
 	   		// Validar que los dos parámetros de paginación fueron enviados, de lo contrario mandar todas las especies
 	   		if(!is_null($pagina) && !is_null($resultados))
 	   		{
 				Especie::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-		   		$especies = Especie::where('idEspecie', '>', 0)->paginate($resultados);	   			
+		   		$especies = Especie::where('idEspecie', '>', 0)->orderBy('nombreComun', 'asc')->paginate($resultados);	   			
 	   		}
 
 	   		return $especies;	    	
@@ -177,13 +179,20 @@
 
 	    public function crearEspecie($especie)
 	    {
+			$validator = Validator::make($especie -> toArray(), Especie::$reglasCrearEspecie);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
 			$nuevaEspecie = new Especie;
 			$nuevaEspecie = $especie;
 			$resultado = $nuevaEspecie -> save(); 
 
 	    	if($resultado)
 	    	{
-				return 200;	    		
+				return 201;	    		
 	    	}
 
 	    	return 500;
@@ -191,7 +200,15 @@
 
 	    public function modificarEspecie($especie)
 	    {
-	    	$especieExistente = Especie::find($especie -> idEspecie);
+	    	$validator = Validator::make($especie -> toArray(), Especie::$reglasModificarEspecie);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
+	    	// El find ahora lo hace una instancia de especie para poder hacer el mock
+	    	$especieExistente = $especie ->find($especie -> idEspecie);
 	    	
 	    	if(is_null($especieExistente))
 	    	{
@@ -213,17 +230,30 @@
 	    	return 500;
 	    }
 
-	    public function eliminarEspecie($id)
+	    public function eliminarEspecie($especie)
 	    {
-	    	$especie = Especie::find($id);
-	    	$incidentes = $especie -> incidentes;
+	    	$validator = Validator::make($especie -> toArray(), Especie::$reglasBorrarEspecie);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
+	    	$especieExistente = $especie ->find($especie -> idEspecie);
+
+	    	if(is_null($especieExistente))
+	    	{
+	    		return 404;
+	    	}
+
+	    	$incidentes = $especieExistente -> incidentes;
 
 	    	if(count($incidentes))
 	    	{
 	    		return 412;
 	    	}
 
-	    	$resultado = $especie -> delete();
+	    	$resultado = $especieExistente -> delete();
 
 	    	if($resultado)
 	    	{

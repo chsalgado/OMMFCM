@@ -1,5 +1,5 @@
 'use strict';
-app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$window', 'servicioIncidentes', 'servicioEspecies', 'uiGmapGoogleMapApi', 'uiGmapIsReady', function($scope, $timeout, $filter, $window, servicioIncidentes, servicioEspecies, uiGmapGoogleMapApi, uiGmapIsReady){
+app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servicioIncidentes', 'servicioEspecies', 'uiGmapGoogleMapApi', 'uiGmapIsReady', function($scope, $timeout, $filter, servicioIncidentes, servicioEspecies, uiGmapGoogleMapApi, uiGmapIsReady){
 
     // Lista de incidentes
     $scope.incidentes = [];
@@ -95,7 +95,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', '$wind
             if(pagina == 1){
                 $scope.regresar = false;
             }
-            if(pagina == $scope.ultimaPagina){
+            if(pagina == $scope.ultimaPagina || $scope.ultimaPagina == 0){
                 $scope.avanzar = false;
             }
 
