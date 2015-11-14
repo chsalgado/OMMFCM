@@ -1,5 +1,5 @@
 'use strict';
-app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servicioIncidentes', 'servicioEspecies', function($scope, $timeout, $filter, servicioIncidentes, servicioEspecies){
+app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servicioIncidentes', 'servicioEspecies', 'uiGmapGoogleMapApi', 'uiGmapIsReady', function($scope, $timeout, $filter, servicioIncidentes, servicioEspecies, uiGmapGoogleMapApi, uiGmapIsReady){
 
     // Lista de incidentes
     $scope.incidentes = [];
@@ -22,6 +22,7 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
     $scope.mensaje = '';
     $scope.exito = false;
     $scope.errores = false;
+    $scope.modal_desabilitado = true;
 
     // Variable que permite que se edite un incidente a la vez 
     $scope.editandoIn = false;
@@ -228,36 +229,48 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
 
     }
 
-    // MAPA
-    // Crear el mapa
-    $scope.map;
-    $scope.initMap = function(){
-        $scope.mexico = new google.maps.LatLng(23.945963, -102.537750);
-        $scope.mapOptions = {
-            zoom: 7,
-            center: $scope.mexico
-        }
-        $scope.map = new google.maps.Map(document.getElementById("map-canvas"), $scope.mapOptions);
-     }
+    uiGmapGoogleMapApi.then(function(maps) {
+        $scope.map = { 
+            center: { 
+                latitude: 23.945963, 
+                longitude: -102.537750
+            },
+            zoom: 9,
+            control: {}
+        };
 
-     // Muestra la ubicación del incidente
-     $scope.mostrarUbicacion = function(index){
-        if($scope.marker)
-            $scope.marker.setMap(null);
-        $scope.latLng = {
-            lat: parseFloat($scope.incidentes[index].lat),
-            lng: parseFloat($scope.incidentes[index].long)
-            };
-        $scope.marker = new google.maps.Marker({
-            map: $scope.map,
-            position: $scope.latLng
-        });
-        $timeout($scope.recentrar, 300);
-     }
+        $scope.marker = {
+            id: 1,
+            coords: {
+                latitude: 40.1451,
+                longitude: -99.6680
+            }
+        };
+    });
+
+    uiGmapIsReady.promise(1).then(function(instances) {
+        $scope.modal_desabilitado = false;
+    });
+
+    // Muestra la ubicación del incidente
+    $scope.mostrarUbicacion = function(index){
+
+        var lat = $scope.incidentes[index].lat;
+        var lon = $scope.incidentes[index].long;
+        var latlong = new google.maps.LatLng(lat, lon);
+
+        $scope.marker.coords.latitude = lat;
+        $scope.marker.coords.longitude = lon;
+
+        $timeout(function(){recentrar(lat, lon);}, 400);
+    }
 
      // Re-centra el mapa cuando se abre la modal
-     $scope.recentrar = function(){
-        google.maps.event.trigger($scope.map, 'resize');
-        $scope.map.setCenter($scope.latLng);
-     }
+    function recentrar(lat, lon){
+        google.maps.event.trigger($scope.map.control.getGMap(), "resize");
+
+        $scope.map.center.latitude = lat;
+        $scope.map.center.longitude = lon;
+        $scope.zoom = 9;
+    }
 }]);
