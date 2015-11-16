@@ -2,6 +2,16 @@
 
 class EspeciesControllerTest extends TestCase 
 {
+	public function setUp()
+    {
+    	parent::setUp();
+    }
+
+	public function tearDown()
+	{
+		Mockery::close();
+	}
+
 	/// OBTENER ESPECIES ///
 
 	/**
@@ -91,7 +101,7 @@ class EspeciesControllerTest extends TestCase
 	   	$codigoEsperado = 404;
 
 	   	// Invocar al index de especiesControllers
-	    $respuestaActual = $this->call('GET', 'api/especies?pagina=ABC&resultados=-2&parametroExtra=extra']);
+	    $respuestaActual = $this->call('GET', 'api/especies?pagina=ABC&resultados=-2&parametroExtra=extra');
 
 	    // Generar respuesta esperada
 	    $respuestaEsperada = Response::json(array(

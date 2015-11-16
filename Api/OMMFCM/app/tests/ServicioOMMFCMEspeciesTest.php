@@ -3,6 +3,11 @@ use services\ServicioOMMFCM;
 
 class ServicioOMMFCMEspeciesTest extends TestCase 
 {
+	public function setUp()
+    {
+    	parent::setUp();
+    }
+
 	public function tearDown()
 	{
 		Mockery::close();
@@ -267,7 +272,7 @@ class ServicioOMMFCMEspeciesTest extends TestCase
 
        	$respuestaActual = $servicio->eliminarEspecie($this->mock);
 
-       	$this->assertEquals(200, $respuestaActual);
+       	$this->assertEquals(204, $respuestaActual);
 	}
 
 	/**

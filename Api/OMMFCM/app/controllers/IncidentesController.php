@@ -17,51 +17,61 @@ class IncidentesController extends \BaseController
 	 */
 	public function index()
 	{
+		$paramsQty = count(Request::query());
+
+		// Para reportes, el unico argumento en la url debe ser $reporte
+		if ($paramsQty == 1)
+		{
+			if(!Request::has('reporte'))
+			{
+	   			return Response::json(array('error' => true), 404);
+			}
+
+	   		$reporte = Request::get('reporte');
+
+			if(!is_numeric($reporte))
+			{
+				return Response::json(array('error' => true), 400);
+			}
+
+			$incidentes = $this->servicioOMMFCM->getIncidentesPorReporte($reporte);
+
+			return Response::json(array('error' => false, 'incidentes' => $incidentes),	200);	
+		}
+
+		// Si no se trata de un reporte, pagina y resultados son obligatorios
+		if(($paramsQty != 2 && $paramsQty != 3) || !Request::has('pagina') || !Request::has('resultados'))
+		{
+			return Response::json(array('error' => true), 404);
+		}
+
 		$pagina = Request::get('pagina');
 	   	$resultados = Request::get('resultados');
-	   	$idEspecie = Request::get('idEspecie');
-	   	$reporte = Request::get('reporte');
 
-	   	if(is_null($idEspecie))	
+	   	if(!is_numeric($pagina) || !is_numeric($resultados))
 		{
-			if(is_null($pagina))
-			{
-				// El método getIncidentesPorReporte regresa un array, mientras que los otros métodos regresan una colección. Por eso se debe tratar diferente
-				$incidentes = $this->servicioOMMFCM->getIncidentesPorReporte($reporte);
-				
-				return Response::json(array(
-					'error' => false,
-					'incidentes' => $incidentes),
-					200
-				);				
-			}
-			else
-			{
-				$incidentes = $this->servicioOMMFCM->getIncidentesPaginados($pagina, $resultados);							
-			}
+			return Response::json(array('error' => true), 400);
+		}
+
+	   	// idEspecie es opcional
+	   	if(!Request::has('idEspecie'))
+		{
+			$incidentes = $this->servicioOMMFCM->getIncidentesPaginados($pagina, $resultados);
 		}
 		else
 		{
+	   		$idEspecie = Request::get('idEspecie');
+
+	   		if(!is_numeric($idEspecie))
+			{
+				return Response::json(array('error' => true), 400);
+			}
+
 			$incidentes = $this->servicioOMMFCM->getIncidentesPorEspecie($idEspecie, $pagina, $resultados);	
 		}
 
-		return Response::json(array(
-			'error' => false,
-			'incidentes' => $incidentes -> toArray()),
-			200
-		);
+		return Response::json(array('error' => false, 'incidentes' => $incidentes -> toArray()), 200);
 	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -70,56 +80,21 @@ class IncidentesController extends \BaseController
 	 */
 	public function store()
 	{
-		$incidente = new Incidente;
-		$incidente -> idIncidente = null;
-		$incidente -> fecha = Input::get('fecha');
-		$incidente -> long = Input::get('long');
-		$incidente -> lat = Input::get('lat');
+		if(count(Request::query()) != 0)
+		{
+			return Response::json(array('error' => true), 404);
+		}
+
+		// El controlador unicamente toma parametros de la solicitud y crea un modelo usando massive assignment
+		$incidente = new Incidente(Input::all());		
+
 		$imagen64  = Input::get('imagen');
 		$extensionImg = Input::get('extension');
-		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64, $extensionImg);
+		$publicPath = public_path();
+		$resultado = $this->servicioOMMFCM->crearIncidente($incidente, $imagen64, $extensionImg, $publicPath);
 
-		if($resultado < 400)
-		{
-			return Response::json(array(
-				'error' => false,
-				'incidente' => $incidente),
-				$resultado 
-			);
-		}
-		else
-		{
-			return Response::json(array(
-				'error' => true),
-				$resultado
-			);
-		}	
+		return Response::json(array('error' => $resultado >= 400), $resultado);	
 	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
 
 	/**
 	 * Update the specified resource in storage.
@@ -129,31 +104,21 @@ class IncidentesController extends \BaseController
 	 */
 	public function update($id)
 	{
-		$incidente = new Incidente;
+		if(count(Request::query()) != 0)
+		{
+			return Response::json(array('error' => true), 404);
+		}
+
+		// El controlador unicamente toma parametros de la solicitud y crea un modelo usando massive assignment
+		$incidente = new Incidente(Input::all());
+
+		// El id no es parte de $fillable en el modelo ni de Input:all, por lo que la asignamos manualmente
 		$incidente -> idIncidente = $id;
-		$incidente -> idEspecie = Input::get('idEspecie');
-		$incidente -> km = Input::get('km');
-		$incidente -> ruta = Input::get('ruta');
 
 		$resultado = $this->servicioOMMFCM->modificarIncidente($incidente);
 
-		if($resultado < 400)
-		{
-			return Response::json(array(
-				'error' => false,
-				'incidente' => $incidente),
-				$resultado
-			);
-		}
-		else
-		{
-			return Response::json(array(
-				'error' => true),
-				$resultado
-			);
-		}	
+		return Response::json(array('error' => $resultado >= 400), $resultado);
 	}
-
 
 	/**
 	 * Remove the specified resource from storage.
@@ -163,21 +128,16 @@ class IncidentesController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-		$resultado = $this->servicioOMMFCM->eliminarIncidente($id);
-
-		if($resultado < 400)
+		if(count(Request::query()) != 0)
 		{
-			return Response::json(array(
-				'error' => false),
-				$resultado
-			);
+			return Response::json(array('error' => true), 404);
 		}
-		else
-		{
-			return Response::json(array(
-				'error' => true),
-				$resultado
-			);
-		}	
+
+		$incidente = new Incidente;
+		$incidente -> idIncidente = $id;
+
+		$resultado = $this->servicioOMMFCM->eliminarIncidente($incidente);
+
+		return Response::json(array('error' => $resultado >= 400), $resultado);
 	}
 }
