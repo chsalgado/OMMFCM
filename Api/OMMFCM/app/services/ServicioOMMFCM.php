@@ -42,7 +42,7 @@
 		public function getIncidentesPaginados($pagina, $resultados)
 		{
 	   		Incidente::resolveConnection()->getPaginator()->setCurrentPage($pagina);
-	   		$incidentes = Incidente::orderBy('fecha', 'asc')->paginate($resultados);
+	   		$incidentes = Incidente::orderBy('fecha', 'desc')->paginate($resultados);
 
 	   		return $incidentes;
 	   	}
