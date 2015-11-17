@@ -277,7 +277,7 @@ class IncidentesControllerTest extends TestCase
 	 * Prueba la ruta post api/incidentes cuando el servicio devuelve un error 
 	 * @return [type] [description]
 	 */
-	public function testCrearIncidenteConErro()
+	public function testCrearIncidenteConError()
 	{	 
 		// Generar el código que devuelve el servicio mock
 	   	$codigoEsperado = 400;

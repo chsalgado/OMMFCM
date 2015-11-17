@@ -140,8 +140,8 @@
 	    		return 404;
 	    	}
 
-	    	$rutaImagen = $incidente -> rutaFoto;
-	    	$rutaThumbnail = $incidente -> rutaThumbnail;
+	    	$rutaImagen = $incidenteExistente -> rutaFoto;
+	    	$rutaThumbnail = $incidenteExistente -> rutaThumbnail;
 
 	    	if(file_exists($rutaImagen))
 	    	{
@@ -163,7 +163,7 @@
 		    	}
 	    	}
 
-	    	$resultado = $incidente -> delete();
+	    	$resultado = $incidenteExistente -> delete();
 
 	    	if($resultado)
 	    	{
