@@ -33,5 +33,14 @@ describe('probar servicio de incidentes', function(){
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
         });
+
+        it('obtiene los incidentes para excel', function(){
+            $httpBackend.expectGET(servicioBase + 'api/incidentes?reporte=1').respond(200, {"error":false,"incidentes":[{"fecha":"2015-03-12 19:18:06","ruta":null,"km":null,"lat":"21.32008096","long":"-104.36462402","nombreCientifico":"Sin especie","nombreComun":"Sin especie","estado":"Sin asignar","estado2":"Sin asignar"},{"fecha":"2015-09-29 21:27:14","ruta":null,"km":null,"lat":"20.54399939","long":"-100.60225519","nombreCientifico":"Sin especie","nombreComun":"Sin especie","estado":"Sin asignar","estado2":"Sin asignar"},{"fecha":"2015-10-08 11:53:36","ruta":null,"km":null,"lat":"20.87564364","long":"-101.53036427","nombreCientifico":"Sin especie","nombreComun":"Sin especie","estado":"Sin asignar","estado2":"Sin asignar"}]});
+
+            servicioIncidentes.obtenerExcel();
+            $httpBackend.flush();
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
     });
 });
