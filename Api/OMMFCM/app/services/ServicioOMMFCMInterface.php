@@ -5,12 +5,12 @@
 	    public function getIncidentesPorReporte($reporte);
 	    public function getIncidentesPaginados($pagina, $resultados);
 	    public function getIncidentesPorEspecie($idEspecie, $pagina, $resultados); 
-	    public function crearIncidente($incidente, $imagen64, $extensionImg);
-	    public function eliminarIncidente($especie);
+	    public function crearIncidente($incidente, $imagen64, $extensionImg, $publicPath);
+	    public function eliminarIncidente($incidente);
 	    public function modificarIncidente($incidente);
 	    public function getEspecies($pagina, $resultados);
 	    public function crearEspecie($especie);
-	    public function eliminarEspecie($id);
+	    public function eliminarEspecie($especie);
 	    public function modificarEspecie($especie);
 	    public function getEstados();
 	    public function getMunicipiosPorEstado($idEstado);

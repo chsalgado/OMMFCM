@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
         "eventviva/php-image-resize": "1.5.*",
-        "mockery/mockery": "dev-master@dev"
+        "mockery/mockery": "dev-master@dev",
+        "mikey179/vfsStream": "1.6.0"
 	},
 	"autoload": {
 		"classmap": [

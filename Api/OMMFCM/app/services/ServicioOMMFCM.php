@@ -55,60 +55,94 @@
 	   		return $incidentes;
 	   	}
 
-	    public function crearIncidente($incidente, $imagen64, $extensionImg)
+	    public function crearIncidente($incidente, $imagen64, $extensionImg, $publicPath)
 	    {
 	    	if(is_null($imagen64) || is_null($extensionImg))
 	    	{
 	    		return 400;
 	    	}
 
-	    	// Le asignamos la idEspecie 0 para definir que no se le ha asignado ninguna especie
-	    	$incidente -> idEspecie = 0;	    	
+	    	if(strcasecmp($extensionImg, ".png") != 0 &&
+	    	   strcasecmp($extensionImg, ".jpg") != 0 &&
+	    	   strcasecmp($extensionImg, ".jpeg") != 0 &&
+	    	   strcasecmp($extensionImg, ".gif") != 0)
+	    	{
+	    		return 403;
+	    	}
 
 	    	$thumbnailAncho = 200;
 	    	$thumbnailAlto = 200;
-			$imagen = base64_decode($imagen64);
-			$ruta = public_path() . "/imagenes/incidentes/";
+			$ruta = $publicPath . "/imagenes/incidentes/";
 			$nombreImagen 	= "incidente_" . time();
 			$rutaThumbnail = $ruta . $nombreImagen . "_thumbnail" . $extensionImg;
 			$nombreImagen  = $nombreImagen . $extensionImg;
+			$rutaImagen = $ruta . $nombreImagen;
 
-			$resultado = File::put($ruta . $nombreImagen, $imagen);
+			// Le asignamos la idEspecie 0 para definir que no se le ha asignado ninguna especie
+	    	$incidente -> idEspecie = 0;	    	
+			$incidente -> rutaFoto = $rutaImagen;
+			$incidente -> rutaThumbnail = $rutaThumbnail;
+			$incidente -> ruta = null;
+			$incidente -> km = null;
 
-			if(!$resultado)
+			$validator = Validator::make($incidente -> toArray(), Incidente::$reglasCrearIncidente);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
+			$imagen = base64_decode($imagen64);
+
+			try
+			{
+				imagecreatefromstring($imagen);
+			}
+			catch(\Exception $e)
+			{
+				return 403;
+			}
+
+			try 
+			{
+				File::put($rutaImagen, $imagen);
+				$imagenThumbnail = new ImageResize($rutaImagen, $imagen);
+				$imagenThumbnail -> resize($thumbnailAncho, $thumbnailAlto);
+				$imagenThumbnail -> save($rutaThumbnail);
+			}
+			catch (\Exception $e) 
 			{
 				return 500;
 			}
-			
-			$imagenThumbnail = new ImageResize($ruta . $nombreImagen, $imagen);
-			$imagenThumbnail -> resize($thumbnailAncho, $thumbnailAlto);
-			$resultado = $imagenThumbnail -> save($rutaThumbnail);
 
-			if(!$resultado)
-			{
-				return 500;
-			}
- 
-			$nuevoIncidente = new Incidente;
-			$nuevoIncidente = $incidente;
-			$nuevoIncidente -> rutaFoto = $ruta . $nombreImagen;
-			$nuevoIncidente -> rutaThumbnail = $rutaThumbnail;
-
-			$resultado = $nuevoIncidente -> save(); 
+			$resultado = $incidente -> save(); 
 
 	    	if($resultado)
 	    	{
-				return 200;	    		
+				return 201;	    		
 	    	}
 
 	    	return 500;	    
 	    }
 
-	    public function eliminarIncidente($id)
+	    public function eliminarIncidente($incidente)
 	    {
-	    	$incidente = Incidente::find($id);
-	    	$rutaImagen = $incidente -> rutaFoto;
-	    	$rutaThumbnail = $incidente -> rutaThumbnail;
+	    	$validator = Validator::make($incidente -> toArray(), Incidente::$reglasBorrarIncidente);
+
+			if ($validator->fails()) 
+			{
+				return 400;
+			}
+
+	    	$incidenteExistente = $incidente ->find($incidente -> idIncidente);
+
+	    	if(is_null($incidenteExistente))
+	    	{
+	    		return 404;
+	    	}
+
+	    	$rutaImagen = $incidenteExistente -> rutaFoto;
+	    	$rutaThumbnail = $incidenteExistente -> rutaThumbnail;
 
 	    	if(file_exists($rutaImagen))
 	    	{
@@ -130,7 +164,7 @@
 		    	}
 	    	}
 
-	    	$resultado = $incidente -> delete();
+	    	$resultado = $incidenteExistente -> delete();
 
 	    	if($resultado)
 	    	{
@@ -142,12 +176,20 @@
 
 	    public function modificarIncidente($incidente)
 	    {
-	    	$incidenteExistente = Incidente::find($incidente -> idIncidente);
+	    	$validator = Validator::make($incidente -> toArray(), Incidente::$reglasModificarIncidente);
 
-			if(is_null($incidente -> idEspecie))
+			if ($validator->fails()) 
 			{
-				return 400;	
+				return 400;
 			}
+
+	    	// El find ahora lo hace una instancia de incidente para poder hacer el mock
+	    	$incidenteExistente = $incidente ->find($incidente -> idIncidente);
+
+			if(is_null($incidenteExistente))
+	    	{
+	    		return 404;
+	    	}
 
 			$incidenteExistente -> idEspecie = $incidente -> idEspecie;
 			$incidenteExistente -> km = $incidente -> km;
@@ -186,9 +228,7 @@
 				return 400;
 			}
 
-			$nuevaEspecie = new Especie;
-			$nuevaEspecie = $especie;
-			$resultado = $nuevaEspecie -> save(); 
+			$resultado = $especie -> save(); 
 
 	    	if($resultado)
 	    	{
@@ -257,7 +297,7 @@
 
 	    	if($resultado)
 	    	{
-				return 200;	    		
+				return 204;	    		
 	    	}
 
 	    	return 500;
