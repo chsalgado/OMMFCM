@@ -16,7 +16,7 @@ describe('controlador incidentes', function(){
         spyOn(window, 'confirm').and.returnValue(true);
 
         mockServicioEspecies = jasmine.createSpyObj('servicioEspecies', ['obtenerEspecies', 'obtenerEstadosEspecies', 'agregarEspecie']);
-        mockServicioIncidentes = jasmine.createSpyObj('servicioIncidentes', ['obtenerIncidentes', 'eliminarIncidente' ,'modificarIncidente']);
+        mockServicioIncidentes = jasmine.createSpyObj('servicioIncidentes', ['obtenerIncidentes', 'eliminarIncidente', 'modificarIncidente', 'obtenerExcel']);
 
         inject(function($rootScope, $controller, $q, _$timeout_){
             $scope = $rootScope.$new();
@@ -75,6 +75,13 @@ describe('controlador incidentes', function(){
             mockServicioIncidentes.modificarIncidente.and.callFake(function(){
                 if(exito){
                     return ($q.resolve());
+                }
+                return ($q.reject());
+            });
+
+            mockServicioIncidentes.obtenerExcel.and.callFake(function(){
+                if(exito){
+                    return ($q.resolve([{"fecha":"2015-03-12 19:18:06","ruta":null,"km":null,"lat":"21.32008096","long":"-104.36462402","nombreCientifico":"Sin especie","nombreComun":"Sin especie","estado":"Sin asignar","estado2":"Sin asignar"},{"fecha":"2015-09-29 21:27:14","ruta":null,"km":null,"lat":"20.54399939","long":"-100.60225519","nombreCientifico":"Sin especie","nombreComun":"Sin especie","estado":"Sin asignar","estado2":"Sin asignar"},{"fecha":"2015-10-08 11:53:36","ruta":null,"km":null,"lat":"20.87564364","long":"-101.53036427","nombreCientifico":"Sin especie","nombreComun":"Sin especie","estado":"Sin asignar","estado2":"Sin asignar"}]));
                 }
                 return ($q.reject());
             });
@@ -242,5 +249,19 @@ describe('controlador incidentes', function(){
         expect(mockServicioEspecies.agregarEspecie).toHaveBeenCalled();
         $timeout.flush();
         expect($scope.mensaje).toBe('La especie no fue agregada. Intentelo más tarde')
+    });
+
+    it('obtiene incidentes para excel', function(){
+        cambiarExito(true);
+        $scope.obtenerExcel();
+        expect(mockServicioIncidentes.obtenerExcel).toHaveBeenCalled();
+    });
+
+    it('falla al obtener incidentes para excel', function(){
+        cambiarExito(false);
+        $scope.obtenerExcel();
+        expect(mockServicioIncidentes.obtenerExcel).toHaveBeenCalled();
+        $timeout.flush();
+        expect($scope.mensaje).toMatch('No ha sido posible extraer los datos. Inténtelo más tarde');
     });
 });
