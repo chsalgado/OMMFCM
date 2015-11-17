@@ -16,13 +16,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       '../scripts/angular.js',
+      '../scripts/angular-google-maps.js',
       '../scripts/angular-mocks.js',
       '../scripts/angular-route.min.js',
-      '../scripts/loading-bar.js',
-      '../scripts/angular-google-maps.js',
-      '../scripts/ng-tags-input.js',
       '../scripts/angular-simple-logger.min.js',
+      '../scripts/loading-bar.js',
       '../scripts/lodash.min.js',
+      '../scripts/ng-tags-input.js',
       '../scripts/ui-bootstrap-tpls-0.14.3.js',
       '../*.js',
       '../controladores/*.js',
