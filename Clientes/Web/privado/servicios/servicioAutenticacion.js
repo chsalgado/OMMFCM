@@ -8,7 +8,7 @@ app.factory('servicioAutenticacion', ['USUARIO', 'CONTRASENA', function(USUARIO,
 
 		var authData = USUARIO + ":" + CONTRASENA;
 		if(authData){
-			config.headers.Authorization = btoa(authData);
+			config.headers.Authorization = "Basic " + btoa(authData);
 		}
 
 		return config;
