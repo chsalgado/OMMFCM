@@ -16,25 +16,19 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-// Route group for API versioning
-Route::group(array('prefix' => 'api/'), function()
+// Grupo de rutas para la API, necesita estar authenticado
+Route::group(array('prefix' => 'api/', 'before' => 'auth.basic'), function()
 {
     Route::resource('incidentes', 'IncidentesController');
     Route::resource('especies', 'EspeciesController');
-    Route::resource('estados', 'EstadosController');
-    Route::resource('municipios', 'MunicipiosController');
     Route::resource('estadosEspecies', 'EstadosEspeciesController');
     Route::resource('estadosEspecies2', 'EstadosEspecies2Controller');
+});
 
-	Route::get('incidentes', ['before' => 'auth.basic', 'uses' => 'IncidentesController@index']);
-	Route::put('incidentes/{incidentes}', ['before' => 'auth.basic', 'uses' => 'IncidentesController@update']);
-	Route::delete('incidentes/{incidentes}', ['before' => 'auth.basic', 'uses' => 'IncidentesController@destroy']);
-
-	Route::get('especies', ['before' => 'auth.basic', 'uses' => 'EspeciesController@index']);
-	Route::post('especies', ['before' => 'auth.basic', 'uses' => 'EspeciesController@store']);
-	Route::put('especies/{especies}', ['before' => 'auth.basic', 'uses' => 'EspeciesController@update']);
-	Route::delete('especies/{especies}', ['before' => 'auth.basic', 'uses' => 'EspeciesController@destroy']);
-
-	Route::get('estadosEspecies', ['before' => 'auth.basic', 'uses' => 'EstadosEspeciesController@index']);
-	Route::get('estadosEspecies2', ['before' => 'auth.basic', 'uses' => 'EstadosEspecies2Controller@index']);
+// Grupo de rutas para apps y sitio público
+Route::group(array('prefix' => 'api/'), function()
+{
+	Route::post('incidentes', ['uses' => 'IncidentesController@index']);
+    Route::resource('estados', 'EstadosController');
+    Route::resource('municipios', 'MunicipiosController');
 });
