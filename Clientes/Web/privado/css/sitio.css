@@ -36,6 +36,9 @@
     display: inline;
     height: 28px;
 }
+.peque{
+    width: 70px;
+}
 .form-control:focus {
     border-color: #619859;
     outline: 0;
