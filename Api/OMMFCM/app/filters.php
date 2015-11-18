@@ -13,6 +13,8 @@
 
 App::before(function($request)
 {
+	// En caso de migrar a un servidor no-windows, descomentar 
+	/* 	
 	if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') 
 	{
         $statusCode = 200;
@@ -25,13 +27,14 @@ App::before(function($request)
         );
 
         return Response::make(null, $statusCode, $headers);
-    }
+    } */
 });
 
 
 App::after(function($request, $response)
 {
-    $response->headers->set('Access-Control-Allow-Origin', '*');
+	// En caso de migrar a un servidor no-windows, descomentar 
+    // $response->headers->set('Access-Control-Allow-Origin', '*');
 });
 
 /*
