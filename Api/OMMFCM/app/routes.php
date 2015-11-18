@@ -16,13 +16,19 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-// Route group for API versioning
-Route::group(array('prefix' => 'api/'), function()
+// Grupo de rutas para la API, necesita estar authenticado
+Route::group(array('prefix' => 'api/', 'before' => 'auth.basic'), function()
 {
     Route::resource('incidentes', 'IncidentesController');
     Route::resource('especies', 'EspeciesController');
-    Route::resource('estados', 'EstadosController');
-    Route::resource('municipios', 'MunicipiosController');
     Route::resource('estadosEspecies', 'EstadosEspeciesController');
     Route::resource('estadosEspecies2', 'EstadosEspecies2Controller');
+});
+
+// Grupo de rutas para apps y sitio público
+Route::group(array('prefix' => 'api/'), function()
+{
+	Route::post('incidentes', ['uses' => 'IncidentesController@index']);
+    Route::resource('estados', 'EstadosController');
+    Route::resource('municipios', 'MunicipiosController');
 });

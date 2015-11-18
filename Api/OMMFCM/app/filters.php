@@ -20,7 +20,8 @@ App::before(function($request)
         $headers = array(
             'Access-Control-Allow-Origin'      => '*',  // TODO cambiar esto cuando tengamos los sitios corriendo en un dominio especifico
             'Access-Control-Allow-Methods'     => 'GET, POST, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers'     => 'Origin, Content-Type, Accept, Authorization, X-Requested-With'
+            'Access-Control-Allow-Headers'     => 'Origin, Content-Type, Accept, Authorization, X-Requested-With',
+			'Access-Control-Allow-Credentials' => 'true'
         );
 
         return Response::make(null, $statusCode, $headers);
