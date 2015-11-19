@@ -5,11 +5,11 @@
 		protected $primaryKey = 'idIncidente';
 
 		public static $reglasCrearIncidente = array(
-            'fecha' 		=> 'Required|Date',
+            'fecha' 		=> 'Required|date_format:Y-m-d H:i:s',
             'long'     		=> 'Required|Numeric',
             'lat'  			=> 'Required|Numeric',
-            'rutaFoto'		=> 'Required|URL',
-            'rutaThumbnail'	=> 'Required|URL',
+            'rutaFoto'		=> 'Required',
+            'rutaThumbnail'	=> 'Required',
             'idEspecie'		=> 'Required|Numeric'
         );
 

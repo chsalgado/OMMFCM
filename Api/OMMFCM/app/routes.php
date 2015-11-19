@@ -28,7 +28,7 @@ Route::group(array('prefix' => 'api/', 'before' => 'auth.basic'), function()
 // Grupo de rutas para apps y sitio público
 Route::group(array('prefix' => 'api/'), function()
 {
-	Route::post('incidentes', ['uses' => 'IncidentesController@index']);
+	Route::post('incidentes', ['uses' => 'IncidentesController@store']);
     Route::resource('estados', 'EstadosController');
     Route::resource('municipios', 'MunicipiosController');
 });
