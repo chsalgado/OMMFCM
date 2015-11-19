@@ -7,6 +7,8 @@ app.controller('controladorReporteMapa', function($scope, ServicioReporteMapa, u
 	$scope.fecha_inicial_abierta = false;
 	$scope.fecha_final_abierta = false;
 	$scope.borrar_ruta_deshabilitado = true;
+	$scope.origen = '';
+	$scope.destino = '';
 
 	// Variables para uso interno del controlador
 	var incidentes = [];
@@ -113,6 +115,13 @@ app.controller('controladorReporteMapa', function($scope, ServicioReporteMapa, u
 		if($scope.directionsDisplay != null){
 			$scope.directionsDisplay.setMap(null);
 			$scope.borrar_ruta_deshabilitado = true;
+			$scope.mapa.control.getGMap().setCenter({ 
+				latitude: 19.41220201, 
+				longitude: -99.12139893
+			});
+			$scope.mapa.control.getGMap().setZoom(5);
+			$scope.origen = '';
+			$scope.destino = '';
 		}
 	}
 
