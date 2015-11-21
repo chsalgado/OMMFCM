@@ -1,7 +1,10 @@
 package com.example.george.ommfcm;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,6 +46,7 @@ public class ActividadMapa extends AppCompatActivity {
     private GoogleMap gMap; // Variable para invocar el mapa
     protected LatLng selected_location;
     protected String rutaImagen;
+    protected ProgressDialog prDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,8 @@ public class ActividadMapa extends AppCompatActivity {
         rutaImagen = intent.getStringExtra("ruta_imagen");
 
         gMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap(); // Creacion del mapa
+        prDialog = new ProgressDialog(ActividadMapa.this);
+        prDialog.setCancelable(false);
 
         // Obtencion de variables de la ventana anterior
         final String origenEstado = getIntent().getStringExtra("OrigenEstado");
@@ -63,6 +69,14 @@ public class ActividadMapa extends AppCompatActivity {
         new RutaMapa(this, gMap, origenEstado, origenMunicipio, destinoEstado, destinoMunicipio).execute(); // Calcular y dibjar ruta en mapa de acuerdo al origen y destino
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        if(prDialog != null){
+            prDialog.dismiss(); // Desechar dialogo de progreso cuando la aplicacion se cierre
+        }
+    }
     /**
      * TODO: Metodo que regresa a la vista anterior y pasa las coordenadas seleccionadas en el mapa
      * @param view
@@ -75,7 +89,24 @@ public class ActividadMapa extends AppCompatActivity {
             intent.putExtra("ruta_imagen", rutaImagen);
 
             this.startActivity(intent);
+        }else{
+            mostrarMensaje("Localización de incidente faltante", "Favor de seleccionar la ubicación aproximada donde ocurrió el incidente");
         }
+    }
+
+
+    private void mostrarMensaje(String titulo, String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**
@@ -84,8 +115,6 @@ public class ActividadMapa extends AppCompatActivity {
      * Actividad asincrona donde se calcula una ruta en el mapa de acuerdo a un origen y un destino
      */
     private class RutaMapa extends AsyncTask<Void, Integer, Boolean> {
-        private static final String TOAST_MSG = "Calculating"; // Mensaje de retroalimentacion para el usuario
-        private static final String TOAST_ERR_MAJ = "Impossible to trace Itinerary"; // Mensaje de retroalimentacion para el usuario
         private Context context; // Variable que guarda el contexto de la actividad donde se ejecutan la sfunciones
         private GoogleMap gMap; // Variable para acceso al mapa
         private String origenEstado; // Nombre del estado origen
@@ -94,6 +123,7 @@ public class ActividadMapa extends AppCompatActivity {
         private String destinoMunicipio; // NOmbre del municipio destino
         private final ArrayList<LatLng> lstLatLng = new ArrayList<LatLng>(); // Arreglo de coordenadas para guardar la ruta
         private Marker user_marker; // Variable de marcador de mapa
+
 
         /**
          * Constructor de la clase
@@ -114,7 +144,8 @@ public class ActividadMapa extends AppCompatActivity {
         }
 
         @Override protected void onPreExecute() {
-            Toast.makeText(context, TOAST_MSG, Toast.LENGTH_LONG).show(); // Mostrar mensaje de carga
+            prDialog.setMessage("Calculando ruta"); // Asignar mensaje al dialogo de progreso
+            prDialog.show(); // Mostrar dialogo de progreso
         }
 
         @Override protected Boolean doInBackground(Void... params) {
@@ -165,8 +196,10 @@ public class ActividadMapa extends AppCompatActivity {
                     }
                 }
                 return true;
-            } catch(final Exception e) {
+            } catch(Exception e) {
                 e.printStackTrace(); // Imprimir error
+                prDialog.hide();
+                mostrarMensaje("Ruta no encontrada", "Favor de especificar un nuevo origen y destino o regrese a la ventana anterior para volver a calcular la ruta");
                 return false;
             }
         }
@@ -199,7 +232,8 @@ public class ActividadMapa extends AppCompatActivity {
 
         @Override protected void onPostExecute(final Boolean result) {
             if(!result) {
-                Toast.makeText(context, TOAST_ERR_MAJ, Toast.LENGTH_SHORT).show(); // Mostrar mensaje en caso de error
+                prDialog.hide();
+                mostrarMensaje("Ruta no encontrada", "Favor de especificar un nuevo origen y destino o regrese a la ventana anterior para volver a calcular la ruta");
             } else {
                 try {
                     final PolylineOptions polylines = new PolylineOptions(); // Crear arreglo de lineas
@@ -254,9 +288,12 @@ public class ActividadMapa extends AppCompatActivity {
                             selected_location = point;
                         }
                     });
-
+                    Toast.makeText(context, "Seleccione un punto en el mapa", Toast.LENGTH_LONG).show(); // Mostrar mensaje de carga
+                    prDialog.hide();
                 } catch (Exception e) {
                     e.printStackTrace(); // Imprimir error
+                    prDialog.hide();
+                    mostrarMensaje("Error al procesar la ruta", "Favor de regresar a la ventana anterior para volver a calcular la ruta");
                 }
             }
         }

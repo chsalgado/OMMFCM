@@ -1,6 +1,8 @@
+import com.android.build.gradle.AppExtension
+
 apply plugin: 'com.android.application'
 
-android {
+final def extension = android {
     signingConfigs {
         config {
             keyAlias 'MyAndroidKey'
@@ -12,7 +14,7 @@ android {
     compileSdkVersion 22
     buildToolsVersion "21.1.2"
     defaultConfig {
-        applicationId "com.watchimt.george.ommfcm"
+        applicationId "com.watchimt.imt.ommfcm"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 2
@@ -26,8 +28,10 @@ android {
         }
     }
 }
+extension
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(":volley")
     compile 'com.android.support:appcompat-v7:22.1.0'
     compile 'com.loopj.android:android-async-http:1.4.8'
     compile 'com.google.android.gms:play-services:7.8.0'
