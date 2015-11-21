@@ -5948,3 +5948,23 @@ you can use the generic selector below, but it's slower:
         height: 50px;
     }
 }
+
+.retro{
+    position: fixed;
+    z-index: 3;
+}
+
+.info{
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #619859;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(190, 231, 184,.8);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(190, 231, 184,.8);
+}
+
+q{
+    font-style: italic;
+}
