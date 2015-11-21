@@ -1,77 +1,91 @@
-<div ng-init="obtenerEstados(); obtenerMunicipiosOrigen(1); obtenerMunicipiosDestino(1); initMap();">
-    <h2>Reportar Animal en Carretera</h2>
-    <hr />
-    <div class="row">
-        <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
-        <div class="alert alert-success fade in retro" ng-show="exito">{{mensaje}}</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>1. Incidente <span class="info"><i class="fa fa-info-circle" title="Imagen y fecha en la que sucedió el incidente"></i></span></h3>
-            <div class="form-group">
-                <div class="archivo btn btn-default">
-                    <span><i class="fa fa-camera fa-2x"></i></span>
-                    <input type="file" id="imagen" onchange="angular.element(this).scope().encodeImageFileAsURL(this)" class="upload"/>
+<div class="form-cover">
+    <div class="section-images">
+        <div class="container" ng-init="obtenerEstados(); obtenerMunicipiosOrigen(1); obtenerMunicipiosDestino(1); initMap();">
+            <h2>Reportar Animal en Carretera</h2>
+            <hr />
+            <div class="row">
+                <div class="alert alert-danger fade in retro" ng-show="errores">{{mensaje}}</div>
+                <div class="alert alert-success fade in retro" ng-show="exito">{{mensaje}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>1. Incidente <span class="info"><i class="fa fa-info-circle" title="Imagen y fecha en la que sucedió el incidente"></i></span></h2>
+                    <div class="form-group">
+                        <div class="archivo btn btn-primary">
+                            <span><i class="fa fa-camera fa-4x"></i></span>
+                            <input type="file" id="imagen" onchange="angular.element(this).scope().encodeImageFileAsURL(this)" class="upload"/>
+                        </div>
+                        <label style="margin-left: 20px;" for="imagen">Seleccionar Imagen y fecha</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text"id="fecha" class="form-control" uib-datepicker-popup ng-model="fecha" is-open="fecha.abierto" />
+                            <span class="input-group-btn" style="font-size: 18px;">
+                                <button type="button" class="btn btn-lg btn-primary" ng-click="abrirCalendario($event)"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <label for="imagen">Seleccionar Imagen</label>
+                <div class="col-md-4 col-md-offset-1" id="vistaPrevia">
+                    <img src="images/placeholder.png" style="max-width: 300px; max-height: 300px" title="Vista Previa">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="fecha">Fecha</label>
-                <input class="form-control"  id="fecha" type="date" ng-model="fecha"/>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>2. Origen <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h2>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select class="form-control" ng-model="ruta.origen.idEstado" ng-options="estado.id_estado as estado.estado for estado in estados" ng-change="obtenerMunicipiosOrigen(); limpiarMapa()"></select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Municipio</label>
+                        <select class="form-control" ng-model="ruta.origen.nombreMunicipio" ng-options="municipio.nombre_municipio as municipio.nombre_municipio for municipio in municipiosOrigen" ng-change="calcRuta()"></select>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-3 col-sm-offset-1" id="vistaPrevia">
-            <img src="img/vistaPrevia.png" width="100%" title="Vista Previa">
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>3. Destino <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h2>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select class="form-control" ng-model="ruta.destino.idEstado" ng-options="estado.id_estado as estado.estado for estado in estados" ng-change="obtenerMunicipiosDestino(); limpiarMapa()"></select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Municipio</label>
+                        <select class="form-control" ng-model="ruta.destino.nombreMunicipio" ng-options="municipio.nombre_municipio as municipio.nombre_municipio for municipio in municipiosDestino" ng-change="calcRuta()"></select>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>4. Selecciona la ubicación del incidente <span class="info"><i class="fa fa-info-circle" title="Dando click en el mapa, selecciona la ubicación"></i></span></h2>
+                </div>
+                <div class="col-sm-12">
+                    <div style="height:400px; width:100%;" id="map-canvas"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>2. Origen <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h3>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label>Estado</label>
-                <select class="form-control" ng-model="ruta.origen.idEstado" ng-options="estado.id_estado as estado.estado for estado in estados" ng-change="obtenerMunicipiosOrigen(); limpiarMapa()"></select>
+</div>
+
+<div class="about4-top-img ng-scope">
+    <div class="effect-over"></div>
+    <div class="container">
+        <div class="col-lg-12">
+            <div class="buy-angula">
+                <a class="btn btn-primary" ng-click="validarForma()">Enviar incidente</a>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label>Municipio</label>
-                <select class="form-control" ng-model="ruta.origen.nombreMunicipio" ng-options="municipio.nombre_municipio as municipio.nombre_municipio for municipio in municipiosOrigen" ng-change="calcRuta()"></select>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>3. Destino <span class="info"><i class="fa fa-info-circle" title="Municipio más cercano al incidente"></i></span></h3>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label>Estado</label>
-                <select class="form-control" ng-model="ruta.destino.idEstado" ng-options="estado.id_estado as estado.estado for estado in estados" ng-change="obtenerMunicipiosDestino(); limpiarMapa()"></select>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label>Municipio</label>
-                <select class="form-control" ng-model="ruta.destino.nombreMunicipio" ng-options="municipio.nombre_municipio as municipio.nombre_municipio for municipio in municipiosDestino" ng-change="calcRuta()"></select>
-            </div>
-        </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>4. Selecciona la ubicación del incidente <span class="info"><i class="fa fa-info-circle" title="Dando click en el mapa, selecciona la ubicación"></i></span></h3>
-        </div>
-    </div>
-    <div style="display:block; height:600px; width:100%;" id="map-canvas"></div>
-    <br>
-    <div id="" class="row">
-        <div id="" class="col-xs-12">
-            <button class="col-xs-4 col-xs-offset-4  btn btn-success" ng-click="validarForma()">Enviar</button>
-        </div>
-    </div>
-<br>
+    </div> 
 </div>

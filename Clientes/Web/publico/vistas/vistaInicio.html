@@ -1,62 +1,139 @@
-<br>
-<div class="row">
-    <div class="col-sm-4 centrado">
-        <div class="col-sm-12">
-            <img src="img/logo_watch.png" class="fotoMaxWidth"/>
-        </div>
-        <div class="col-sm-12">
-            <img src="img/appStore.png" class="fotoMaxWidth">
-            <img src="img/googlePlay.png" class="fotoMaxWidth">
-        </div>
+<!-- Slider -->
+<div class="container-slide">
+    <!--<div id="boxgallery4" class="boxgallery" data-effect="effect-3">
+        <div class="panel"><img src="images/home_wallpaper1.jpg" alt="Image 1"/></div>
+    </div>-->
+
+    <div class="boxgallery">
+        <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+            <uib-slide ng-repeat="slide in slides" active="slide.active">
+                <div class="panel">
+                    <img ng-src="{{slide.image}}" style="margin:auto;">
+                </div>
+            </uib-slide>
+        </uib-carousel>
     </div>
-    <div class="col-sm-8">
-        <div class="panel panel-success">
-            <div class="panel-heading">WATCH <sub>MX</sub></div>
-            <div class="panel-body">
-                <p>WATCH<sub>MX</sub> es una herramienta para el monitoreo de la fauna que cruza las carreteras en México y que puede representar un peligro para la seguridad de los usuarios de la red de carreteras en el país y la posible pérdida de la especie por el atropellamiento.</p>
-                <p>WATCH<sub>MX</sub> es el acrónimo de <q>Wild Animals in Transport Corridors and Highways</q>, que en español significa <q>Animales Silvestres en Corredores de Transporte y Carreteras</q>. Si deseas conocer más o tienes dudas envíanos un correo a watch@imt.mx</p>
+    
+    <div class="slide-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <h3>Bienvenido a WATCH! Ayúdanos a proteger a las especies que sufren accidentes en las carreteras.</h3>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <a class="btn btn-lg btn-primary pull-right" href="#/reportar">Reportar incidente</a>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
-<hr />
-<div class="row">
-    <div class="col-sm-4">
-        <div class="panel panel-success">
-            <div class="panel-heading">¿Cómo funciona?</div>
-            <div class="panel-body">
-                <p>El monitoreo de la fauna, se realiza mediante el seguimiento a través de fotografías tomadas por los usuarios de la red de carreteras y enviadas al Observatorio de Movilidad y Mortalidad de Fauna del Instituto Mexicano de transporte, mediante la cuales se integrará un sistema para:</p>
-                <ul>
-                    <li>Monitorear las especies que cruzan o que son atropelladas en las carreteras</li>
-                    <li>Identificar los puntos críticos de la red que ponen en peligro a los usuarios de la red y a las especies</li>
-                    <li>Generar reportes para auxiliar en la toma de decisiones en la búsqueda de implementar medidas de mitigación</li>
-                    <li>Reducir la mortalidad de especies de fauna en las carreteras y preservarlas para el futuro</li>
-                    <li>Aumentar la seguridad de las carreteras</li>
-                </ul>
+</div>
+<div class="section-images">
+    <div class="container">
+        <div class="row">
+            <div id="screen-macbook" class="col-lg-6 col-md-6">
+                <img src="images/logo_imt.png" alt="" />
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <h1 class="section-title"><span>¿Que es WATCH<sub>MX</sub>?</span></h1>
+                <p>
+                    <strong>WATCH<sub>MX</sub></strong> es una plataforma creada para monitorear la fauna que cruza las carreteras en México con el fin de desarrollar planes de mitigación que puedan ayudar a evitar accidentes de los usuarios que utilicen la red de carreteras del país, así como la perdida de especies por atropellamiento.
+                </p>
+                <p>
+                    <strong>WATCH<sub>MX</sub></strong> es el acrónimo de <q>Wild Animals in Transport Corridors and Highways</q>, que en español significa <q>Animales Silvestres en Corredores de Transporte y Carreteras</q>. Si deseas conocer más o tienes dudas envíanos un correo a watch@imt.mx
+                </p>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="panel panel-success">
-            <div class="panel-heading">Reglas de Seguridad</div>
-            <div class="panel-body">
-                <p>Antes de tomar la fotografía debes tener especial precaución de:</p>
-                <ul>
-                    <li>Disminuye la velocidad y recuerda encender las luces preventivas del vehículo antes de detenerlo</li>
-                    <li>Detener el vehículo fuera de la calzada</li>
-                    <li>Poner especial atención a la circulación de vehículos para que no comprometas tu seguridad al tomar la fotografía</li>
-                    <li>Evitar remover la especie de fauna de la calzada</li>
-                    <li>En caso de contar con copiloto, es preferible que éste realice la toma de la fotografía</li>
-                    <li>En ningún caso, como conductor, utilices tu teléfono o equipo fotográfico para tomar la imagen sin detener completamente el vehículo en un lugar seguro</li>
-                </ul>
+</div>
+<!-- /.section-colored -->
+
+<div class="home3-city-bg">
+    <div class="home3-effect-cover"></div>
+      <div class="home3-well">
+        <div class="container">
+            <div class="row row-footer">
+                <div class="col-lg-12 col-md-12">
+                    <h1 class="section-title">¿Cómo funciona?</h1>
+                    <div class="txt-circle-content first-ic">
+                        <div class="fact-icon"><span class="icon-camera"></span></div>
+                        <div class="txt-circle">
+                            <h3>Fotografias de incidentes de los usuarios</h3>
+                            <p>Todo comienza gracias a la ayuda de los usuarios, los cuales proporcionan fotografias de los incidentes para su posterior análisis</p>
+                        </div>
+                    </div>
+                    <div class="txt-circle-content first-ic">
+                        <div class="fact-icon"><span class="icon-search"></span></div>
+                        <div class="txt-circle">
+                            <h3>Identificación de especies</h3>
+                            <p>Las fotografias de los usuarios son analizadas para determinar la(s) especie(s) asociada(s) a la foto y poder hacer una mejor clasificación de la información.</p>
+                        </div>
+                    </div>
+                    <div class="txt-circle-content">
+                        <div class="fact-icon"><span class="icon-linegraph"></span></div>
+                        <div class="txt-circle">
+                            <h3>Generación de reportes</h3>
+                            <p>A partir de la ubicación y especie de cada incidente se generarán una serie de reportes que permitan tomar decisiones sobre las medidas de mitigación que se pueden llevar a cabo para la prevención de accidentes.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="panel panel-success">
-            <div class="panel-heading">¿Cómo participar?</div>
-            <div class="panel-body">
-                <p>Si al transitar por una carretera mexicana, te percatas de una especie de fauna (venados, reptiles, tortugas, jaguares, etc.) cruzando la carretera o que ha sido atropellada, y sin que comprometas tu seguridad vial puedes tomar una fotografía, posteriormente envíala a través de la aplicación para dispositivos móviles o <a href="#/reportar">Reporta aquí</a>, ésta sería tu colaboración, que nos será de mucha ayuda.</p>
+</div>
+<!-- /.section-colored -->
+
+<div class="section-images">
+    <div class="container about-pg-4">
+        <div class="row">
+             <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <h1 class="section-title"><span>¿Como puedo participar?</span></h1>
+                    <p>Si al transitar por una carretera mexicana, te percatas de una especie de fauna (venados, reptiles, tortugas, jaguares, etc.) cruzando la carretera o que ha sido atropellada y sin que comprometas tu seguridad vial toma una fotografía y súbela a través de nuestra página web o por medio de las aplicaciones para dispositivos móviles oficiales.</p>
+                    <p>
+                        <a class="btn btn-lg btn-primary" href="#/reportar">Reportar incidente</a>
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="section-title">Medidas de seguridad</h1>
+                    <ul>
+                      <li><i class="fa fa-angle-right"></i>Disminuye la velocidad y recuerda encender las luces preventivas del vehículo antes de detenerlo.</li>
+                      <li><i class="fa fa-angle-right"></i>Detener el vehículo fuera de la carretera.</li>
+                      <li><i class="fa fa-angle-right"></i>Poner especial atención a la circulación de vehículos para que no comprometas tu seguridad al tomar la fotografia</li>
+                      <li><i class="fa fa-angle-right"></i>En caso de contar con copiloto, es preferible que éste realice la toma de la fotografía</li>
+                      <li><i class="fa fa-angle-right"></i>En ningún caso, como conductor, utilices tu teléfono o equipo fotográfico para tomar la imagen sin detener completamente el vehículo en un lugar seguro</li>
+                    </ul>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION IPHONE -->
+<div id="iphone-home5" class="bg-texture">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="images/iphone.png" alt="" />
+            </div>
+            <div class="col-md-7 iphone-desc">
+                <ul>
+                    <li>
+                        <p><span class="icon-camera"></span>Reporta el incidente al instante</p>
+                    </li>
+                    <li>
+                        <p><span class="icon-tools-2"></span>Interfaz sencilla y amigable</p>
+                    </li>
+                    <li>
+                        <p><span class="icon-map-pin"></span>Soporte de mapas para geolocalización</p>
+                    </li>
+                    <li>
+                        <p><span class=" icon-mobile"></span>Disponible en Play Store y App Store</p>
+                    </li>
+                     <li>
+                        <a class="btn btn-lg btn-app-store" href="#"></a>
+                        <a class="btn btn-lg btn-play-store" href="#"></a>
+                     </li>
+                </ul>
             </div>
         </div>
     </div>
