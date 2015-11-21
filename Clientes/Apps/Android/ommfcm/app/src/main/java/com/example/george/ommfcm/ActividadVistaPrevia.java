@@ -1,7 +1,9 @@
 package com.example.george.ommfcm;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,22 +44,25 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 
 
 public class ActividadVistaPrevia extends AppCompatActivity {
 
     ProgressDialog prDialog; // Variable del dialogo de progreso al realizar la operacion de comrpesion y subida de imagne
     String imagenBase64; // Variable donde se va a guardar la imagen en formato string base 64
-    RequestParams params = new RequestParams(); // Variable para agregar los parametros que se envian en la llamada http
+    JSONObject params = new JSONObject(); // Variable para agregar los parametros que se envian en la llamada http
     String imgRuta; // Variable donde se guarda la ruta de la imagen obtenida de la vista previa
     private double latitud = 0.0;
     private double longitud = 0.0;
     private static String rutaServidor= "http://watch.imt.mx/public_html/index.php/api/incidentes"; // Ruta del servidor donde se sube la imagen
     private String lastimgdatetime;
     private GoogleMap gMap;
+
     /**
      * Metodo que se llama al crearse la vista por primera vez
      *
@@ -137,16 +148,7 @@ public class ActividadVistaPrevia extends AppCompatActivity {
             @Override
             protected void onPostExecute(String msg){
                 prDialog.setMessage("Subiendo imagen");
-                params.put("imagen", imagenBase64); // Agregar string de la imagen a los parametros de la llamada HTTP
-                if(lastimgdatetime==null){
-                    params.put("fecha", getDateTime()); // Agregar fecha a los parametros
-                }else {
-                    params.put("fecha", lastimgdatetime); // Agregar fecha a los parametros version 2
-                }
-                params.put("long", longitud); // Agregar longitud a los parametros
-                params.put("lat", latitud); // Agregar latitud a los parametros
-                params.put("extension", ".jpg"); // Agregar extension de la imagen a los parametros
-                realizarLlamadaHTTP(); // Realizar llamada http para subir la imagen
+                realizarLlamadaHTTP(imagenBase64); // Realizar llamada http para subir la imagen
             }
         }.execute(null, null, null);
     }
@@ -154,67 +156,40 @@ public class ActividadVistaPrevia extends AppCompatActivity {
     /**
      * Metodo que realiza la llamada HTTP para subir la imagen al servidor
      */
-    public void realizarLlamadaHTTP(){
+    public void realizarLlamadaHTTP(String imagenBase64) {
         prDialog.setMessage("Subiendo imagen al servidor");
-        final AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(10000);
-        client.setResponseTimeout(10000);
-
-        client.post(rutaServidor, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onStart() {
-                //Log.d("ActividadVistaPrevia", "Http client: " + client.getHttpClient().toString());
-                //Log.d("ActividadVistaPrevia", "Http context: " + client.getHttpContext().toString());
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            params.put("imagen", imagenBase64); // Agregar string de la imagen a los parametros de la llamada HTTP
+            if (lastimgdatetime == null) {
+                params.put("fecha", getDateTime()); // Agregar fecha a los parametros
+            } else {
+                params.put("fecha", formatDate(lastimgdatetime)); // Agregar fecha a los parametros version 2
             }
+            params.put("long", longitud); // Agregar longitud a los parametros
+            params.put("lat", latitud); // Agregar latitud a los parametros
+            params.put("extension", ".jpg"); // Agregar extension de la imagen a los parametros
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
-                prDialog.hide(); // Esconder el dialogo de progreso
-                Intent intentConfirm = new Intent(ActividadVistaPrevia.this, ActividadConfirmacion.class); // Crear nueva accion para mostrar la vista de confirmacion
-                startActivity(intentConfirm);
-            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, rutaServidor, params, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    prDialog.hide();
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable
-                    error) {
-                prDialog.hide(); // Esconder el dialogo de progreso
-
-                //Log.d("ActividadVistaPrevia", "Error: " + error.toString());
-
-                if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(),
-                            "Requested resource not found",
-                            Toast.LENGTH_LONG).show(); // Mostrar error 400
-                } else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(),
-                            "Lo sentimos hubo problemas con el servidor, favor de intentarlo de nuevo",
-                            Toast.LENGTH_LONG).show(); // Mostrar error 500
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Ocurrió un error \n  Posibles causas: \n" +
-                                    "1. Se perdio la conexión a internet\n" +
-                                    "2. El servidor no esta funcionando", Toast.LENGTH_LONG)
-                            .show(); // Mostrar error
+                    Intent intentConfirm = new Intent(ActividadVistaPrevia.this, ActividadConfirmacion.class); // Crear nueva accion para mostrar la vista de confirmacion
+                    startActivity(intentConfirm);
                 }
-            }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    prDialog.hide();
+                    mostrarMensaje("Error al subir el archivo", "Favor de intentarlo de nuevo");
+                }
+            });
 
-            @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-
-            }
-
-            @Override
-            public void onRetry(int retryNum){
-                //Log.d("ActividadVistaPrevia", "Retry num: " + retryNum);
-            }
-
-            @Override
-            public void onFinish() {
-                // Completed the request (either success or failure)
-            }
-        });
+            requestQueue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            prDialog.hide();
+        }
     }
 
     /**
@@ -230,9 +205,23 @@ public class ActividadVistaPrevia extends AppCompatActivity {
     }
 
     private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
+        return formatDate(date);
+    }
+
+    private String formatDate(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateFormat.format(date);
+    }
+
+    private String formatDate(String dateString){
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = formatter.parse(dateString);
+            return formatter.format(date);
+        } catch (ParseException e) {
+            return getDateTime();
+        }
     }
 
     private Bitmap decodeFile(String path) {//you can provide file path here
@@ -295,29 +284,51 @@ public class ActividadVistaPrevia extends AppCompatActivity {
             }
             return bitmap;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     private  Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
-        if (maxHeight > 0 && maxWidth > 0) {
-            int width = image.getWidth();
-            int height = image.getHeight();
-            float ratioBitmap = (float) width / (float) height;
-            float ratioMax = (float) maxWidth / (float) maxHeight;
+        try {
+            if (maxHeight > 0 && maxWidth > 0) {
+                int width = image.getWidth();
+                int height = image.getHeight();
+                float ratioBitmap = (float) width / (float) height;
+                float ratioMax = (float) maxWidth / (float) maxHeight;
 
-            int finalWidth = maxWidth;
-            int finalHeight = maxHeight;
-            if (ratioMax > 1) {
-                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+                int finalWidth = maxWidth;
+                int finalHeight = maxHeight;
+                if (ratioMax > 1) {
+                    finalWidth = (int) ((float) maxHeight * ratioBitmap);
+                } else {
+                    finalHeight = (int) ((float) maxWidth / ratioBitmap);
+                }
+                image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+                return image;
             } else {
-                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+                return image;
             }
-            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
-            return image;
-        } else {
+        }catch (Exception e){
+            Log.d("ActividadVistaPrevia", e.toString());
             return image;
         }
     }
+
+    private void mostrarMensaje(String titulo, String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titulo);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
+
+
 
