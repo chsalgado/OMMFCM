@@ -271,6 +271,6 @@ app.controller('controladorIncidentes', ['$scope', '$timeout', '$filter', 'servi
 
         $scope.map.center.latitude = lat;
         $scope.map.center.longitude = lon;
-        $scope.zoom = 9;
+        $scope.map.zoom = 9;
     }
 }]);
