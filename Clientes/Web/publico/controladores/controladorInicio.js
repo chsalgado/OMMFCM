@@ -1,32 +1,32 @@
 app.controller('controladorInicio',['$scope', '$interval', function ($scope, $interval) {
 
-     var duration = 1600, steps = 3, step = 1;
+     var duracion = 1600, pasos = 3, paso = 1;
 
-     $scope.customAttributeValue = step;
+    $scope.contador = paso;
 
     var start = $interval(function () {
-        if ($scope.customAttributeValue < steps) {
-            $scope.customAttributeValue += step;
+        if ($scope.contador < pasos) {
+            $scope.contador += paso;
         }
         else {
-            $scope.customAttributeValue = step;
+            $scope.contador = pasos;
          }
-    }, duration);
+    }, duracion);
 
-    $scope.myInterval = 3000;
+    $scope.intervalo = 3000;
     
-    $scope.noWrapSlides = false;
+    $scope.agruparSlides = false;
     
     $scope.slides = [];
     
-    $scope.initSlides = function() {
+    $scope.iniciarSlides = function() {
         for(var i=0; i<3; i++){
             $scope.slides.push({
-              image: 'images/home_wallpaper' + (i+1) + '.jpg'
+              imagen: 'images/home_wallpaper' + (i+1) + '.jpg'
             });
         }
     };
     
-    $scope.initSlides();
+    $scope.iniciarSlides();
 
 }]);
