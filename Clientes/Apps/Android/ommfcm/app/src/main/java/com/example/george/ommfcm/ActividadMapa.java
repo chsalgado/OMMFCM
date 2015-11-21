@@ -90,7 +90,7 @@ public class ActividadMapa extends AppCompatActivity {
 
             this.startActivity(intent);
         }else{
-            mostrarMensaje("Localización de incidente faltante", "Favor de seleccionar la ubicación aproximada donde ocurrio el incidente");
+            mostrarMensaje("Localización de incidente faltante", "Favor de seleccionar la ubicación aproximada donde ocurrió el incidente");
         }
     }
 
@@ -293,7 +293,7 @@ public class ActividadMapa extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace(); // Imprimir error
                     prDialog.hide();
-                    mostrarMensaje("Error al procesar la ruta", "Favor de egresar a la ventana anterior para volver a calcular la ruta");
+                    mostrarMensaje("Error al procesar la ruta", "Favor de regresar a la ventana anterior para volver a calcular la ruta");
                 }
             }
         }
