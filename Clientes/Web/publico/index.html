@@ -6,65 +6,95 @@
     <link rel="shortcut icon" href="img/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+    <!--Frameworks estilo-->
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.7.0/angular-material.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+
+    <!--Fuentes-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,700,600,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+
+    <!--Estilo personalizado-->
     <link href="css/sitio.css" rel="stylesheet" />
     <link href="css/loading-bar.css" rel="stylesheet" />
 </head>
 <body>
 
     <!-- Menu -->
-    <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/inicio">
-                    <img alt="WATCH" src="img/watch_icon.png">
-                </a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a class="navbar-brand" href="#/"><img src="images/logo_web.png" alt="logo" /></a>
             </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#/reportar">Reportar</a></li>
-                    <li><a href="#/politicas">Políticas de Privacidad</a></li>
+            <div class="collapse navbar-collapse navbar-ex1-collapse dropdown-prod-cart-scroll scroll-menu">
+            
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#/inicio">Inicio</a>
+                    </li>
+                    <li><a href="#/reportar">Reportar incidente</a>
+                    </li>
+                    <li><a href="#/politicas">Políticas de privacidad</a>
+                    </li>
                 </ul>
+                
             </div>
         </div>
     </nav>
 
+
     <!--load partial views-->
 
-        <div class="container body-content menuScrolleable">
-            <div data-ng-view="">
+    <div ng-view autoscroll="true"></div>
+
+
+    <footer id="footer_sponsor">
+        <div class="container">
+            <div class="row">
+                <div id="footer_clients">
+                    <ul class="clients">
+                      <li title=""><a href="#"></a></li>
+                      <li title="Instituto Mexicano del Transporte"><img src="images/logo_imt_blanco.png" alt="Instituto Mexicano del Transporte" /></li>
+                      <li title="Estados Unidos Mexicanos"><img src="images/logo_mexico.png" alt="" /></li>
+                      <li title="Secretaria de Comunicaciones y Transportes"><img src="images/logo_sct.png" alt="" /></li>
+                      <li title=""><a href="#"></a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-
-        <!--end of partial view-->
-        <div id="push"></div>
-    </div>
-
-    <footer class="col-sm-10 col-sm-offset-1">
-        <div class="row">
-            <img src="img/IMT.png">
-            <img src="img/SCT.png">
-        </div>
-        <br>
-        <div class="row">
-            INSTITUTO MEXICANO DEL TRANSPORTE - DERECHOS RESERVADOS &copy 2015 - <script type="text/javascript">document.write(new Date().getFullYear())</script>
+        <div class="info-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                         <div class="col-sm-6"><span> Instituto Mexicano del Transporte - Derechos Reservados &copy 2015 - <script type="text/javascript">document.write(new Date().getFullYear())</script></span></div>
+                         <div class="col-sm-6"><address><span class="ic-fo icon-envelope"></span>watch@imt.mx</address></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
+
     <!-- 3rd party libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="scripts/loading-bar.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="scripts/ui-bootstrap-tpls-0.14.3.js"></script>
+    <script src="scripts/loading-bar.js"></script>
 
 
     <!-- load app main script -->
@@ -75,6 +105,7 @@
 
     <!-- Load controllers -->
     <script src="controladores/controladorReportar.js"></script>
+    <script src="controladores/controladorInicio.js"></script>
 </body>
 </html>
 

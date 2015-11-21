@@ -3,6 +3,7 @@ app.controller('controladorReportar', ['$scope', '$filter', '$timeout', 'servici
 
     // Modelo con el formato requerido por input date
     $scope.fecha = new Date();
+    $scope.fecha.abierto = false;
 
     // Variable que guarda la imagen
     $scope.foto = '';
@@ -36,7 +37,11 @@ app.controller('controladorReportar', ['$scope', '$filter', '$timeout', 'servici
     // Retroalimentación al usuario
     $scope.mensaje = '';
     $scope.exito = false;
-    $scope.errores = false;
+    $scope.errores = false
+    
+    $scope.abrirCalendario = function($event) {
+        $scope.fecha.abierto = true;
+    };
 
     // Oculta la retroalimentacion al usuario
     $scope.ocultarMensaje = function(){
@@ -53,7 +58,7 @@ app.controller('controladorReportar', ['$scope', '$filter', '$timeout', 'servici
         $scope.incidente.extension = '';
         $scope.fecha = new Date();
         $scope.foto = '';
-        document.getElementById("vistaPrevia").innerHTML = '<img src="img/vistaPrevia.png" width="100%" title="Vista Previa">'
+        document.getElementById("vistaPrevia").innerHTML = '<img src="images/placeholder.png" width="100%" title="Vista Previa">'
         angular.element("input[type='file']").val(null);
         $scope.limpiarMapa();
         $scope.ruta.origen.idEstado = 1;

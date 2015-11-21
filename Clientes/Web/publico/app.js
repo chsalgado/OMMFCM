@@ -1,7 +1,8 @@
-var app = angular.module('appPublica', ['ngRoute', 'angular-loading-bar']);
+var app = angular.module('appPublica', ['ngRoute', 'angular-loading-bar', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when("/inicio", {
+        controller: "controladorInicio",
         templateUrl: "vistas/vistaInicio.html"
     });
 
