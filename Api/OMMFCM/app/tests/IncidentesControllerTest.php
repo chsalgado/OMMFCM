@@ -237,7 +237,7 @@ class IncidentesControllerTest extends TestCase
 	public function testCrearIncidenteExito()
 	{	 
 		// codigo que regresa el mock
-	   	$codigoEsperado = 201;
+	   	$codigoEsperado = 200;
 
 	   	// obtener los parámetros de la consulta
         $archivoJson = __DIR__ . '/jsons/crearIncidenteConParametrosValidos.json';
