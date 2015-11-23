@@ -19,12 +19,13 @@ module.exports = function(config) {
       '../scripts/angular.js',
       '../scripts/angular-mocks.js',
       '../scripts/angular-route.min.js',
+      '../scripts/loading-bar.js',
+      '../scripts/ui-bootstrap-tpls-0.14.3.js',
       '../*.js',
       '../controladores/*.js',
       '../servicios/*.js',
       'servicios/*.tests.js',
       'controladores/*.tests.js',
-      '../scripts/loading-bar.js',
       'https://maps.googleapis.com/maps/api/js'
     ],
 
