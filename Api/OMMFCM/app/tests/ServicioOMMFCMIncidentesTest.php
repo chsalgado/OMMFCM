@@ -48,7 +48,7 @@ class ServicioOMMFCMIncidentesTest extends TestCase
 
 		$respuestaActual = $servicio->crearIncidente($this->mock, $this ->imagen64, '.png', vfsStream::url('publicPath/someDir'));
 
-		$this->assertEquals(201, $respuestaActual);
+		$this->assertEquals(200, $respuestaActual);
 	}
 
 	/**

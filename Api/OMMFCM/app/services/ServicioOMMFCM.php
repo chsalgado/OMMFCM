@@ -119,7 +119,8 @@
 
 	    	if($resultado)
 	    	{
-				return 201;	    		
+	    		// Debería regresar 201, la app de IOS espera un 200
+				return 200;	    		
 	    	}
 
 	    	return 500;	    
